@@ -56,7 +56,7 @@ const Navbar = () => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel dir="rtl">حسابي</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <Link className="mx-5" href={"/admin/add-product"}>
+                        <Link className="mx-5" href={"/admin/products/1"}>
                             لوحة التحكم
                         </Link>
                     </DropdownMenuContent>

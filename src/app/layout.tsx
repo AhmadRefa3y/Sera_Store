@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Alexandria, Inter } from "next/font/google";
+import { Alexandria } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Alexandria({ subsets: ["latin"] });
 
@@ -18,10 +19,13 @@ export default function RootLayout({
     return (
         <html lang="en" dir="rtl">
             <body
-                className={`${inter.className} flex flex-col min-h-screen bg-[#fafafa] max-w-7xl mx-auto`}
+                className={`${inter.className} flex flex-col min-h-screen bg-[#fafafa]  mx-auto`}
             >
+                <Toaster />
                 <Navbar />
-                <main className="flex-grow px-4  ">{children}</main>
+                <main className="flex-grow w-full  max-w-screen-2xl mx-auto  px-4 ">
+                    {children}
+                </main>
             </body>
         </html>
     );

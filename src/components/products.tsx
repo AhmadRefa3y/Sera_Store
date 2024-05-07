@@ -10,44 +10,17 @@ type product = Prisma.ProductGetPayload<{
     };
 }>;
 const ProductsGrid = ({ products }: { products: product[] }) => {
-    // const products = [
-    //     {
-    //         id: 1,
-    //         name: "تيشيرت سادة تلبيس متناسب مع الجسم - أسود",
-    //         price: 100,
-    //         image: "/1.webp",
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "قميص جوخ كاروه بجيب واحد-أبيض رمادي",
-    //         price: 200,
-    //         image: "/2.webp",
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "قميص جوخ سادة بجيب - فضي",
-    //         price: 300,
-    //         image: "/3.webp",
-    //     },
-    //     {
-    //         id: 4,
-    //         name: "product 4",
-    //         price: 400,
-    //         image: "/4.webp",
-    //     },
-    // ];
     return (
-        <div className="flex items-center justify-center h-full gap-2 flex-wrap ">
+        <div className="flex items-center justify-center h-full gap-1 flex-wrap ">
             {products.map((product) => (
-                <div className="w-[350px] group group/parent h-[400px] p-2  rounded-md flex items-center flex-col overflow-hidden">
+                <div className="w-[240px] group group/parent h-[315px] p-2  rounded-md flex items-center flex-col overflow-hidden">
                     <div
                         key={product.id}
-                        className=" group  w-[300px] h-[300px] overflow-hidden bg-[#f8f8f8] p-4 relative"
+                        className=" group  w-full h-[240px] overflow-hidden bg-[#f8f8f8] p-1 relative"
                     >
                         <Image
                             src={product.images[0].url}
-                            width={300}
-                            height={300}
+                            fill
                             alt={""}
                             className="group-hover:scale-110 duration-1000 animate-in mx-auto"
                         />

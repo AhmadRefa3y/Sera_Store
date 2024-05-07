@@ -24,6 +24,7 @@ const ImageUpload: React.FC<imageUploadProps> = ({
     useEffect(() => {
         setIsMounted(true);
     }, []);
+    console.log(value);
 
     const onUpload = (result: any) => {
         onChange(result.info.secure_url);
@@ -65,7 +66,7 @@ const ImageUpload: React.FC<imageUploadProps> = ({
                             )
                     )}
             </div>
-            <CldUploadWidget onSuccess={onUpload} uploadPreset="augvfnz0">
+            <CldUploadWidget onSuccess={onUpload} uploadPreset="mn2jf7zs">
                 {({ open }) => {
                     const onclick = () => {
                         open();
@@ -77,8 +78,8 @@ const ImageUpload: React.FC<imageUploadProps> = ({
                             variant={"secondary"}
                             onClick={onclick}
                         >
+                            اختر صورة
                             <ImagePlus className="h-4 w-4 mr-2" />
-                            Upload an Image
                         </Button>
                     );
                 }}

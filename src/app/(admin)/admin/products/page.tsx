@@ -2,6 +2,10 @@ import { TableUi } from "@/components/ui/MainTable";
 import DB from "@/lib/prismaDb";
 import React from "react";
 import { ProductsColumn, ProductsColumns } from "./ProductsColumns";
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
+import Link from "next/link";
+import Heading from "@/components/ui/heading";
 
 const page = async () => {
     const products = await DB.product.findMany({
@@ -29,7 +33,17 @@ const page = async () => {
         };
     });
     return (
-        <div>
+        <div className="flex flex-col gap-4">
+            <div className="flex justify-between items-center border-b border-b-stone-300">
+                <Heading description="عرض الاصناف المسجلة" title="الاصناف" />
+                <Link
+                    className="  flex gap-2  w-fit bg-[#151616] text-white p-2 rounded-md hover:opacity-90"
+                    href={"/admin/products/addProductBtn"}
+                >
+                    اضافة منتج
+                    <PlusCircle />
+                </Link>
+            </div>
             <TableUi
                 columns={ProductsColumns}
                 data={formmatedProducts}

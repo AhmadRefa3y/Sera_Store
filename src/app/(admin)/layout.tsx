@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Alexandria } from "next/font/google";
 import "../globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/PublicNavBar/Navbar";
 import { Toaster } from "react-hot-toast";
 import AdminNavbar from "@/components/adminNavbar";
 

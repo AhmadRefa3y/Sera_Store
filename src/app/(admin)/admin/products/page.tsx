@@ -38,7 +38,7 @@ const page = async () => {
                 <Heading description="عرض الاصناف المسجلة" title="الاصناف" />
                 <Link
                     className="  flex gap-2  w-fit bg-[#151616] text-white p-2 rounded-md hover:opacity-90"
-                    href={"/admin/products/addProductBtn"}
+                    href={"/admin/products/new"}
                 >
                     اضافة منتج
                     <PlusCircle />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Alexandria } from "next/font/google";
 import "../globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/PublicNavBar/Navbar";
 import { Toaster } from "react-hot-toast";
 
 const inter = Alexandria({ subsets: ["latin"] });
@@ -20,7 +20,7 @@ export default function RootLayout({
         <>
             <Toaster />
             <Navbar />
-            <main className="flex-grow w-full  max-w-screen-2xl mx-auto  px-4 ">
+            <main className="flex-grow w-full  max-w-screen-lg mx-auto  px-4 ">
                 {children}
             </main>
         </>

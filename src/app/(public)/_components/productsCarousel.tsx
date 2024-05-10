@@ -13,26 +13,24 @@ import { Prisma } from "@prisma/client";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import { SetStateAction, useState } from "react";
+import FilterProducts from "./productsFilter";
 type product = Prisma.ProductGetPayload<{
     include: {
         images: true;
     };
 }>;
 const ProductsCarousel = ({ products }: { products: product[] }) => {
-    console.log(products);
     const [filters, setfilters] = useState<{
         category: "men" | "women" | "kids" | "all";
     } | null>({
         category: "all",
     });
 
-    console.log(filters);
-
     const categories = [
-        { name: "all", value: "all" },
-        { name: "men", value: "men" },
-        { name: "women", value: "women" },
-        { name: "kids", value: "kids" },
+        { name: "الكل", value: "all" },
+        { name: "الرجال", value: "men" },
+        { name: "النساء", value: "women" },
+        { name: "الاطفال", value: "kids" },
     ];
     const formattedProducts = products.map((product) => ({
         category: "men",
@@ -45,11 +43,10 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
             return product;
         } else return null;
     });
-    console.log(filteerdProducts);
 
     return (
-        <div>
-            <FilteredProducts
+        <div className="mx-12 ">
+            <FilterProducts
                 categories={categories}
                 filters={filters}
                 setfilters={setfilters}
@@ -59,7 +56,7 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                     align: "start",
                     loop: true,
                 }}
-                className="w-full "
+                className="lg:w-full lg:max-w-full max-w-3xl mx-auto my-2 "
                 dir="ltr"
                 plugins={[Autoscroll({ stopOnInteraction: false })]}
             >
@@ -146,41 +143,3 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
 };
 
 export default ProductsCarousel;
-
-const FilteredProducts = ({
-    categories,
-    setfilters,
-    filters,
-}: {
-    categories: { name: string; value: string }[];
-    setfilters: any;
-    filters: {
-        category: "men" | "women" | "kids" | "all";
-    } | null;
-}) => {
-    return (
-        <div>
-            <div className="flex items-center justify-between">
-                <div className="flex gap-2">
-                    {categories.map((category) => (
-                        <button
-                            key={category.value}
-                            onClick={() =>
-                                setfilters({
-                                    category: category.value,
-                                })
-                            }
-                            className={`btn ${
-                                category.value === filters?.category
-                                    ? "text-red-500"
-                                    : ""
-                            }`}
-                        >
-                            {category.name}
-                        </button>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};

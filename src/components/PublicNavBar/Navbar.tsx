@@ -40,7 +40,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between border-b pb-1 border-black w-fit">
                     <input
                         placeholder="عن ماذا تبحث ؟"
-                        className="border-none outline-none focus-visible:ring-0 placeholder:text-sm placeholder:text-black"
+                        className="border-none bg-transparent outline-none focus-visible:ring-0 placeholder:text-sm placeholder:text-black"
                     />
                     <Search />
                 </div>

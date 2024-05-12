@@ -2,6 +2,7 @@ import { formatter } from "@/lib/utils";
 import { Prisma, Product } from "@prisma/client";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 type product = Prisma.ProductGetPayload<{
@@ -11,23 +12,26 @@ type product = Prisma.ProductGetPayload<{
 }>;
 const ProductsGrid = ({ products }: { products: product[] }) => {
     return (
-        <div className="flex w-full  justify-center h-full  flex-wrap ">
+        <div className="flex w-full  justify-center h-full  flex-wrap gap-2 ">
             {[...products, ...products, ...products].map((product) => (
-                <div className=" min-w-[250px] group group/parent h-[500px] p-2  rounded-md flex items-center flex-col ">
-                    <div
-                        key={product.id}
-                        className=" group  w-full h-[calc(100%-100px)] overflow-hidden bg-[#f8f8f8] p-1 relative"
-                    >
+                <div
+                    className=" w-[205px] group group/parent  flex items-center flex-col gap-1 "
+                    key={product.id}
+                >
+                    <div className=" group  w-full h-[308px] overflow-hidden bg-[#f8f8f8]  relative">
                         <Image
                             src={product.images[0].url}
                             fill
                             alt={""}
-                            className="group-hover:scale-110 object-cover duration-1000 animate-in mx-auto"
+                            className="group-hover:scale-110 object-fill duration-1000 animate-in mx-auto"
                         />
                         <div className="flex items-center justify-center absolute -bottom-3 group-hover/parent:bottom-3 opacity-0  group-hover/parent:opacity-100 w-full gap-3 duration-300">
-                            <span className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300">
+                            <Link
+                                href={`/shop/${product.id}`}
+                                className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300"
+                            >
                                 <Eye />
-                            </span>
+                            </Link>
                             <span className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300">
                                 {" "}
                                 <svg
@@ -50,7 +54,7 @@ const ProductsGrid = ({ products }: { products: product[] }) => {
                             </span>
                         </div>
                     </div>
-                    <div className="h-fit flex flex-col gap-2 pt-4 w-full">
+                    <div className=" flex flex-col gap-1 w-full">
                         <p className=" text-xs  overflow-hidden w-full">
                             {product.name}
                         </p>

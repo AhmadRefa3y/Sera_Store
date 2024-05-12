@@ -12,7 +12,7 @@ export default async function Home() {
     });
     return (
         <div className="flex-1 flex flex-col justify-between">
-            <div className="flex flex-col gap-2 w-full max-w-screen-lg mx-auto">
+            <div className="flex flex-col gap-2 w-full max-w-screen-lg mx-auto overflow-hidden  px-4">
                 <DiscountSection />
                 <BillboardSection />
                 <ProductsCarousel products={products} />

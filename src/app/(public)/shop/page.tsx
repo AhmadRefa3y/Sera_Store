@@ -18,7 +18,7 @@ export default ShopPage;
 
 const SideBar = () => {
     return (
-        <div className="basis-[200px]  h-full text-xs font-normal pr-12">
+        <div className="basis-[200px]  h-full text-xs font-normal">
             <div className="flex flex-col gap-1 ">
                 <div className=" text-xs font-bold mb-3">تسوق حسب المنتج</div>
                 <Link

@@ -3,10 +3,10 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <div>
+        <div className="w-full mt-auto">
             <div className="bg-[#e4e4e4] w-full h-[400px] grid grid-cols-6 p-7 ">
                 <div
-                    className="col-span-2 font-normal gap-2  text-xs  flex flex-col justify-start py-4
+                    className="col-span-2 font-normal gap-2  text-xs  flex items-center flex-col justify-start py-4
                px-4 "
                 >
                     <div className=" my-4 font-bold">حول متجرنا</div>
@@ -30,11 +30,11 @@ const Footer = () => {
                     </Link>
                 </div>
                 <div
-                    className="col-span-2 font-normal gap-2  text-xs max-w-[250px] flex flex-col justify-start  py-4
+                    className="col-span-2 font-normal gap-2  text-xs  flex flex-col items-center justify-start  py-4
                px-4 "
                 >
                     <div className=" my-4 font-bold">تواصل معنا </div>
-                    <div className="leading-5	 ">
+                    <div className="leading-5	max-w-[250px] ">
                         كن أول المطلعين على التشكيلات الجديدة و العروض الحصرية
                         والفعاليات في المحلات القريبة منك
                     </div>
@@ -58,7 +58,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div
-                    className="col-span-2 font-normal gap-2  text-xs  flex flex-col justify-start py-4
+                    className="col-span-2 font-normal gap-2  text-xs  flex flex-col items-center justify-start py-4
                px-4 "
                 >
                     <div className=" my-4 font-bold ">تسوق حسب القسم </div>

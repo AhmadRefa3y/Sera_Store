@@ -1,20 +1,24 @@
+import ProductsGrid from "@/components/products";
+import { Button } from "@/components/ui/button";
+import DB from "@/lib/prismaDb";
+import { ArrowDown } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const ShopPage = () => {
     return (
-        <div className="flex gap-2 h-full w-full mt-3 ">
-            <ShopSideBar />
-            <ShopProducts />
+        <div className="flex gap-2 h-full w-full mt-6 px-4 ">
+            <SideBar />
+            <Shop />
         </div>
     );
 };
 
 export default ShopPage;
 
-const ShopSideBar = () => {
+const SideBar = () => {
     return (
-        <div className="basis-[200px]  h-full text-xs font-normal pr-3">
+        <div className="basis-[200px]  h-full text-xs font-normal pr-12">
             <div className="flex flex-col gap-1 ">
                 <div className=" text-xs font-bold mb-3">تسوق حسب المنتج</div>
                 <Link
@@ -67,14 +71,68 @@ const ShopSideBar = () => {
     );
 };
 
-const ShopProducts = () => {
+const Shop = async () => {
+    const products = await DB.product.findMany({
+        include: {
+            images: true,
+        },
+    });
     return (
-        <div className="basis-[calc(100%-150px)]  h-full flex flex-col gap-2">
+        <div className="basis-[calc(100%-200px)]  h-full flex flex-col gap-2 relative max-w-screen-xl mx-auto ">
             <ShopCategoryLabel />
+            <ShopFilters />
+            <ProductsGrid products={products} />
         </div>
     );
 };
 
 const ShopCategoryLabel = () => {
-    return <div className="h-[100px]  w-full text-2xl">القمصان</div>;
+    return <div className="  w-full text-4xl mb-3 ">القمصان</div>;
+};
+
+const ShopFilters = () => {
+    return (
+        <div className="flex items-center justify-between sticky top-0 py-2 z-50 bg-[#fafafa] ">
+            <div className="flex gap-2">
+                <Button
+                    className="flex gap-2 text-sm items-center"
+                    variant={"ghost"}
+                >
+                    <span>رتب حسب</span>
+                    <ArrowDown className="w-6 h-6" />
+                </Button>
+                <Button
+                    className="flex gap-2 text-sm items-center"
+                    variant={"ghost"}
+                >
+                    <span>رتب حسب</span>
+                    <ArrowDown className="w-6 h-6" />
+                </Button>
+                <Button
+                    className="flex gap-2 text-sm items-center"
+                    variant={"ghost"}
+                >
+                    <span>رتب حسب</span>
+                    <ArrowDown className="w-6 h-6" />
+                </Button>
+                <Button
+                    className="flex gap-2 text-sm items-center"
+                    variant={"ghost"}
+                >
+                    <span>رتب حسب</span>
+                    <ArrowDown className="w-6 h-6" />
+                </Button>
+                <Button
+                    className="flex gap-2 text-sm items-center"
+                    variant={"ghost"}
+                >
+                    <span>رتب حسب</span>
+                    <ArrowDown className="w-6 h-6" />
+                </Button>
+            </div>
+            <div className="flex gap-2 text-sm">
+                <div>500 منتج</div>
+            </div>
+        </div>
+    );
 };

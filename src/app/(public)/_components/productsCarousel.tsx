@@ -65,7 +65,7 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                         filteerdProducts.map((product, index) => (
                             <CarouselItem
                                 key={index}
-                                className="md:basis-1/2 lg:basis-1/3"
+                                className="md:basis-1/2 lg:basis-1/4"
                                 dir="rtl"
                             >
                                 <div className="p-1">
@@ -73,16 +73,16 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                         key={Math.random()}
                                         className="basis-[20%]"
                                     >
-                                        <div className="w-[240px] group group/parent h-[315px] p-2  rounded-md flex items-center flex-col ">
+                                        <div className="min-w-[240px] group group/parent h-[500px] p-2  rounded-md flex items-center flex-col ">
                                             <div
                                                 key={product.id}
-                                                className=" group  w-full h-[240px] overflow-hidden bg-[#f8f8f8] p-1 relative"
+                                                className=" group  w-full h-full overflow-hidden bg-[#f8f8f8] p-1 relative"
                                             >
                                                 <Image
                                                     src={product.images[0].url}
                                                     fill
                                                     alt={""}
-                                                    className="group-hover:scale-110 duration-1000 animate-in mx-auto"
+                                                    className="group-hover:scale-110 object-cover duration-1000 animate-in mx-auto"
                                                 />
                                                 <div className="flex items-center justify-center absolute -bottom-3 group-hover/parent:bottom-3 opacity-0  group-hover/parent:opacity-100 w-full gap-3 duration-300">
                                                     <span className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300">
@@ -110,15 +110,17 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                                     </span>
                                                 </div>
                                             </div>
-                                            <p className="text-center text-sm text-nowrap overflow-hidden w-full">
-                                                {product.name}
-                                            </p>
+                                            <div className="h-[100px] flex flex-col gap-2 pt-4 w-full">
+                                                <p className=" text-xs  overflow-hidden w-full">
+                                                    {product.name}
+                                                </p>
 
-                                            <p className="text-center text-sm text-nowrap overflow-hidden w-full">
-                                                {formatter.format(
-                                                    Number(product.price)
-                                                )}
-                                            </p>
+                                                <p className=" text-sm  overflow-hidden w-full mt-auto">
+                                                    {formatter.format(
+                                                        Number(product.price)
+                                                    )}
+                                                </p>
+                                            </div>
                                         </div>
                                     </CarouselItem>
                                 </div>

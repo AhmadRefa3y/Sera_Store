@@ -56,29 +56,30 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                     align: "start",
                     loop: true,
                 }}
-                className=" mx-auto h-[500px] my-5"
+                className=" mx-auto h-[350px] my-5"
                 dir="ltr"
                 plugins={[Autoscroll({ stopOnInteraction: false })]}
             >
-                <CarouselContent className="w-full mx-auto " dir="ltr">
+                <CarouselContent className=" mx-auto " dir="ltr">
                     {filteerdProducts.length > 0 ? (
                         filteerdProducts.map((product, index) => (
                             <CarouselItem
                                 key={index}
-                                className="md:basis-1/2 lg:basis-1/4 pl-2 py-2"
+                                className="md:basis-1/2 lg:basis-1/3 pl-2 py-2 h-full"
                                 dir="rtl"
                             >
                                 {/* <div className="p-1"> */}
-                                <div className="min-w-[25%] group group/parent h-[500px]   rounded-md flex items-center flex-col ">
+                                <div className="group group/parent rounded-md flex items-center h-full justify-center flex-col ">
                                     <div
                                         key={product.id}
-                                        className=" group  w-full h-full overflow-hidden bg-[#f8f8f8] p-1 relative"
+                                        className=" group  w-full h-[260px]  bg-[#f8f8f8] p-1 relative"
                                     >
                                         <Image
                                             src={product.images[0].url}
-                                            fill
+                                            width={250}
+                                            height={260}
                                             alt={""}
-                                            className="group-hover:scale-110 object-cover duration-1000 animate-in mx-auto"
+                                            className="group-hover:scale-110 object-fill  duration-1000 animate-in mx-auto"
                                         />
                                         <div className="flex items-center justify-center absolute -bottom-3 group-hover/parent:bottom-3 opacity-0  group-hover/parent:opacity-100 w-full gap-3 duration-300">
                                             <span className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300">
@@ -106,12 +107,12 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="h-[80px] flex flex-col gap-2 pt-2 w-full">
-                                        <p className=" text-xs  overflow-hidden w-full">
+                                    <div className="flex flex-col items-center justify-center gap-2 pt-2 w-full text-sm ">
+                                        <p className="  overflow-hidden text-center text-nowrap w-full ">
                                             {product.name}
                                         </p>
 
-                                        <p className=" text-sm  overflow-hidden w-full mt-auto">
+                                        <p className="  overflow-hidden w-full text-center">
                                             {formatter.format(
                                                 Number(product.price)
                                             )}

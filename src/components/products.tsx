@@ -15,10 +15,10 @@ const ProductsGrid = ({ products }: { products: product[] }) => {
         <div className="flex w-full  justify-center h-full  flex-wrap gap-2 ">
             {[...products, ...products, ...products].map((product) => (
                 <div
-                    className=" w-[205px] group group/parent  flex items-center flex-col gap-1 "
+                    className=" w-[265px]  group group/parent  flex items-start flex-col gap-1 "
                     key={product.id}
                 >
-                    <div className=" group  w-full h-[308px] overflow-hidden bg-[#f8f8f8]  relative">
+                    <div className=" group  w-full h-[260px] overflow-hidden bg-[#f8f8f8]  relative">
                         <Image
                             src={product.images[0].url}
                             fill

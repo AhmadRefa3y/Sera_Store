@@ -76,8 +76,7 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                     >
                                         <Image
                                             src={product.images[0].url}
-                                            width={250}
-                                            height={260}
+                                            fill
                                             alt={""}
                                             className="group-hover:scale-110 object-fill  duration-1000 animate-in mx-auto"
                                         />

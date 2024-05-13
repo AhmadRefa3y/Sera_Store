@@ -21,7 +21,7 @@ export default function RootLayout({
         <div className="flex h-full ">
             <AdminNavbar />
             <Toaster />
-            <main className="flex-grow w-full  max-w-screen-2xl mx-auto  px-4 overflow-y-auto ">
+            <main className="flex-grow w-full  max-w-screen-2xl mx-auto  px-4 overflow-y-auto min-h-screen">
                 {children}
             </main>
         </div>

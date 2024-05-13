@@ -25,7 +25,7 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
         size: ProductDetails?.size.name!,
     };
     return (
-        <div className="flex flex-col max-w-screen-2xl  w-full px-2 mt-10">
+        <div className="flex flex-col max-w-screen-xl  w-full px-2 sm:mt-10  mx-auto">
             <ProductDetail product={product} />
         </div>
     );
@@ -46,66 +46,62 @@ const ProductDetail = ({
     };
 }) => {
     return (
-        <div className="flex gap-2 h-[560px] font-normal text-sm">
-            <div className="basis-[600px]">
-                <div className="w-[560px] h-[560px] mr-auto">
+        <div className="flex gap-2 font-normal text-sm flex-col sm:flex-row pb-3">
+            <div className="sm:basis-[40%]">
+                <div className="w-full mx-auto">
                     <Image
                         src={product.images[0].url}
-                        width={1200}
-                        height={1200}
+                        width={560}
+                        height={700}
                         alt={product.name}
                         className=" "
                     />
                 </div>
             </div>
-            <div className="flex-1 flex flex-col gap-4 ">
-                <div className="text-3xl">{product.name}</div>
-                <div className="text-3xl">
+            <div className="sm:basis-[60%] flex flex-col sm:gap-4 gap-2 flex-wrap  ">
+                <div className="sm:text-3xl text-lg">{product.name}</div>
+                <div className="sm:text-3xl text-lg">
                     {formatter.format(product.price)}{" "}
                 </div>
-                <div className="flex gap-2 text-lg">
+                <div className="text-muted-foreground w-fit ">
+                    يتضمن ضريبة القيمة المضافة
+                </div>
+                <div className="flex gap-2  text-lg">
                     <span>اللون</span>
                     <span className="text-muted-foreground">
                         : {product.color}
                     </span>
                 </div>
-                <div className="flex gap-2 text-lg">
+                <div className="flex gap-2  text-lg">
                     <span>المقاس</span>
                     <span className="text-muted-foreground">
                         : {product.size}
                     </span>
                 </div>
-                <div className="text-muted-foreground w-[40%] ">
-                    تتضمن ضريبة القيمة المضافة
-                </div>
-                <div className="flex gap-2 border border-green-400  px-4 py-2 w-[40%] text-base">
-                    <Package />
-                    التوصيل في نفس اليوم متاح
-                </div>
-                <div className="flex gap-2 w-full">
-                    <div className="flex justify-evenly border border-stone-300 w-fit px-4 text-lg p-2">
+                <div className="flex sm:gap-2 gap-1 flex-col sm:flex-row ">
+                    <div className="flex justify-evenly border border-stone-300   sm:mx-0 px-1 sm:text-lg p-1">
                         <button>
                             <Plus />
                         </button>
-                        <span className="mx-4">1</span>
+                        <span className="sm:mx-4 mx-1">1</span>
                         <button>
                             <Minus />
                         </button>
                     </div>
-                    <button className="flex items-center justify-center basis-[80%] border border-cyan-950 px-5 hover:bg-cyan-950 hover:text-white duration-300">
+                    <button className="flex items-center justify-center flex-1 min-w-fit border border-cyan-950 p-1 hover:bg-cyan-950 hover:text-white duration-300">
                         اضـــــــــــــــــــف الي السلة
                         <ArrowBigLeft />
                     </button>
-                    <div className="flex items-center justify-center  border border-cyan-950 px-2 hover:bg-cyan-950 hover:text-white duration-300 relative">
+                    <div className="flex items-center justify-center  border border-cyan-950 p-1 hover:bg-cyan-950 hover:text-white duration-300 relative">
                         <Heart />
                         <div className="absolute  hidden">
                             اضافة الي المفضلة
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-2 border border-green-400  px-4 py-2 w-[40%] text-base">
+                <div className="flex gap-2 border border-green-400  px-4 py-2  sm:text-base">
                     <Car />
-                    التوصيل خلال من 3 إلى 5 أيام عمل
+                    التوصيل خلال 3 إلى 5 أيام عمل
                 </div>
             </div>
         </div>

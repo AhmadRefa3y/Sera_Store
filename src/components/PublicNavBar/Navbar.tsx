@@ -2,7 +2,7 @@
 import { HeartIcon, Search } from "lucide-react";
 import Link from "next/link";
 import { FlyoutLink } from "./FlyoutLink";
-import { PricingContent } from "./navItemsContent";
+import { PricingContent } from "./NavItemsContent";
 
 const Navbar = () => {
     const links = [
@@ -35,8 +35,8 @@ const Navbar = () => {
         },
     ];
     return (
-        <div className="flex justify-between h-32 items-center px-10  py-2 ">
-            <div className="basis-[25%]">
+        <div className="flex sm:justify-between justify-center h-32 items-center px-10  py-2 ">
+            <div className="basis-[25%] hidden sm:inline-flex">
                 <div className="flex items-center justify-between border-b pb-1 border-black w-fit">
                     <input
                         placeholder="عن ماذا تبحث ؟"
@@ -45,15 +45,15 @@ const Navbar = () => {
                     <Search />
                 </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-2 basis-[50%]">
-                <div className="flex items-center justify-center font-normal text-xs gap-2">
+            <div className="flex flex-col justify-center items-center gap-2 basis-[50%] ">
+                <div className=" items-center justify-center font-normal text-xs gap-2  hidden lg:flex">
                     <Link href={"/signup"}>تسجيل مستخدم جديد</Link>
                     <Link href={"/signup"}>تسجيل الدخول</Link>
                     <Link href={"/signup"}>البحث عن محلاتنا</Link>
                     <Link href={"/signup"}>English</Link>
                 </div>
                 <div className="text-3xl py-3">لوجو</div>
-                <div className="flex z-50 w-full justify-center text-black gap-4  px-3 ">
+                <div className=" z-50 w-full justify-center text-black gap-4  px-3  hidden lg:flex">
                     {links.map((link) => (
                         <FlyoutLink
                             href={link.path}
@@ -65,7 +65,7 @@ const Navbar = () => {
                     ))}
                 </div>
             </div>
-            <div className="flex gap-4 items-center justify-end basis-[25%]">
+            <div className=" gap-4 items-center justify-end basis-[25%] hidden sm:flex">
                 <Link
                     href={"/wishlist"}
                     className="text-sm hover:opacity-70 duration-200"

@@ -4,8 +4,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Category, Color, Image, Product, Size } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -256,6 +264,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                                     {Category.name}
                                                 </SelectItem>
                                             ))}
+                                            <AddTypeDialog />
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -393,16 +402,53 @@ const ProductForm: React.FC<ProductFormProps> = ({
                         />
                     </div>
                     {/* /// Save Settings */}
-                    <Button
+                    {/* <Button
                         disabled={loading}
                         type="submit"
                         className="ml-auto"
                     >
                         {action}
-                    </Button>
+                    </Button> */}
                 </form>
             </Form>
         </>
     );
 };
 export default ProductForm;
+
+const AddTypeDialog = () => {
+    const SaveType = (formData: FormEvent<HTMLFormElement>) => {
+        console.log(formData.currentTarget);
+    };
+    return (
+        <Dialog open>
+            <DialogTrigger>اضافة نوع</DialogTrigger>
+            <DialogContent>
+                <DialogHeader className="flex items-center">
+                    <DialogTitle>اضافة فئة جديدة</DialogTitle>
+                </DialogHeader>
+                <form
+                    className=" flex items-center justify-center flex-col gap-2"
+                    onSubmit={(e) => {
+                        SaveType(e);
+                        console.log(e);
+                    }}
+                >
+                    <div className="flex  gap-2 w-full items-center  justify-center">
+                        <label htmlFor="name" className="font-bold">
+                            اسم الفئة
+                        </label>
+                        <input
+                            type="text"
+                            name="type"
+                            className="flex-1 p-2 border border-stone-300"
+                        />
+                        <Button className="mr-auto " type="submit">
+                            اضافة
+                        </Button>
+                    </div>
+                </form>
+            </DialogContent>
+        </Dialog>
+    );
+};

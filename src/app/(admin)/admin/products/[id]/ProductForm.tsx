@@ -1,19 +1,11 @@
 "use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Category, Color, Image, Product, Size } from "@prisma/client";
+import { Category, Color, Image, Product, Size, type } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { FormEvent, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -40,6 +32,7 @@ import ImageUpload from "@/components/ImageUpload";
 import AlertModal from "@/components/Modals/AlertModal";
 import { CreateProduct, UpdateProduct } from "@/actions/products";
 import Heading from "@/components/ui/heading";
+import AddTypeDialog from "../../add/AddTypeDialog";
 
 interface ProductFormProps {
     initialData:
@@ -50,11 +43,13 @@ interface ProductFormProps {
     categories: Category[];
     sizes: Size[];
     colors: Color[];
+    types: type[];
 }
 const formSchema = z.object({
     name: z.string().min(1),
     images: z.object({ url: z.string() }).array(),
     price: z.coerce.number().min(1),
+    typeID: z.string().min(1),
     categoryId: z.string().min(1),
     colorId: z.string().min(1),
     sizeId: z.string().min(1),
@@ -68,9 +63,17 @@ const ProductForm: React.FC<ProductFormProps> = ({
     categories,
     sizes,
     colors,
+    types,
 }) => {
     const params = useParams();
     const router = useRouter();
+    const [TypeID, setTypeID] = useState<string | undefined>(
+        initialData?.typeId
+    );
+
+    const FilterdCategories = categories.filter((category) => {
+        return category.typeId === TypeID;
+    });
 
     const title = initialData ? "تعديل صنف" : "اضافة صنف";
     const description = initialData ? "تعديل مواصفات صنف" : "اضافة صنف جديد";
@@ -84,15 +87,17 @@ const ProductForm: React.FC<ProductFormProps> = ({
         defaultValues: initialData
             ? {
                   ...initialData,
+                  typeID: initialData?.typeId,
                   price: parseFloat(String(initialData?.price)),
               }
             : {
                   name: "",
                   images: [],
                   price: 0,
-                  categoryId: "1",
-                  colorId: "1",
-                  sizeId: "1",
+                  categoryId: "",
+                  colorId: "",
+                  sizeId: "",
+                  typeID: "",
                   isArchived: false,
                   isFeatured: false,
               },
@@ -106,9 +111,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 await UpdateProduct({ ...data, id: initialData.id });
                 router.push(`/`);
             } else {
-                console.log(data);
                 const product = await CreateProduct(data);
-                // console.log(senddata);
+                console.log(product);
                 router.push(`/`);
             }
             toast.success(toastMessage);
@@ -165,6 +169,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 <form
                     onSubmit={form.handleSubmit(OnSubmit)}
                     className="space-y-8 w-full"
+                    key={23516}
                 >
                     <FormField
                         control={form.control}
@@ -234,6 +239,47 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                 </FormItem>
                             )}
                         />
+
+                        <FormField
+                            control={form.control}
+                            name="typeID"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>الفئة</FormLabel>
+                                    <Select
+                                        disabled={loading}
+                                        onValueChange={(value) => {
+                                            console.log(value);
+                                            field.onChange(value);
+                                            setTypeID(value);
+                                        }}
+                                        value={field.value}
+                                        defaultValue={field.value}
+                                        dir="rtl"
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue
+                                                    defaultValue={field.value}
+                                                    placeholder="اخر فئة"
+                                                />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {types.map((type) => (
+                                                <SelectItem
+                                                    key={type.id}
+                                                    value={type.id}
+                                                >
+                                                    {type.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="categoryId"
@@ -255,16 +301,26 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                                 />
                                             </SelectTrigger>
                                         </FormControl>
-                                        <SelectContent>
-                                            {categories.map((Category) => (
+                                        <SelectContent className="w-full ">
+                                            {FilterdCategories.map(
+                                                (Category) => (
+                                                    <SelectItem
+                                                        key={Category.id}
+                                                        value={Category.id}
+                                                    >
+                                                        {Category.name}
+                                                    </SelectItem>
+                                                )
+                                            )}
+                                            {FilterdCategories.length === 0 && (
                                                 <SelectItem
-                                                    key={Category.id}
-                                                    value={Category.id}
+                                                    value="none"
+                                                    disabled
+                                                    className=" flex  justify-center w-full text-center "
                                                 >
-                                                    {Category.name}
+                                                    <span>قم بتحديد فئة</span>
                                                 </SelectItem>
-                                            ))}
-                                            <AddTypeDialog />
+                                            )}
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -401,54 +457,17 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             )}
                         />
                     </div>
-                    {/* /// Save Settings */}
-                    {/* <Button
+
+                    <Button
                         disabled={loading}
                         type="submit"
                         className="ml-auto"
                     >
                         {action}
-                    </Button> */}
+                    </Button>
                 </form>
             </Form>
         </>
     );
 };
 export default ProductForm;
-
-const AddTypeDialog = () => {
-    const SaveType = (formData: FormEvent<HTMLFormElement>) => {
-        console.log(formData.currentTarget);
-    };
-    return (
-        <Dialog open>
-            <DialogTrigger>اضافة نوع</DialogTrigger>
-            <DialogContent>
-                <DialogHeader className="flex items-center">
-                    <DialogTitle>اضافة فئة جديدة</DialogTitle>
-                </DialogHeader>
-                <form
-                    className=" flex items-center justify-center flex-col gap-2"
-                    onSubmit={(e) => {
-                        SaveType(e);
-                        console.log(e);
-                    }}
-                >
-                    <div className="flex  gap-2 w-full items-center  justify-center">
-                        <label htmlFor="name" className="font-bold">
-                            اسم الفئة
-                        </label>
-                        <input
-                            type="text"
-                            name="type"
-                            className="flex-1 p-2 border border-stone-300"
-                        />
-                        <Button className="mr-auto " type="submit">
-                            اضافة
-                        </Button>
-                    </div>
-                </form>
-            </DialogContent>
-        </Dialog>
-    );
-};

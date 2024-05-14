@@ -6,6 +6,7 @@ import {
     TrendingUp,
 } from "lucide-react";
 import React from "react";
+import AddTypeDialog from "./add/AddTypeDialog";
 
 const AdminHomePage = () => {
     return (
@@ -16,8 +17,7 @@ const AdminHomePage = () => {
                         <div className="flex gap-2">
                             <AreaChart />
                             <span className="text-muted font-light">
-                                {" "}
-                                اجمالي المبيعات
+                                <AddTypeDialog /> اجمالي المبيعات
                             </span>{" "}
                         </div>
                         <div className="flex gap-2 justify-between ">

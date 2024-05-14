@@ -68,7 +68,6 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                 className="md:basis-1/2 lg:basis-1/3 pl-2 py-2 h-full"
                                 dir="rtl"
                             >
-                                {/* <div className="p-1"> */}
                                 <div className="group group/parent rounded-md flex items-center h-full justify-center flex-col ">
                                     <div
                                         key={product.id}
@@ -76,7 +75,8 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                     >
                                         <Image
                                             src={product.images[0].url}
-                                            fill
+                                            width={400}
+                                            height={400}
                                             alt={""}
                                             className="group-hover:scale-110 object-fill  duration-1000 animate-in mx-auto"
                                         />
@@ -118,7 +118,6 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                         </p>
                                     </div>
                                 </div>
-                                {/* </div> */}
                             </CarouselItem>
                         ))
                     ) : (

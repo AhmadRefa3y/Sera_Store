@@ -30,6 +30,7 @@ export type ProductsColumn = {
     category: string;
     size: string;
     color: string;
+    type: string;
     images: string[];
     isFeatured: boolean;
     isArchived: boolean;
@@ -49,17 +50,6 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
         minSize: 600,
         cell: ({ row }) => {
             return (
-                // <div className="w-[350px] relative group ">
-                //     <span>{row.original.name}</span>
-                //     <div className=" absolute group-hover:flex top-0 left-1/2 z-50">
-                //         <Image
-                //             src={row.original.images[0]}
-                //             width={100}
-                //             height={100}
-                //             alt=""
-                //         />
-                //     </div>
-                // </div>
                 <div>
                     <div className="flex gap-1 items-center justify-between px-2">
                         <div>{row.original.name}</div>
@@ -104,6 +94,22 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
         size: 100,
         cell: ({ row }) => {
             return row.original.price;
+        },
+    },
+    {
+        accessorKey: "type",
+        header: ({ column }) => {
+            return (
+                <div>
+                    <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
+                        <SortableHeader column={column} label="الفئة" />
+                    </div>
+                </div>
+            );
+        },
+
+        cell: ({ row }) => {
+            return row.original.type;
         },
     },
     {

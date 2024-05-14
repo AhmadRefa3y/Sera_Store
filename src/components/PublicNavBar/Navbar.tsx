@@ -13,7 +13,7 @@ const Navbar = () => {
         },
         {
             name: "الرجال",
-            path: "/",
+            path: "/shop",
             FlyoutContent: <PricingContent />,
         },
         {

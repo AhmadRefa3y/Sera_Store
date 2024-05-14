@@ -13,7 +13,7 @@ type product = Prisma.ProductGetPayload<{
 const ProductsGrid = ({ products }: { products: product[] }) => {
     return (
         <div className="flex w-full  justify-center h-full  flex-wrap gap-2 ">
-            {[...products, ...products, ...products].map((product) => (
+            {products.map((product) => (
                 <div
                     className=" w-[265px]  group group/parent  flex items-start flex-col gap-1 "
                     key={product.id}
@@ -21,7 +21,8 @@ const ProductsGrid = ({ products }: { products: product[] }) => {
                     <div className=" group  w-full h-[260px] overflow-hidden bg-[#f8f8f8]  relative">
                         <Image
                             src={product.images[0].url}
-                            fill
+                            width={400}
+                            height={400}
                             alt={""}
                             className="group-hover:scale-110 object-fill duration-1000 animate-in mx-auto"
                         />

@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 
 export const CreateProduct = async (data: ProductFormValues) => {
     try {
+        console.log(data);
         const product = DB.product.create({
             data: {
                 name: data.name,
@@ -16,6 +17,7 @@ export const CreateProduct = async (data: ProductFormValues) => {
                 sizeId: data.sizeId,
                 isArchived: data.isArchived,
                 isFeatured: data.isFeatured,
+                typeId: data.typeID,
                 images: {
                     create: data.images.map((image) => ({
                         url: image.url,

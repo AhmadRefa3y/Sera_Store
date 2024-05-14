@@ -2,7 +2,6 @@ import DB from "@/lib/prismaDb";
 import ProductForm from "./ProductForm";
 
 const page = async ({ params }: { params: { id: string } }) => {
-    console.log(params);
     const product = await DB.product.findUnique({
         where: {
             id: params.id,
@@ -11,15 +10,19 @@ const page = async ({ params }: { params: { id: string } }) => {
             images: true,
         },
     });
-    console.log(product);
+    const sizes = await DB.size.findMany();
+    const colors = await DB.color.findMany();
+    const categories = await DB.category.findMany();
+    const types = await DB.type.findMany();
 
     return (
         <div className="">
             <ProductForm
-                categories={[]}
-                sizes={[]}
-                colors={[]}
+                categories={categories}
+                sizes={sizes}
+                colors={colors}
                 initialData={product}
+                types={types}
             />
         </div>
     );

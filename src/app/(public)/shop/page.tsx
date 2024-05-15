@@ -1,7 +1,7 @@
 import ProductsGrid from "@/components/products";
 import { Button } from "@/components/ui/button";
 import DB from "@/lib/prismaDb";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, X } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import ShopFilters from "./filters";
@@ -73,12 +73,39 @@ const SideBar = () => {
 };
 
 const Shop = async ({ searchParams }: { searchParams: any }) => {
-    console.log(searchParams);
     const nameFIlter = searchParams.sort;
-    const productscount = await DB.product.findMany();
-    const products = await DB.product.findMany({
+    const priceFIlter = searchParams.priceRange;
+    const sizeFilter = searchParams.size;
+    const priceFIltersSpilted = priceFIlter?.split("-");
+    const productscount = await DB.product.findMany({
         include: {
             images: true,
+            size: true,
+            color: true,
+            category: true,
+            orderItems: true,
+        },
+    });
+    const products = await DB.product.findMany({
+        where: {
+            price: priceFIlter
+                ? {
+                      gte: priceFIltersSpilted[0],
+                      lte: priceFIltersSpilted[1],
+                  }
+                : undefined,
+            size: sizeFilter
+                ? {
+                      value: sizeFilter,
+                  }
+                : undefined,
+        },
+        include: {
+            images: true,
+            size: true,
+            color: true,
+            category: true,
+            orderItems: true,
         },
         orderBy: {
             name:
@@ -100,7 +127,11 @@ const Shop = async ({ searchParams }: { searchParams: any }) => {
     return (
         <div className="basis-[calc(100%-200px)]  h-full flex flex-col gap-2 relative max-w-screen-xl mx-auto ">
             <ShopCategoryLabel />
-            <ShopFilters products={productscount} />
+            <ShopFilters
+                products={productscount}
+                filterdProductsCount={products.length}
+            />
+            <SelectedFilters searchParams={searchParams} />
             <ProductsGrid products={products} />
         </div>
     );
@@ -108,4 +139,32 @@ const Shop = async ({ searchParams }: { searchParams: any }) => {
 
 const ShopCategoryLabel = () => {
     return <div className="  w-full text-4xl mb-3 ">القمصان</div>;
+};
+
+const SelectedFilters = ({ searchParams }: { searchParams: any }) => {
+    const priceFIlters = searchParams.priceRange;
+    const sizeFilter = searchParams.size;
+    const priceFIltersSpilted = priceFIlters?.split("-");
+
+    return (
+        <div className="flex gap-2">
+            <div>الاختيارات المحددة</div>
+            {priceFIlters && (
+                <div className="flex gap-2 items-center justify-center ">
+                    {`${priceFIltersSpilted[0]}   ج.م-  ${priceFIltersSpilted[1]}   ج.م`}
+                    <span>
+                        <X className="w-6 h-6  text-muted-foreground" />
+                    </span>
+                </div>
+            )}
+            {sizeFilter && (
+                <div className="flex gap-2 items-center justify-center  ">
+                    <span className="px-4 text-lg"> {sizeFilter}</span>{" "}
+                    <span>
+                        <X className="w-6 h-6  text-muted-foreground" />
+                    </span>
+                </div>
+            )}
+        </div>
+    );
 };

@@ -8,17 +8,51 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Product } from "@prisma/client";
+import { Prisma, PrismaClient, Product } from "@prisma/client";
 import { ArrowDown } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 
-const ShopFilters = ({ products }: { products: Product[] }) => {
+type productExtendedtype = Prisma.ProductGetPayload<{
+    include: {
+        images: true;
+        size: true;
+        color: true;
+        category: true;
+        orderItems: true;
+    };
+}>;
+const ShopFilters = ({
+    products,
+    filterdProductsCount,
+}: {
+    products: productExtendedtype[];
+    filterdProductsCount: number;
+}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    let priceFIlters = [
+    const sizeFilters = [
+        {
+            name: "S",
+            productsNumber: 0,
+        },
+        {
+            name: "M",
+            productsNumber: 0,
+        },
+        {
+            name: "L",
+            productsNumber: 0,
+        },
+        {
+            name: "XL",
+            productsNumber: 0,
+        },
+    ];
+
+    let PriceFilters = [
         {
             name: "0-500",
             form: 0,
@@ -50,9 +84,8 @@ const ShopFilters = ({ products }: { products: Product[] }) => {
             productsNumber: 0,
         },
     ];
-
     products.map((product) => {
-        priceFIlters.filter((filter) => {
+        PriceFilters.forEach((filter) => {
             if (
                 filter.form <= Number(product.price) &&
                 filter.to >= Number(product.price)
@@ -60,8 +93,14 @@ const ShopFilters = ({ products }: { products: Product[] }) => {
                 filter.productsNumber += 1;
             }
         });
+        sizeFilters.forEach((filter) => {
+            console.log(filter.name, product.size.value);
+
+            if (product.size.value == filter.name) {
+                filter.productsNumber += 1;
+            }
+        });
     });
-    console.log(priceFIlters);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -110,18 +149,20 @@ const ShopFilters = ({ products }: { products: Product[] }) => {
                     dir="rtl"
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="اخر فئة" />
+                        <div className="w-fit text-nowrap ml-3">رتب حسب</div>
                     </SelectTrigger>
                     <SelectContent>
                         {orderBy.map((order, index) => (
-                            <SelectItem key={index} value={order.value}>
+                            <SelectItem
+                                key={index + order.value + order.name}
+                                value={order.value}
+                            >
                                 {order.name}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
                 <Select
-                    open
                     onValueChange={(value) => {
                         router.push(
                             pathname +
@@ -132,12 +173,14 @@ const ShopFilters = ({ products }: { products: Product[] }) => {
                     dir="rtl"
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="اخر فئة" />
+                        <div className="w-fit text-nowrap ml-3">السعر</div>
                     </SelectTrigger>
                     <SelectContent>
-                        {priceFIlters.map((filter, index) => (
+                        {PriceFilters.map((filter, index) => (
                             <SelectItem
-                                key={index}
+                                key={
+                                    index + filter.name + filter.productsNumber
+                                }
                                 value={filter.name}
                                 className="w-full"
                             >
@@ -151,30 +194,39 @@ const ShopFilters = ({ products }: { products: Product[] }) => {
                         ))}
                     </SelectContent>
                 </Select>
-                <Button
-                    className="flex gap-2 text-sm items-center"
-                    variant={"ghost"}
+                <Select
+                    onValueChange={(value) => {
+                        router.push(
+                            pathname + "?" + createQueryString("size", value)
+                        );
+                    }}
+                    dir="rtl"
                 >
-                    <span>رتب حسب</span>
-                    <ArrowDown className="w-6 h-6" />
-                </Button>
-                <Button
-                    className="flex gap-2 text-sm items-center"
-                    variant={"ghost"}
-                >
-                    <span>رتب حسب</span>
-                    <ArrowDown className="w-6 h-6" />
-                </Button>
-                <Button
-                    className="flex gap-2 text-sm items-center"
-                    variant={"ghost"}
-                >
-                    <span>رتب حسب</span>
-                    <ArrowDown className="w-6 h-6" />
-                </Button>
+                    <SelectTrigger>
+                        <div className="w-fit text-nowrap ml-3">الحجم</div>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {sizeFilters.map((filter, index) => (
+                            <SelectItem
+                                key={
+                                    index + filter.name + filter.productsNumber
+                                }
+                                value={filter.name}
+                                className="w-full"
+                            >
+                                <div className="flex justify-between w-full ">
+                                    <span className="mr-2 min-w-28">
+                                        {filter.name}
+                                    </span>
+                                    <span>{`(${filter.productsNumber})`}</span>
+                                </div>
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </div>
             <div className="flex gap-2 text-sm">
-                <div>500 منتج</div>
+                <div>{filterdProductsCount} منتج</div>
             </div>
         </div>
     );

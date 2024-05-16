@@ -24,10 +24,8 @@ type productExtendedtype = Prisma.ProductGetPayload<{
 }>;
 const ShopFilters = ({
     products,
-    filterdProductsCount,
 }: {
-    products: productExtendedtype[];
-    filterdProductsCount: number;
+    products: productExtendedtype[] | undefined;
 }) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -84,7 +82,7 @@ const ShopFilters = ({
             productsNumber: 0,
         },
     ];
-    products.map((product) => {
+    products?.map((product) => {
         PriceFilters.forEach((filter) => {
             if (
                 filter.form <= Number(product.price) &&
@@ -226,7 +224,7 @@ const ShopFilters = ({
                 </Select>
             </div>
             <div className="flex gap-2 text-sm">
-                <div>{filterdProductsCount} منتج</div>
+                <div>{products?.length} منتج</div>
             </div>
         </div>
     );

@@ -20,7 +20,7 @@ export default function RootLayout({
         <>
             <Toaster />
             <Navbar />
-            <main className=" flex-1 w-full flex flex-col h-full  mx-auto   ">
+            <main className="w-full h-full flex  mx-auto flex-1 ">
                 {children}
             </main>
         </>

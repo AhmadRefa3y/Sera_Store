@@ -10,10 +10,10 @@ type product = Prisma.ProductGetPayload<{
         images: true;
     };
 }>;
-const ProductsGrid = ({ products }: { products: product[] }) => {
+const ProductsGrid = ({ products }: { products: product[] | undefined }) => {
     return (
         <div className="flex w-full  justify-center h-full  flex-wrap gap-2 ">
-            {products.map((product) => (
+            {products?.map((product) => (
                 <div
                     className=" w-[265px]  group group/parent  flex items-start flex-col gap-1 "
                     key={product.id}

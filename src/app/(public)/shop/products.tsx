@@ -29,9 +29,7 @@ type product = Prisma.ProductGetPayload<{
 
 const Products = ({ categories, colors, sizes, types }: productsProps) => {
     const [products, setProducts] = useState<product[] | undefined>([]);
-    const [AllProducts, setAllProducts] = useState<
-        Partial<product>[] | undefined
-    >([]);
+
     const [loading, setLoading] = useState(true);
     const [Filters, setFilters] = useState<{
         categoryies: string[];
@@ -46,54 +44,6 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
         size: [],
         sort: "none",
     });
-    const variantCount = {
-        colors: colors.map((c) => {
-            let count = products?.filter(
-                (p) => p.color.value === c.value
-            ).length;
-
-            if (Filters.color.length > 0) {
-                if (Filters.categoryies.length > 0) {
-                    const FilterdP1 = AllProducts?.filter((p) =>
-                        Filters.categoryies.includes(p.category?.name!)
-                    );
-                    if (Filters.size.length > 0) {
-                        count = FilterdP1?.filter((p) =>
-                            Filters.size.includes(p.size?.value!)
-                        ).length;
-                    } else {
-                        count = FilterdP1?.length;
-                    }
-                }
-            }
-
-            return {
-                name: c.name,
-                count: count,
-                value: c.value,
-            };
-        }),
-        sizes: sizes.map((s) => {
-            let count = products?.filter(
-                (p) => p.size.value === s.value
-            ).length;
-
-            return {
-                name: s.name,
-                count: count,
-                value: s.value,
-            };
-        }),
-        categories: categories.map((c) => {
-            const count = products?.filter(
-                (p) => p.category.name === c.name
-            ).length;
-            return {
-                name: c.name,
-                count: count,
-            };
-        }),
-    };
 
     useEffect(() => {
         setLoading(true);
@@ -104,15 +54,6 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
         };
         fetchData();
     }, [Filters]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await GetProducts(Filters);
-            console.log(data);
-            setAllProducts(data?.allProducts);
-        };
-        fetchData();
-    }, []);
 
     const applyFilters = ({
         category,
@@ -135,6 +76,8 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
             }));
         }
     };
+    console.log("rendered");
+
     return (
         <div className="w-full flex flex-row gap-2  max-w-screen-xl mx-auto ">
             <div className="w-[20%] flex">
@@ -142,41 +85,39 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
                     <div className="flex flex-col gap-2 my-5">
                         <div>عرض حسب النوع</div>
                         <div className="flex flex-col gap-1 text-sm">
-                            {variantCount.categories.map(
-                                (category, categoryIdx) => (
-                                    <li
-                                        key={category.name}
-                                        className="flex items-center"
+                            {categories.map((category, categoryIdx) => (
+                                <li
+                                    key={category.name}
+                                    className="flex items-center"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        id={`category-${categoryIdx}`}
+                                        onChange={() => {
+                                            applyFilters({
+                                                category: "categoryies",
+                                                value: category.name,
+                                            });
+                                        }}
+                                        checked={Filters.categoryies.includes(
+                                            category.name
+                                        )}
+                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                    <label
+                                        htmlFor={`category-${categoryIdx}`}
+                                        className="mr-3 text-sm text-gray-600 "
                                     >
-                                        <input
-                                            type="checkbox"
-                                            id={`category-${categoryIdx}`}
-                                            onChange={() => {
-                                                applyFilters({
-                                                    category: "categoryies",
-                                                    value: category.name,
-                                                });
-                                            }}
-                                            checked={Filters.categoryies.includes(
-                                                category.name
-                                            )}
-                                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                        />
-                                        <label
-                                            htmlFor={`category-${categoryIdx}`}
-                                            className="mr-3 text-sm text-gray-600 "
-                                        >
-                                            {category.name}
-                                        </label>
-                                    </li>
-                                )
-                            )}
+                                        {category.name}
+                                    </label>
+                                </li>
+                            ))}
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 text-sm my-5">
                         <div>عرض حسب الحجم</div>
                         <div className="flex flex-col gap-1 text-sm">
-                            {variantCount.sizes.map((size, sizeIdx) => (
+                            {sizes.map((size, sizeIdx) => (
                                 <li
                                     key={size.value}
                                     className="flex items-center"
@@ -201,7 +142,6 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
                                     >
                                         {size.name}
                                     </label>
-                                    <span>{`(${size.count})`}</span>
                                 </li>
                             ))}
                         </div>
@@ -209,7 +149,7 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
                     <div className="flex flex-col gap-2 text-sm">
                         <div>عرض حسب اللون</div>
                         <div className="flex flex-col gap-1 text-sm">
-                            {variantCount.colors.map((color, colorIdx) => (
+                            {colors.map((color, colorIdx) => (
                                 <li
                                     key={color.value}
                                     className="flex items-center"
@@ -234,7 +174,6 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
                                     >
                                         {color.name}
                                     </label>
-                                    <span>{`(${color.count})`}</span>
                                 </li>
                             ))}
                         </div>

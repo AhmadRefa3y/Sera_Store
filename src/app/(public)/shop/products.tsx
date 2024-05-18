@@ -4,8 +4,6 @@ import LoadingPage from "@/components/loadingComp";
 import ProductsGrid from "@/components/products";
 import { GetProducts } from "@/data/products";
 import { Category, Color, Prisma, Product, Size, type } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
-import { count } from "console";
 import { useEffect, useState } from "react";
 
 const DEFAULT_CUSTOM_PRICE = [0, 100] as [number, number];
@@ -76,7 +74,6 @@ const Products = ({ categories, colors, sizes, types }: productsProps) => {
             }));
         }
     };
-    console.log("rendered");
 
     return (
         <div className="w-full flex flex-row gap-2  max-w-screen-xl mx-auto ">

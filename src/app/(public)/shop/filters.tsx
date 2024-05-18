@@ -92,8 +92,6 @@ const ShopFilters = ({
             }
         });
         sizeFilters.forEach((filter) => {
-            console.log(filter.name, product.size.value);
-
             if (product.size.value == filter.name) {
                 filter.productsNumber += 1;
             }

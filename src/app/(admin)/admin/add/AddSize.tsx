@@ -14,7 +14,6 @@ const AddsizeDialog = () => {
         const sizeName = formData.get("size-name");
         const sizeValue = formData.get("size-value");
         const res = await Createsize(sizeName as string, sizeValue as string);
-        console.log(res);
     };
     return (
         <Dialog>

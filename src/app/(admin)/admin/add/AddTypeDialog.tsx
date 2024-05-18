@@ -12,7 +12,6 @@ const AddTypeDialog = () => {
     const SaveType = async (formData: FormData) => {
         const type = formData.get("type");
         const res = await CreateType(type as string);
-        console.log(res);
     };
     return (
         <Dialog>

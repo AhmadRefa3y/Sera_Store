@@ -25,9 +25,7 @@ const AddCategory = ({ types }: { types: type[] }) => {
     });
     const SaveType = async (formData: FormData) => {
         const category = formData.get("category");
-        console.log(category, form.typeID);
         const res = await CreateCategory(category as string, form.typeID);
-        console.log(res);
     };
     return (
         <Dialog>

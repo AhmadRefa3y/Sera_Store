@@ -5,7 +5,6 @@ export const GetProducts = async (Filters?: any) => {
     const nameFIlter = Filters?.sort;
     const priceFIlter = Filters?.priceRange;
     const sizeFilter = Filters?.size;
-    console.log(Filters.categoryies.length > 0 ? "hi" : "no");
 
     const priceFIltersSpilted = priceFIlter?.split("-");
     try {

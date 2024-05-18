@@ -112,7 +112,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 router.push(`/`);
             } else {
                 const product = await CreateProduct(data);
-                console.log(product);
                 router.push(`/`);
             }
             toast.success(toastMessage);
@@ -249,7 +248,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                     <Select
                                         disabled={loading}
                                         onValueChange={(value) => {
-                                            console.log(value);
                                             field.onChange(value);
                                             setTypeID(value);
                                         }}

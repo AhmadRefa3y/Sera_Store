@@ -17,7 +17,6 @@ const AddColorDialog = () => {
             colorName as string,
             colorValue as string
         );
-        console.log(res);
     };
     return (
         <Dialog>

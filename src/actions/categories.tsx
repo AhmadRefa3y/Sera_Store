@@ -11,7 +11,6 @@ export const CreateCategory = async (CategoryName: string, typeID: string) => {
             },
         },
     });
-    console.log(Category);
 
     return Category;
 };

@@ -9,8 +9,6 @@ const AddProductBtn = () => {
         <Button
             className="absolute left-14 top-2 Flex gap-2 "
             onClick={() => {
-                console.log("clicked");
-
                 redirect("admin/dsa");
             }}
         >

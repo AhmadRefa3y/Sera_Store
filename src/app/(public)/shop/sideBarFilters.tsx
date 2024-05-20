@@ -56,7 +56,7 @@ const SideBarFilters = ({
                         {categories.map((category, categoryIdx) => (
                             <li
                                 key={category.name}
-                                className="flex items-center"
+                                className="flex items-center cursor-pointer"
                             >
                                 <input
                                     type="checkbox"
@@ -76,11 +76,15 @@ const SideBarFilters = ({
                                     checked={ActiveCategories.includes(
                                         category.name
                                     )}
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    className="h-4 w-4  rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
                                     htmlFor={`category-${categoryIdx}`}
-                                    className="mr-3 text-sm text-gray-600 "
+                                    className={` mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                        ActiveCategories.includes(category.name)
+                                            ? "text-red-600"
+                                            : ""
+                                    } `}
                                 >
                                     {category.name}
                                 </label>
@@ -92,7 +96,10 @@ const SideBarFilters = ({
                     <div>عرض حسب الحجم</div>
                     <div className="flex flex-col gap-1 text-sm">
                         {sizes.map((size, sizeIdx) => (
-                            <li key={size.value} className="flex items-center">
+                            <li
+                                key={size.value}
+                                className="flex items-center cursor-pointer"
+                            >
                                 <input
                                     type="checkbox"
                                     id={`size-${sizeIdx}`}
@@ -111,7 +118,11 @@ const SideBarFilters = ({
                                 />
                                 <label
                                     htmlFor={`size-${sizeIdx}`}
-                                    className="mr-3 text-sm text-gray-600 w-20 "
+                                    className={` mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                        ActiveSizes.includes(size.value)
+                                            ? "text-red-600"
+                                            : ""
+                                    } `}
                                 >
                                     {size.name}
                                 </label>
@@ -123,7 +134,10 @@ const SideBarFilters = ({
                     <div>عرض حسب اللون</div>
                     <div className="flex flex-col gap-1 text-sm">
                         {colors.map((color, colorIdx) => (
-                            <li key={color.value} className="flex items-center">
+                            <li
+                                key={color.value}
+                                className="flex items-center cursor-pointer"
+                            >
                                 <input
                                     type="checkbox"
                                     id={`color-${colorIdx}`}
@@ -142,7 +156,11 @@ const SideBarFilters = ({
                                 />
                                 <label
                                     htmlFor={`color-${colorIdx}`}
-                                    className="mr-3 text-sm text-gray-600 w-14"
+                                    className={` mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                        ActiveColors.includes(color.name)
+                                            ? "text-red-600"
+                                            : ""
+                                    } `}
                                 >
                                     {color.name}
                                 </label>

@@ -4,26 +4,17 @@ import DB from "@/lib/prismaDb";
 export const GetProducts = async (Filters?: any) => {
     const nameFIlter = Filters?.sort;
     const priceFIlter = Filters?.priceRange;
-    const sizeFilter = Filters?.size;
-    console.log(Filters.categoryies.length > 0 ? "hi" : "no");
-
     const priceFIltersSpilted = priceFIlter?.split("-");
+    const categories = Filters.categories?.split("-");
+    const sizes = Filters?.size?.split("-");
+
     try {
-        const allProducts = await DB.product.findMany({
-            include: {
-                images: true,
-                size: true,
-                color: true,
-                category: true,
-                orderItems: true,
-            },
-        });
         const products = await DB.product.findMany({
             where: {
-                category: Filters.categoryies.length
+                category: Filters.categories
                     ? {
                           name: {
-                              in: Filters?.categoryies,
+                              in: categories,
                           },
                       }
                     : undefined,
@@ -33,10 +24,10 @@ export const GetProducts = async (Filters?: any) => {
                 //           lte: priceFIltersSpilted[1],
                 //       }
                 //     : undefined,
-                size: sizeFilter.length
+                size: sizes?.length
                     ? {
                           value: {
-                              in: sizeFilter.map((size: string) => size),
+                              in: sizes,
                           },
                       }
                     : undefined,
@@ -65,10 +56,7 @@ export const GetProducts = async (Filters?: any) => {
             },
         });
 
-        return {
-            FilterdProducts: products,
-            allProducts: allProducts,
-        };
+        return products;
     } catch (error) {
         console.log(error);
     }

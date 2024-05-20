@@ -1,3 +1,4 @@
+import { GetProducts } from "@/data/GetProducts";
 import { formatter } from "@/lib/utils";
 import { Prisma, Product } from "@prisma/client";
 import { Eye, Heart } from "lucide-react";
@@ -10,7 +11,9 @@ type product = Prisma.ProductGetPayload<{
         images: true;
     };
 }>;
-const ProductsGrid = ({ products }: { products: product[] | undefined }) => {
+const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
+    const products = await GetProducts(searchParams);
+
     return (
         <div className="flex w-full  justify-center h-full  flex-wrap gap-2 ">
             {products?.map((product) => (

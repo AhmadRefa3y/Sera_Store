@@ -1,7 +1,7 @@
 "use client";
 import { Category, Color, Size, type } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 
 const SideBarFilters = ({
     categories,
@@ -18,38 +18,101 @@ const SideBarFilters = ({
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams.toString());
-    const ActiveCategories = params.get("categories")?.split("-") || [];
-    const ActiveSizes = params.get("size")?.split("-") || [];
-    const ActiveColors = params.get("color")?.split("-") || [];
+
+    const [activeCategories, setActiveCategories] = useState<string[]>(
+        params.get("categories")?.split("-") || []
+    );
+    const [activetypes, setActivetypes] = useState<string[]>(
+        params.get("types")?.split("-") || []
+    );
+    const [activeSizes, setActiveSizes] = useState<string[]>(
+        params.get("size")?.split("-") || []
+    );
+    const [activeColors, setActiveColors] = useState<string[]>(
+        params.get("color")?.split("-") || []
+    );
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
-            if (params.get(name)) {
-                const ParamsValues = params.get(name);
-                const activeValues = ParamsValues?.split("-") || [];
-                if (activeValues?.includes(value)) {
-                    const index = activeValues.indexOf(value);
-                    activeValues.splice(index, 1);
-                    if (activeValues.length === 0) {
-                        params.delete(name);
+            const updatedParams = new URLSearchParams(params.toString());
+            if (updatedParams.get(name)) {
+                const values = updatedParams.get(name)?.split("-") || [];
+                if (values.includes(value)) {
+                    const index = values.indexOf(value);
+                    values.splice(index, 1);
+                    if (values.length === 0) {
+                        updatedParams.delete(name);
                     } else {
-                        params.set(name, activeValues.join("-"));
+                        updatedParams.set(name, values.join("-"));
                     }
                 } else {
-                    activeValues.push(value);
-                    params.set(name, activeValues.join("-"));
+                    values.push(value);
+                    updatedParams.set(name, values.join("-"));
                 }
             } else {
-                params.set(name, value);
+                updatedParams.set(name, value);
             }
-
-            return params.toString();
+            return updatedParams.toString();
         },
-        [searchParams]
+        [params]
     );
+
+    const handleCheckboxChange = (
+        name: string,
+        value: string,
+        setState: React.Dispatch<React.SetStateAction<string[]>>,
+        state: string[]
+    ) => {
+        const newState = state.includes(value)
+            ? state.filter((item) => item !== value)
+            : [...state, value];
+        setState(newState);
+        const newQueryString = createQueryString(name, value);
+        router.push(`${pathname}?${newQueryString}`, {
+            scroll: false,
+        });
+    };
+
     return (
         <div className="w-[20%] flex">
-            <div className="  flex flex-col gap-2 w-full items-start px-4">
+            <div className="flex flex-col gap-2 w-full items-start px-4">
+                <div className="flex flex-col gap-2 my-5">
+                    <div>عرض حسب الفئة</div>
+                    <div className="flex flex-col gap-1 text-sm">
+                        {types.map((type, typeIdx) => (
+                            <li
+                                key={type.name}
+                                className="flex items-center cursor-pointer"
+                            >
+                                <input
+                                    type="checkbox"
+                                    name={type.name}
+                                    id={`type-${typeIdx}`}
+                                    onChange={() =>
+                                        handleCheckboxChange(
+                                            "types",
+                                            type.name,
+                                            setActivetypes,
+                                            activetypes
+                                        )
+                                    }
+                                    checked={activetypes.includes(type.name)}
+                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label
+                                    htmlFor={`type-${typeIdx}`}
+                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                        activetypes.includes(type.name)
+                                            ? "text-red-600"
+                                            : ""
+                                    }`}
+                                >
+                                    {type.name}
+                                </label>
+                            </li>
+                        ))}
+                    </div>
+                </div>
                 <div className="flex flex-col gap-2 my-5">
                     <div>عرض حسب النوع</div>
                     <div className="flex flex-col gap-1 text-sm">
@@ -62,29 +125,26 @@ const SideBarFilters = ({
                                     type="checkbox"
                                     name={category.name}
                                     id={`category-${categoryIdx}`}
-                                    onChange={(e) => {
-                                        router.push(
-                                            pathname +
-                                                "?" +
-                                                createQueryString(
-                                                    "categories",
-                                                    category.name
-                                                )
-                                        );
-                                        router.refresh();
-                                    }}
-                                    checked={ActiveCategories.includes(
+                                    onChange={() =>
+                                        handleCheckboxChange(
+                                            "categories",
+                                            category.name,
+                                            setActiveCategories,
+                                            activeCategories
+                                        )
+                                    }
+                                    checked={activeCategories.includes(
                                         category.name
                                     )}
-                                    className="h-4 w-4  rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
                                     htmlFor={`category-${categoryIdx}`}
-                                    className={` mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
-                                        ActiveCategories.includes(category.name)
+                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                        activeCategories.includes(category.name)
                                             ? "text-red-600"
                                             : ""
-                                    } `}
+                                    }`}
                                 >
                                     {category.name}
                                 </label>
@@ -103,26 +163,24 @@ const SideBarFilters = ({
                                 <input
                                     type="checkbox"
                                     id={`size-${sizeIdx}`}
-                                    onChange={(e) => {
-                                        router.push(
-                                            pathname +
-                                                "?" +
-                                                createQueryString(
-                                                    "size",
-                                                    size.value
-                                                )
-                                        );
-                                    }}
-                                    checked={ActiveSizes.includes(size.value)}
+                                    onChange={() =>
+                                        handleCheckboxChange(
+                                            "size",
+                                            size.value,
+                                            setActiveSizes,
+                                            activeSizes
+                                        )
+                                    }
+                                    checked={activeSizes.includes(size.value)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
                                     htmlFor={`size-${sizeIdx}`}
-                                    className={` mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
-                                        ActiveSizes.includes(size.value)
+                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                        activeSizes.includes(size.value)
                                             ? "text-red-600"
                                             : ""
-                                    } `}
+                                    }`}
                                 >
                                     {size.name}
                                 </label>
@@ -141,26 +199,24 @@ const SideBarFilters = ({
                                 <input
                                     type="checkbox"
                                     id={`color-${colorIdx}`}
-                                    onChange={(e) => {
-                                        router.push(
-                                            pathname +
-                                                "?" +
-                                                createQueryString(
-                                                    "color",
-                                                    color.name
-                                                )
-                                        );
-                                    }}
-                                    checked={ActiveColors.includes(color.name)}
+                                    onChange={() =>
+                                        handleCheckboxChange(
+                                            "color",
+                                            color.name,
+                                            setActiveColors,
+                                            activeColors
+                                        )
+                                    }
+                                    checked={activeColors.includes(color.name)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
                                     htmlFor={`color-${colorIdx}`}
-                                    className={` mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
-                                        ActiveColors.includes(color.name)
+                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                        activeColors.includes(color.name)
                                             ? "text-red-600"
                                             : ""
-                                    } `}
+                                    }`}
                                 >
                                     {color.name}
                                 </label>
@@ -168,7 +224,7 @@ const SideBarFilters = ({
                         ))}
                     </div>
                 </div>
-            </div>{" "}
+            </div>
         </div>
     );
 };

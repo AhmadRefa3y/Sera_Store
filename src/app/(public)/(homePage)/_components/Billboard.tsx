@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const BillboardSection = () => (
-    <Link href={"/products"}>
+    <Link href={"/shop"}>
         <div className="w-full h-full overflow-hidden relative ">
             <div className="z-10 relative">
                 <Image

@@ -41,6 +41,11 @@ const AdminNavbar = () => {
             icon: <LineChart />,
             path: "/admin/reports",
         },
+        {
+            name: "المتجر",
+            icon: <LineChart />,
+            path: "/",
+        },
     ];
     return (
         <div className="w-[200px]  inset-y-0 right-0 flex flex-col items-start px-2 bg-[#151616] text-white h-full">

@@ -56,11 +56,14 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                     align: "start",
                     loop: true,
                 }}
-                className=" mx-auto h-[350px] my-5"
+                className=" mx-auto h-[350px] my-5 "
                 dir="ltr"
                 plugins={[Autoscroll({ stopOnInteraction: false })]}
             >
-                <CarouselContent className=" mx-auto " dir="ltr">
+                <CarouselContent
+                    className=" mx-auto flex items-center justify-center "
+                    dir="ltr"
+                >
                     {filteerdProducts.length > 0 ? (
                         filteerdProducts.map((product, index) => (
                             <CarouselItem
@@ -71,12 +74,11 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                 <div className="group group/parent rounded-md flex items-center h-full justify-center flex-col ">
                                     <div
                                         key={product.id}
-                                        className=" group  w-full h-[260px]  bg-[#f8f8f8] p-1 relative"
+                                        className=" group  w-full h-[260px] overflow-hidden  bg-[#f8f8f8] p-1 relative"
                                     >
                                         <Image
                                             src={product.images[0].url}
-                                            width={400}
-                                            height={400}
+                                            fill
                                             alt={""}
                                             className="group-hover:scale-110 object-fill  duration-1000 animate-in mx-auto"
                                         />

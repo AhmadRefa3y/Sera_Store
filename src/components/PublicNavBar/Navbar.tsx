@@ -27,7 +27,7 @@ const Navbar = () => {
         },
         {
             name: "الرجال",
-            path: "/shop",
+            path: "/shop?types=رجالي",
             FlyoutContent: <PricingContent />,
         },
         {
@@ -66,7 +66,9 @@ const Navbar = () => {
                     <Link href={"/signup"}>البحث عن محلاتنا</Link>
                     <Link href={"/signup"}>English</Link>
                 </div>
-                <div className="text-3xl py-3">لوجو</div>
+                <Link className="text-3xl py-3" href={"/"}>
+                    لوجو
+                </Link>
                 <div className=" z-50 w-full justify-center text-black gap-4  px-3  hidden lg:flex">
                     {links.map((link) => (
                         <FlyoutLink

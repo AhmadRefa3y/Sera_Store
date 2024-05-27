@@ -3,7 +3,7 @@ import { GetProducts } from "@/data/GetProducts";
 import { Category, Color, Prisma, Size, type } from "@prisma/client";
 import SideBarFilters from "./sideBarFilters";
 import { Suspense } from "react";
-import LoadingPage from "@/components/loadingComp";
+import LoadingPage, { Spinner } from "@/components/loadingComp";
 
 const DEFAULT_CUSTOM_PRICE = [0, 100] as [number, number];
 
@@ -32,7 +32,7 @@ const Products = async ({ searchParams, ...props }: productsProps) => {
             key={Math.random()}
         >
             <SideBarFilters {...props} />
-            <Suspense fallback={<LoadingPage />}>
+            <Suspense fallback={<Spinner />}>
                 <ProductsGrid searchParams={searchParams} />
             </Suspense>
         </div>

@@ -43,7 +43,7 @@ const AdminNavbar = () => {
         },
     ];
     return (
-        <div className="w-[200px]  inset-y-0 right-0 flex flex-col items-start px-2 bg-[#151616] text-white">
+        <div className="w-[200px]  inset-y-0 right-0 flex flex-col items-start px-2 bg-[#151616] text-white h-full">
             <div className="text-2xl mb-10 py-2 font-bold w-full text-center">
                 لوحة التحكم
             </div>

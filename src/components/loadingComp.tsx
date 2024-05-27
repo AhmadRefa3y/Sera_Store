@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export default function LoadingPage() {
     return (
-        <div className="flex justify-center items-center h-full w-full ">
+        <div className="flex justify-center items-center h-screen w-full ">
             <div role="status">
                 <svg
                     aria-hidden="true"
@@ -29,7 +29,10 @@ export default function LoadingPage() {
 }
 export function Spinner({ className }: { className?: string }) {
     return (
-        <div role="status">
+        <div
+            role="status"
+            className="w-full h-full flex items-center justify-center"
+        >
             <svg
                 aria-hidden="true"
                 className={cn(

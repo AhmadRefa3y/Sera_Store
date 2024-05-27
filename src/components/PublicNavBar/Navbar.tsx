@@ -60,12 +60,6 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center gap-2 basis-[50%] ">
-                <div className=" items-center justify-center font-normal text-xs gap-2  hidden lg:flex">
-                    <Link href={"/signup"}>تسجيل مستخدم جديد</Link>
-                    <Link href={"/signup"}>تسجيل الدخول</Link>
-                    <Link href={"/signup"}>البحث عن محلاتنا</Link>
-                    <Link href={"/signup"}>English</Link>
-                </div>
                 <Link className="text-3xl py-3" href={"/"}>
                     لوجو
                 </Link>
@@ -85,7 +79,7 @@ const Navbar = () => {
                 {session.data?.user ? (
                     <DropdownMenu dir="rtl">
                         <DropdownMenuTrigger>
-                            <div className="w-10 h-10 rounded-full relative">
+                            <div className="w-8 h-8 rounded-full relative">
                                 <Image
                                     alt=""
                                     src={session.data?.user?.image || ""}

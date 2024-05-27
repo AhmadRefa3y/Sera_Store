@@ -3,8 +3,22 @@ import { HeartIcon, Search } from "lucide-react";
 import Link from "next/link";
 import { FlyoutLink } from "./FlyoutLink";
 import { PricingContent } from "./NavItemsContent";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
+    const session = useSession();
+    console.log(session.data?.user);
+
     const links = [
         {
             name: "النساء",
@@ -66,6 +80,51 @@ const Navbar = () => {
                 </div>
             </div>
             <div className=" gap-4 items-center justify-end basis-[25%] hidden sm:flex">
+                {session.data?.user ? (
+                    <DropdownMenu dir="rtl">
+                        <DropdownMenuTrigger>
+                            <div className="w-10 h-10 rounded-full relative">
+                                <Image
+                                    alt=""
+                                    src={session.data?.user?.image || ""}
+                                    fill
+                                    className="rounded-full"
+                                />
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuLabel>
+                                {session.data?.user.name}
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            {session.data?.user.role === "admin" && (
+                                <DropdownMenuItem>
+                                    <Link href={"/admin"}>لوحة التحكم</Link>
+                                </DropdownMenuItem>
+                            )}
+                            <DropdownMenuItem>
+                                <Button
+                                    onClick={() => {
+                                        signOut();
+                                    }}
+                                    variant={"ghost"}
+                                    className=" w-full  justify-start py-0 h-full px-0"
+                                >
+                                    تسجيل الخروج
+                                </Button>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                ) : (
+                    <Button
+                        onClick={() => signIn()}
+                        className=""
+                        variant={"ghost"}
+                    >
+                        تسجيل الدخول
+                    </Button>
+                )}
+
                 <Link
                     href={"/wishlist"}
                     className="text-sm hover:opacity-70 duration-200"

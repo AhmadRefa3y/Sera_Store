@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Alexandria } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
+import SessionProviderWrapper from "@/components/providers/session";
 
 const inter = Alexandria({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
             <body
                 className={`${inter.className}  min-h-screen flex flex-col bg-[#fafafa]  `}
             >
-                <Providers>{children}</Providers>
+                <SessionProviderWrapper>{children}</SessionProviderWrapper>
             </body>
         </html>
     );

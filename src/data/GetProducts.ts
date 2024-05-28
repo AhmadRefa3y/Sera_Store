@@ -31,6 +31,7 @@ export const GetProducts = async (Filters?: any) => {
                           },
                       }
                     : undefined,
+                isArchived: false,
             },
             include: {
                 images: true,

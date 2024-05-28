@@ -93,7 +93,7 @@ const Navbar = () => {
                                 {session.data?.user.name}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            {session.data?.user.role === "admin" && (
+                            {session.data.user.role === "admin" && (
                                 <DropdownMenuItem>
                                     <Link href={"/admin"}>لوحة التحكم</Link>
                                 </DropdownMenuItem>

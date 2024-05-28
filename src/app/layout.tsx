@@ -1,8 +1,7 @@
+import SessionProviderWrapper from "@/components/providers/session";
 import type { Metadata } from "next";
 import { Alexandria } from "next/font/google";
 import "./globals.css";
-import Providers from "@/components/Providers";
-import SessionProviderWrapper from "@/components/providers/session";
 
 const inter = Alexandria({ subsets: ["latin"] });
 

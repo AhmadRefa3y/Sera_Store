@@ -1,7 +1,15 @@
 import DB from "@/lib/prismaDb";
 import { formatter } from "@/lib/utils";
 import { Image as PrismaImage } from "@prisma/client";
-import { ArrowBigLeft, Car, Heart, Minus, Package, Plus } from "lucide-react";
+import {
+    ArrowBigLeft,
+    ArrowBigRight,
+    Car,
+    Heart,
+    Minus,
+    Package,
+    Plus,
+} from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
@@ -64,16 +72,16 @@ const ProductDetail = ({
                     {formatter.format(product.price)}{" "}
                 </div>
                 <div className="text-muted-foreground w-fit ">
-                    يتضمن ضريبة القيمة المضافة
+                    includes Taxes
                 </div>
                 <div className="flex gap-2  text-lg">
-                    <span>اللون</span>
+                    <span>color</span>
                     <span className="text-muted-foreground">
                         : {product.color}
                     </span>
                 </div>
                 <div className="flex gap-2  text-lg">
-                    <span>المقاس</span>
+                    <span>size</span>
                     <span className="text-muted-foreground">
                         : {product.size}
                     </span>
@@ -88,20 +96,19 @@ const ProductDetail = ({
                             <Minus />
                         </button>
                     </div>
-                    <button className="flex items-center justify-center flex-1 min-w-fit border border-cyan-950 p-1 hover:bg-cyan-950 hover:text-white duration-300">
-                        اضـــــــــــــــــــف الي السلة
-                        <ArrowBigLeft />
+                    <button className="flex items-center justify-center flex-1 min-w-fit border border-cyan-950 p-1 hover:bg-cyan-950 hover:text-white duration-300 capitalize">
+                        add to cart <ArrowBigRight />
                     </button>
                     <div className="flex items-center justify-center  border border-cyan-950 p-1 hover:bg-cyan-950 hover:text-white duration-300 relative">
                         <Heart />
                         <div className="absolute  hidden">
-                            اضافة الي المفضلة
+                            add to favourites{" "}
                         </div>
                     </div>
                 </div>
                 <div className="flex gap-2 border border-green-400  px-4 py-2  sm:text-base">
+                    delivery in 3 - 5 days
                     <Car />
-                    التوصيل خلال 3 إلى 5 أيام عمل
                 </div>
             </div>
         </div>

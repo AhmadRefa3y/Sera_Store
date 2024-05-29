@@ -16,15 +16,13 @@ const page = async ({ params }: { params: { id: string } }) => {
     const types = await DB.type.findMany();
 
     return (
-        <div className="">
-            <ProductForm
-                categories={categories}
-                sizes={sizes}
-                colors={colors}
-                initialData={product}
-                types={types}
-            />
-        </div>
+        <ProductForm
+            categories={categories}
+            sizes={sizes}
+            colors={colors}
+            initialData={product}
+            types={types}
+        />
     );
 };
 

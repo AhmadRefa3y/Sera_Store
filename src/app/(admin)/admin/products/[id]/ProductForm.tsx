@@ -65,20 +65,28 @@ const ProductForm: React.FC<ProductFormProps> = ({
     colors,
     types,
 }) => {
+    console.log(types);
+
     const params = useParams();
     const router = useRouter();
     const [TypeID, setTypeID] = useState<string | undefined>(
         initialData?.typeId
     );
 
+    console.log(TypeID);
+
     const FilterdCategories = categories.filter((category) => {
         return category.typeId === TypeID;
     });
 
-    const title = initialData ? "تعديل صنف" : "اضافة صنف";
-    const description = initialData ? "تعديل مواصفات صنف" : "اضافة صنف جديد";
-    const toastMessage = initialData ? "تم تعديل الصنف." : "تم انشاء صنف.";
-    const action = initialData ? "حفظ التغييرات" : "انشاء";
+    const title = initialData ? "Edit Product" : "add Product";
+    const description = initialData
+        ? "edit product details"
+        : "add new product";
+    const toastMessage = initialData
+        ? "product updated successfully"
+        : "product created successfully";
+    const action = initialData ? "save changes" : "create";
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -108,16 +116,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
         try {
             setLoading(true);
             if (initialData) {
+                console.log(data);
+
                 await UpdateProduct({ ...data, id: initialData.id });
-                router.push(`/`);
+                router.push(`/admin/products`);
             } else {
-                const product = await CreateProduct(data);
-                router.push(`/`);
+                await CreateProduct(data);
+                router.push(`/admin/products`);
             }
             toast.success(toastMessage);
             router.refresh();
         } catch (error: any) {
-            toast.error("خطأ");
+            toast.error("error occured");
         } finally {
             setLoading(false);
         }
@@ -175,7 +185,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                         name="images"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>صورة الصنف</FormLabel>
+                                <FormLabel>product images</FormLabel>
                                 <FormControl>
                                     <ImageUpload
                                         value={field.value.map(
@@ -209,7 +219,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>الاسم</FormLabel>
+                                    <FormLabel>product name</FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={loading}
@@ -226,7 +236,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             name="price"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>السعر</FormLabel>
+                                    <FormLabel>Price</FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={loading}
@@ -244,7 +254,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             name="typeID"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>الفئة</FormLabel>
+                                    <FormLabel>for</FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={(value) => {
@@ -253,13 +263,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                         }}
                                         value={field.value}
                                         defaultValue={field.value}
-                                        dir="rtl"
                                     >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue
                                                     defaultValue={field.value}
-                                                    placeholder="اخر فئة"
+                                                    placeholder="choose type"
                                                 />
                                             </SelectTrigger>
                                         </FormControl>
@@ -283,13 +292,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             name="categoryId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>النوع</FormLabel>
+                                    <FormLabel>Category</FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={field.onChange}
                                         value={field.value}
                                         defaultValue={field.value}
-                                        dir="rtl"
                                     >
                                         <FormControl>
                                             <SelectTrigger>
@@ -316,7 +324,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                                     disabled
                                                     className=" flex  justify-center w-full text-center "
                                                 >
-                                                    <span>قم بتحديد فئة</span>
+                                                    <span>
+                                                        Select a Category
+                                                    </span>
                                                 </SelectItem>
                                             )}
                                         </SelectContent>
@@ -331,19 +341,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             name="sizeId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>الحجم</FormLabel>
+                                    <FormLabel>size</FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={field.onChange}
                                         value={field.value}
                                         defaultValue={field.value}
-                                        dir="rtl"
                                     >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue
                                                     defaultValue={field.value}
-                                                    placeholder="اختر حجم"
+                                                    placeholder="Select a Size"
                                                 />
                                             </SelectTrigger>
                                         </FormControl>
@@ -367,13 +376,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             name="colorId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>اللون</FormLabel>
+                                    <FormLabel>color</FormLabel>
                                     <Select
                                         disabled={loading}
                                         onValueChange={field.onChange}
                                         value={field.value}
                                         defaultValue={field.value}
-                                        dir="rtl"
                                     >
                                         <FormControl>
                                             <SelectTrigger>
@@ -419,13 +427,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                             checked={field.value}
                                             // @ts-ignore
                                             onCheckedChange={field.onChange}
-                                            dir="rtl"
                                         />
                                     </FormControl>
                                     <div className="space-y-1 leading-none">
-                                        <FormLabel>نشط</FormLabel>
+                                        <FormLabel>active</FormLabel>
                                         <FormDescription>
-                                            هذا الصنف سيظهر علي الصفحة الرئيسية
+                                            this product will be featured in the
+                                            home page{" "}
                                         </FormDescription>
                                     </div>
                                 </FormItem>
@@ -441,14 +449,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                             checked={field.value}
                                             // @ts-ignore
                                             onCheckedChange={field.onChange}
-                                            dir="rtl"
                                         />
                                     </FormControl>
                                     <div className="space-y-1 leading-none">
-                                        <FormLabel>اخفاء</FormLabel>
+                                        <FormLabel>archived</FormLabel>
                                         <FormDescription>
-                                            هذا الصنف لن سيظهر علي الصفحة
-                                            الرئيسية
+                                            this product will be archived
                                         </FormDescription>
                                     </div>
                                 </FormItem>
@@ -459,7 +465,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     <Button
                         disabled={loading}
                         type="submit"
-                        className="ml-auto"
+                        className="ml-auto capitalize"
                     >
                         {action}
                     </Button>

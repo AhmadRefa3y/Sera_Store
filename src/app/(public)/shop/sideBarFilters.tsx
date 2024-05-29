@@ -20,34 +20,34 @@ const SideBarFilters = ({
     const params = new URLSearchParams(searchParams.toString());
 
     const [activeCategories, setActiveCategories] = useState<string[]>(
-        params.get("categories")?.split("-") || []
+        params.get("categories")?.split("--") || []
     );
     const [activetypes, setActivetypes] = useState<string[]>(
-        params.get("types")?.split("-") || []
+        params.get("types")?.split("--") || []
     );
     const [activeSizes, setActiveSizes] = useState<string[]>(
-        params.get("size")?.split("-") || []
+        params.get("size")?.split("--") || []
     );
     const [activeColors, setActiveColors] = useState<string[]>(
-        params.get("color")?.split("-") || []
+        params.get("color")?.split("--") || []
     );
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
             const updatedParams = new URLSearchParams(params.toString());
             if (updatedParams.get(name)) {
-                const values = updatedParams.get(name)?.split("-") || [];
+                const values = updatedParams.get(name)?.split("--") || [];
                 if (values.includes(value)) {
                     const index = values.indexOf(value);
                     values.splice(index, 1);
                     if (values.length === 0) {
                         updatedParams.delete(name);
                     } else {
-                        updatedParams.set(name, values.join("-"));
+                        updatedParams.set(name, values.join("--"));
                     }
                 } else {
                     values.push(value);
-                    updatedParams.set(name, values.join("-"));
+                    updatedParams.set(name, values.join("--"));
                 }
             } else {
                 updatedParams.set(name, value);
@@ -77,7 +77,7 @@ const SideBarFilters = ({
         <div className="w-[20%] flex">
             <div className="flex flex-col gap-2 w-full items-start px-4">
                 <div className="flex flex-col gap-2 my-5">
-                    <div>عرض حسب الفئة</div>
+                    <div>For</div>
                     <div className="flex flex-col gap-1 text-sm">
                         {types.map((type, typeIdx) => (
                             <li
@@ -101,7 +101,7 @@ const SideBarFilters = ({
                                 />
                                 <label
                                     htmlFor={`type-${typeIdx}`}
-                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                    className={`ml-3 text-sm text-gray-600 cursor-pointer  ${
                                         activetypes.includes(type.name)
                                             ? "text-red-600"
                                             : ""
@@ -114,7 +114,7 @@ const SideBarFilters = ({
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 my-5">
-                    <div>عرض حسب النوع</div>
+                    <div> category</div>
                     <div className="flex flex-col gap-1 text-sm">
                         {categories.map((category, categoryIdx) => (
                             <li
@@ -140,7 +140,7 @@ const SideBarFilters = ({
                                 />
                                 <label
                                     htmlFor={`category-${categoryIdx}`}
-                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                    className={`ml-3 text-sm text-gray-600  cursor-pointer ${
                                         activeCategories.includes(category.name)
                                             ? "text-red-600"
                                             : ""
@@ -153,7 +153,7 @@ const SideBarFilters = ({
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 text-sm my-5">
-                    <div>عرض حسب الحجم</div>
+                    <div>Size</div>
                     <div className="flex flex-col gap-1 text-sm">
                         {sizes.map((size, sizeIdx) => (
                             <li
@@ -176,7 +176,7 @@ const SideBarFilters = ({
                                 />
                                 <label
                                     htmlFor={`size-${sizeIdx}`}
-                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                    className={`ml-3 text-sm text-gray-600  cursor-pointer ${
                                         activeSizes.includes(size.value)
                                             ? "text-red-600"
                                             : ""
@@ -189,7 +189,7 @@ const SideBarFilters = ({
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 text-sm">
-                    <div>عرض حسب اللون</div>
+                    <div>Color</div>
                     <div className="flex flex-col gap-1 text-sm">
                         {colors.map((color, colorIdx) => (
                             <li
@@ -212,7 +212,7 @@ const SideBarFilters = ({
                                 />
                                 <label
                                     htmlFor={`color-${colorIdx}`}
-                                    className={`mr-3 text-sm text-gray-600 w-14 cursor-pointer ${
+                                    className={`ml-3 text-sm text-gray-600  cursor-pointer ${
                                         activeColors.includes(color.name)
                                             ? "text-red-600"
                                             : ""

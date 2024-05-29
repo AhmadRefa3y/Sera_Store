@@ -27,10 +27,10 @@ export default async function AdminLayout({
         return (
             <div className="flex h-screen w-full items-center justify-center flex-col gap-2 ">
                 <div className="text-3xl text-red-500">
-                    ليس لديك الصلاحيات اللازمة لعرض هذه الصفحة
+                    You don't have permission to view this page
                 </div>
                 <Link href="/" className="text-blue-500">
-                    الرجوع الي الصفحة الرئيسية
+                    back to homepage
                 </Link>
             </div>
         );

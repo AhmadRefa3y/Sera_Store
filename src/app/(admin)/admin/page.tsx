@@ -17,7 +17,7 @@ const AdminHomePage = () => {
                         <div className="flex gap-2">
                             <AreaChart />
                             <span className="text-muted font-light">
-                                <AddTypeDialog /> اجمالي المبيعات
+                                Total Sales
                             </span>{" "}
                         </div>
                         <div className="flex gap-2 justify-between ">
@@ -32,7 +32,7 @@ const AdminHomePage = () => {
                             <BadgeDollarSign />
                             <span className="text-muted font-light">
                                 {" "}
-                                اجمالي الارباح
+                                Total Revenue{" "}
                             </span>{" "}
                         </div>
                         <div className="flex gap-2 justify-between ">
@@ -47,11 +47,11 @@ const AdminHomePage = () => {
                         <div className="flex gap-2">
                             <ShoppingBag />
                             <span className="text-muted font-light">
-                                اجمالي الطلبات
+                                Total Orders
                             </span>{" "}
                         </div>
                         <div className="flex gap-2 justify-between ">
-                            <div>150 الف</div>
+                            <div>150 K</div>
                             <div>
                                 <TrendingUp className="rotate-[270]" />
                             </div>

@@ -4,48 +4,93 @@ import React from "react";
 const Footer = () => {
     return (
         <div className="w-full mt-auto">
-            <div className="bg-[#e4e4e4] w-full h-[400px] grid grid-cols-6 p-7 ">
-                <div
-                    className="col-span-2 font-normal gap-2  text-xs  flex items-center flex-col justify-start py-4
+            <div className="bg-[#e4e4e4] w-full h-[400px] flex justify-between p-7 ">
+                <div className="flex flex-1 gap-40">
+                    <div
+                        className="col-span-2 font-normal gap-2  text-xs  flex items-start flex-col justify-start py-4
                px-4 "
-                >
-                    <div className=" my-4 font-bold">حول متجرنا</div>
-                    <Link href={"/"} className="hover:underline">
-                        معلومات عنا
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        معلومات التوصيل
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        شروط واحكام الشراء
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        شروط واحكام الموقع
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        سياسة الخصوصية
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        الارجاع والاستبدال
-                    </Link>
+                    >
+                        <div className=" my-4 font-bold">CORPORATE INFO</div>
+                        <Link href={"/"} className="hover:underline">
+                            About Us{" "}
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Delivery Information{" "}
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Terms and Conditions of Sale{" "}
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Website Terms & Conditions{" "}
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Privacy Policy{" "}
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Returns & Refunds{" "}
+                        </Link>
+                    </div>
+
+                    <div
+                        className="col-span-2 font-normal gap-2  text-xs  flex flex-col items-start justify-start py-4
+               px-4 "
+                    >
+                        <div className=" my-4 font-bold ">SHOP BY</div>
+                        <Link href={"/"} className="hover:underline">
+                            Men
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Women
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Kids
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Baby
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Sports Wear
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Sale{" "}
+                        </Link>
+                    </div>
+                    <div
+                        className="col-span-2 font-normal gap-2  text-xs  flex flex-col items-start justify-start py-4
+               px-4 "
+                    >
+                        <div className=" my-4 font-bold ">CUSTOMER SERVICE</div>
+                        <Link href={"/"} className="hover:underline">
+                            FAQs
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Contact Us{" "}
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Connect Via WhatsApp
+                        </Link>
+                        <Link href={"/"} className="hover:underline">
+                            Sitemap
+                        </Link>
+                    </div>
                 </div>
                 <div
-                    className="col-span-2 font-normal gap-2  text-xs  flex flex-col items-center justify-start  py-4
+                    className="col-span-2 font-normal gap-2  text-xs  flex flex-col items-start justify-start  py-4
                px-4 "
                 >
-                    <div className=" my-4 font-bold">تواصل معنا </div>
+                    <div className=" my-4 font-bold">NEWSLETTER</div>
                     <div className="leading-5	max-w-[250px] ">
-                        كن أول المطلعين على التشكيلات الجديدة و العروض الحصرية
-                        والفعاليات في المحلات القريبة منك
+                        be the first to know about our newest arrivals, special
+                        offers and store events near you.
                     </div>
                     <div className="flex my-2">
                         <input
                             type="email"
-                            placeholder="ادخل بريدك الالكتروني"
+                            placeholder="Enter your email address"
                             className="focus-visible:outline-none px-2 bg-transparent border-b border-b-black placeholder:text-black"
                         />
                         <button className="bg-black px-5 py-2 text-center w-fit rounded-none text-white ">
-                            اشترك
+                            SIGN UP
                         </button>
                     </div>
                     <div className="flex gap-9 font-bold text-sm">
@@ -56,30 +101,6 @@ const Footer = () => {
                             English
                         </Link>
                     </div>
-                </div>
-                <div
-                    className="col-span-2 font-normal gap-2  text-xs  flex flex-col items-center justify-start py-4
-               px-4 "
-                >
-                    <div className=" my-4 font-bold ">تسوق حسب القسم </div>
-                    <Link href={"/"} className="hover:underline">
-                        الرجال
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        النساء
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        الاطفال
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        الرضع
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        الملابس الرياضية
-                    </Link>
-                    <Link href={"/"} className="hover:underline">
-                        الخصومات{" "}
-                    </Link>
                 </div>
             </div>
         </div>

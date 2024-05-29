@@ -14,6 +14,7 @@ import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import { SetStateAction, useState } from "react";
 import FilterProducts from "./productsFilter";
+import Link from "next/link";
 type product = Prisma.ProductGetPayload<{
     include: {
         images: true;
@@ -27,10 +28,10 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
     });
 
     const categories = [
-        { name: "الكل", value: "all" },
-        { name: "الرجال", value: "men" },
-        { name: "النساء", value: "women" },
-        { name: "الاطفال", value: "kids" },
+        { name: "All", value: "all" },
+        { name: "Men", value: "men" },
+        { name: "Women", value: "women" },
+        { name: "Kids", value: "kids" },
     ];
     const formattedProducts = products.map((product) => ({
         category: "men",
@@ -69,7 +70,6 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                             <CarouselItem
                                 key={index}
                                 className="md:basis-1/2 lg:basis-1/3 pl-2 py-2 h-full"
-                                dir="rtl"
                             >
                                 <div className="group group/parent rounded-md flex items-center h-full justify-center flex-col ">
                                     <div
@@ -83,9 +83,12 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                             className="group-hover:scale-110 object-fill  duration-1000 animate-in mx-auto"
                                         />
                                         <div className="flex items-center justify-center absolute -bottom-3 group-hover/parent:bottom-3 opacity-0  group-hover/parent:opacity-100 w-full gap-3 duration-300">
-                                            <span className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300">
+                                            <Link
+                                                href={`/shop/${product.id}`}
+                                                className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300"
+                                            >
                                                 <Eye />
-                                            </span>
+                                            </Link>
                                             <span className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300">
                                                 {" "}
                                                 <svg
@@ -128,7 +131,7 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                             className="basis-[100%] "
                         >
                             <div className="w-full group group/parent h-[500px] p-2  rounded-md flex items-center justify-center flex-col ">
-                                <p>لا يوجد منتجات</p>
+                                <p>No Products</p>
                             </div>
                         </CarouselItem>
                     )}

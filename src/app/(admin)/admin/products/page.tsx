@@ -37,23 +37,22 @@ const page = async () => {
     return (
         <div className="flex flex-col gap-4">
             <div className="flex justify-between items-center border-b border-b-stone-300">
-                <Heading description="عرض الاصناف المسجلة" title="الاصناف" />
+                <Heading description="Show all products" title="Products" />
                 <Link
                     className="  flex gap-2  w-fit bg-[#151616] text-white p-2 rounded-md hover:opacity-90"
                     href={"/admin/products/new"}
                 >
-                    اضافة منتج
-                    <PlusCircle />
+                    add product <PlusCircle />
                 </Link>
             </div>
             <TableUi
                 columns={ProductsColumns}
                 data={formmatedProducts}
-                notfound="لا يوجد بيانات"
+                notfound="No products found"
                 filterAccessorKey="name"
                 filterEnabled={true}
-                filterlabel="بحث بالاسم"
-                filterplaceholder="الاسم"
+                filterlabel="search by name"
+                filterplaceholder="Name"
                 visabilty={true}
             />
         </div>

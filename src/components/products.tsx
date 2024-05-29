@@ -58,12 +58,12 @@ const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
                             </span>
                         </div>
                     </div>
-                    <div className=" flex flex-col gap-1 w-full">
-                        <p className=" text-xs  overflow-hidden w-full">
+                    <div className=" flex flex-col gap-1 w-full text-gray-700 font-semibold justify-center items-center">
+                        <p className=" text-sm  overflow-hidden ">
                             {product.name}
                         </p>
 
-                        <p className=" text-sm  overflow-hidden w-full mt-auto">
+                        <p className=" text-sm  overflow-hidden  mt-auto">
                             {formatter.format(Number(product.price))}
                         </p>
                     </div>

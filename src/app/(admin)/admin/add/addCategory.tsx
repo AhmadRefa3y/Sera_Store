@@ -55,7 +55,6 @@ const AddCategory = ({ types }: { types: type[] }) => {
                             </label>
                             <Select
                                 onValueChange={(id) => setform({ typeID: id })}
-                                dir="rtl"
                             >
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder="اختر فئة" />

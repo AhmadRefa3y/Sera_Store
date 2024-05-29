@@ -42,7 +42,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="اسم الصنف" />
+                        <SortableHeader column={column} label="Product Name" />
                     </div>
                 </div>
             );
@@ -86,7 +86,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="السعر" />
+                        <SortableHeader column={column} label="Price" />
                     </div>
                 </div>
             );
@@ -102,7 +102,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="الفئة" />
+                        <SortableHeader column={column} label="for" />
                     </div>
                 </div>
             );
@@ -118,7 +118,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="النوع" />
+                        <SortableHeader column={column} label="category" />
                     </div>
                 </div>
             );
@@ -134,7 +134,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="اللون" />
+                        <SortableHeader column={column} label="color" />
                     </div>
                 </div>
             );
@@ -150,7 +150,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="الحجم" />
+                        <SortableHeader column={column} label="size" />
                     </div>
                 </div>
             );
@@ -165,7 +165,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="مخفي" />
+                        <SortableHeader column={column} label="isArchived" />
                     </div>
                 </div>
             );
@@ -188,7 +188,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="مميز" />
+                        <SortableHeader column={column} label="isFeatured" />
                     </div>
                 </div>
             );
@@ -205,30 +205,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             );
         },
     },
-    // {
-    //     accessorKey: "images",
-    //     header: ({ column }) => {
-    //         return (
-    //             <div>
-    //                 <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-    //                     <SortableHeader column={column} label="مميز" />
-    //                 </div>
-    //             </div>
-    //         );
-    //     },
-    //     cell: ({ row }) => {
-    //         return (
-    //             <div>
-    //                 <Image
-    //                     src={row.original.images[0]}
-    //                     width={100}
-    //                     height={100}
-    //                     alt=""
-    //                 />
-    //             </div>
-    //         );
-    //     },
-    // },
+
     {
         accessorKey: "actions",
         header: ({ column }) => {
@@ -243,21 +220,18 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
         minSize: 150,
         cell: ({ row }) => {
             return (
-                <DropdownMenu dir="rtl">
+                <DropdownMenu>
                     <DropdownMenuTrigger>
                         <MoreHorizontal />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>تعديل</DropdownMenuLabel>
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Link href={`/admin/products/${row.original.id}`}>
-                                تعديل
+                                edit
                             </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                        <DropdownMenuItem>Team</DropdownMenuItem>
-                        <DropdownMenuItem>Subscription</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             );

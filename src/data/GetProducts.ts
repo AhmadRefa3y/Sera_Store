@@ -4,9 +4,9 @@ import DB from "@/lib/prismaDb";
 export const GetProducts = async (Filters?: any) => {
     const nameFIlter = Filters?.sort;
     const priceFIlter = Filters?.priceRange;
-    const priceFIltersSpilted = priceFIlter?.split("-");
-    const categories = Filters.categories?.split("-");
-    const sizes = Filters?.size?.split("-");
+    const priceFIltersSpilted = priceFIlter?.split("--");
+    const categories = Filters.categories?.split("--");
+    const sizes = Filters?.size?.split("--");
 
     try {
         const products = await DB.product.findMany({

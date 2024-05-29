@@ -21,30 +21,30 @@ const Navbar = () => {
 
     const links = [
         {
-            name: "النساء",
+            name: "Women",
             path: "/women",
             FlyoutContent: <PricingContent />,
         },
         {
-            name: "الرجال",
-            path: "/shop?types=رجالي",
+            name: "Men",
+            path: "/shop?types=men",
             FlyoutContent: <PricingContent />,
         },
         {
-            name: "الرضع",
+            name: "Baby",
             path: "/",
             FlyoutContent: <PricingContent />,
         },
         {
-            name: "الاطفال",
+            name: "Kids",
             path: "/",
         },
         {
-            name: "ملابس رياضية",
+            name: "Sports Wear",
             path: "/",
         },
         {
-            name: "الخصومات",
+            name: "Discounts",
             path: "/",
         },
     ];
@@ -53,7 +53,7 @@ const Navbar = () => {
             <div className="basis-[25%] hidden sm:inline-flex">
                 <div className="flex items-center justify-between border-b pb-1 border-black w-fit">
                     <input
-                        placeholder="عن ماذا تبحث ؟"
+                        placeholder="What are you looking for ?"
                         className="border-none bg-transparent outline-none focus-visible:ring-0 placeholder:text-sm placeholder:text-black"
                     />
                     <Search />
@@ -61,7 +61,7 @@ const Navbar = () => {
             </div>
             <div className="flex flex-col justify-center items-center gap-2 basis-[50%] ">
                 <Link className="text-3xl py-3" href={"/"}>
-                    لوجو
+                    Sera Store
                 </Link>
                 <div className=" z-50 w-full justify-center text-black gap-4  px-3  hidden lg:flex">
                     {links.map((link) => (
@@ -77,7 +77,7 @@ const Navbar = () => {
             </div>
             <div className=" gap-4 items-center justify-end basis-[25%] hidden sm:flex">
                 {session.data?.user ? (
-                    <DropdownMenu dir="rtl">
+                    <DropdownMenu>
                         <DropdownMenuTrigger>
                             <div className="w-8 h-8 rounded-full relative">
                                 <Image
@@ -95,7 +95,7 @@ const Navbar = () => {
                             <DropdownMenuSeparator />
                             {session.data.user.role === "admin" && (
                                 <DropdownMenuItem>
-                                    <Link href={"/admin"}>لوحة التحكم</Link>
+                                    <Link href={"/admin"}>Dashboard</Link>
                                 </DropdownMenuItem>
                             )}
                             <DropdownMenuItem>
@@ -106,7 +106,7 @@ const Navbar = () => {
                                     variant={"ghost"}
                                     className=" w-full  justify-start py-0 h-full px-0"
                                 >
-                                    تسجيل الخروج
+                                    LogOut
                                 </Button>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -117,7 +117,7 @@ const Navbar = () => {
                         className=""
                         variant={"ghost"}
                     >
-                        تسجيل الدخول
+                        Sign In{" "}
                     </Button>
                 )}
 

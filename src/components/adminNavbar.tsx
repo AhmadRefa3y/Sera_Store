@@ -12,37 +12,37 @@ import React from "react";
 const AdminNavbar = () => {
     const links = [
         {
-            name: "الرئيسة",
+            name: "Dashboard",
             icon: <LayoutDashboard />,
             path: "/admin",
         },
         {
-            name: "المنتجات",
+            name: "products",
             icon: <Shirt />,
             path: "/admin/products",
         },
         {
-            name: "المبيعات",
+            name: "sales",
             icon: <BadgeDollarSign />,
             path: "/admin/sales",
         },
         {
-            name: "الطلبات",
+            name: "orders",
             icon: <ShoppingBag />,
             path: "/admin/orders",
         },
         {
-            name: "المستخدمين",
+            name: "users",
             icon: <User />,
             path: "/admin/users",
         },
         {
-            name: "التقارير",
+            name: "reports",
             icon: <LineChart />,
             path: "/admin/reports",
         },
         {
-            name: "المتجر",
+            name: "Store",
             icon: <LineChart />,
             path: "/",
         },
@@ -50,7 +50,7 @@ const AdminNavbar = () => {
     return (
         <div className="w-[200px]  inset-y-0 right-0 flex flex-col items-start px-2 bg-[#151616] text-white h-full">
             <div className="text-2xl mb-10 py-2 font-bold w-full text-center">
-                لوحة التحكم
+                Admin Dashboard
             </div>
             <div className="flex flex-col gap-4 w-full">
                 {links.map((link) => (

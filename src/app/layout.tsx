@@ -16,9 +16,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" dir="rtl">
+        <html lang="en">
             <body
-                className={`${inter.className}  min-h-screen flex flex-col bg-[#fafafa]  `}
+                className={`${inter.className}  min-h-screen flex flex-col bg-[#fafafa] capitalize `}
             >
                 <SessionProviderWrapper>{children}</SessionProviderWrapper>
             </body>

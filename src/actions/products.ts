@@ -53,6 +53,7 @@ export const UpdateProduct = async (data: UpdateProductFormValues) => {
                 sizeId: data.sizeId,
                 isArchived: data.isArchived,
                 isFeatured: data.isFeatured,
+                typeId: data.typeID,
                 images: {
                     deleteMany: {},
                 },

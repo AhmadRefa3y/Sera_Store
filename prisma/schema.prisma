@@ -60,6 +60,9 @@ model Order {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   customerName String      @default("")
+  User         User        @relation(fields: [userId], references: [id])
+  totalAmount  Float
+  userId       String
 }
 
 model Category {
@@ -119,6 +122,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   role          String    @default("user")
+  orders        Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

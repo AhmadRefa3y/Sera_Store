@@ -84,7 +84,7 @@ export function TableUi<TData, TValue>({
     });
 
     return (
-        <div className=" max-w-5xl mx-auto ">
+        <div className=" max-w-5xl mx-auto w-full ">
             <div className="flex gap-2 items-center justify-normal  mt-1 ">
                 {filterEnabled && (
                     <div className="flex items-center w-full sm:w-[250px] py-4 relative">
@@ -128,99 +128,89 @@ export function TableUi<TData, TValue>({
                         <ArrowBigRight className="bg-sky-400 text-sm rounded-full p-1 w-8 h-8  shadow-md select-none" />
                     </Button>
                 </div>
-                <div className={` max-w-full  relative px-2 sm:px-0  `}>
-                    <div className=" overflow-x-auto border border-stone-300">
-                        <div className="  ">
-                            <Table
-                                className={`  bg-[#fafafa] border-none overflow-hidden  `}
-                            >
-                                <TableHeader>
-                                    {table
-                                        .getHeaderGroups()
-                                        .map((headerGroup) => (
-                                            <TableRow key={headerGroup.id}>
-                                                {headerGroup.headers.map(
-                                                    (header) => {
-                                                        return (
-                                                            <TableHead
-                                                                key={header.id}
-                                                                className={`font-semibold p-0 hover:bg-slate-400  group border border-stone-300  text-black  relative   text-center mx-auto  h-fit `}
-                                                                colSpan={
-                                                                    header.colSpan
-                                                                }
-                                                                style={{
-                                                                    width: `${header.getSize()}px`,
-                                                                }}
-                                                            >
-                                                                <span
-                                                                    className={`absolute top-0 right-0 w-[5px] z-50   h-full bg-sky-500 group-hover:opacity-100 cursor-col-resize select-none touch-none opacity-0 hover:opacity-100  ${
-                                                                        header.column.getIsResizing()
-                                                                            ? "opacity-100"
-                                                                            : null
-                                                                    }`}
-                                                                    onMouseDown={header.getResizeHandler()}
-                                                                    onTouchStart={header.getResizeHandler()}
-                                                                    onDoubleClick={() =>
-                                                                        header.column.resetSize()
-                                                                    }
-                                                                />
-                                                                {header.isPlaceholder
-                                                                    ? null
-                                                                    : flexRender(
-                                                                          header
-                                                                              .column
-                                                                              .columnDef
-                                                                              .header,
-                                                                          header.getContext()
-                                                                      )}
-                                                            </TableHead>
-                                                        );
-                                                    }
-                                                )}
-                                            </TableRow>
-                                        ))}
-                                </TableHeader>
-                                <TableBody className="bg-white">
-                                    {table.getRowModel().rows?.length ? (
-                                        table.getRowModel().rows.map((row) => (
-                                            <TableRow
-                                                key={row.id}
-                                                data-state={
-                                                    row.getIsSelected() &&
-                                                    "selected"
-                                                }
-                                                className=" p-0 border-b-2 rounded-lg hover:bg-sky-400 "
-                                            >
-                                                {row
-                                                    .getVisibleCells()
-                                                    .map((cell) => (
-                                                        <TableCell
-                                                            key={cell.id}
-                                                            className="p-0 py-1 font-medium text-center border border-t-0 border-stone-300 w-fit"
-                                                        >
-                                                            {flexRender(
-                                                                cell.column
-                                                                    .columnDef
-                                                                    .cell,
-                                                                cell.getContext()
-                                                            )}
-                                                        </TableCell>
-                                                    ))}
-                                            </TableRow>
-                                        ))
-                                    ) : (
-                                        <TableRow>
-                                            <TableCell
-                                                colSpan={8}
-                                                className={`sm:h-24 text-center w-full font-bold text-xl `}
-                                            >
-                                                {notfound}
-                                            </TableCell>
+                <div className={`max-w-full relative px-2 sm:px-0`}>
+                    <div className="overflow-x-auto border border-stone-300">
+                        <Table
+                            className={`bg-[#fafafa] border-none overflow-hidden`}
+                        >
+                            <TableHeader>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <TableRow key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <TableHead
+                                                    key={header.id}
+                                                    className={`font-semibold p-0 hover:bg-slate-400  group border border-stone-300  text-black  relative   text-center mx-auto  h-fit `}
+                                                    colSpan={header.colSpan}
+                                                    style={{
+                                                        width: `${header.getSize()}px`,
+                                                    }}
+                                                >
+                                                    <span
+                                                        className={`absolute top-0 right-0 w-[5px] z-50   h-full bg-sky-500 group-hover:opacity-100 cursor-col-resize select-none touch-none opacity-0 hover:opacity-100  ${
+                                                            header.column.getIsResizing()
+                                                                ? "opacity-100"
+                                                                : null
+                                                        }`}
+                                                        onMouseDown={header.getResizeHandler()}
+                                                        onTouchStart={header.getResizeHandler()}
+                                                        onDoubleClick={() =>
+                                                            header.column.resetSize()
+                                                        }
+                                                    />
+                                                    {header.isPlaceholder
+                                                        ? null
+                                                        : flexRender(
+                                                              header.column
+                                                                  .columnDef
+                                                                  .header,
+                                                              header.getContext()
+                                                          )}
+                                                </TableHead>
+                                            );
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableHeader>
+                            <TableBody className="bg-white">
+                                {table.getRowModel().rows?.length ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <TableRow
+                                            key={row.id}
+                                            data-state={
+                                                row.getIsSelected() &&
+                                                "selected"
+                                            }
+                                            className=" p-0 border-b-2 rounded-lg hover:bg-sky-400 "
+                                        >
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell) => (
+                                                    <TableCell
+                                                        key={cell.id}
+                                                        className="p-0 py-1 font-medium text-center border border-t-0 border-stone-300 w-fit"
+                                                    >
+                                                        {flexRender(
+                                                            cell.column
+                                                                .columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </TableCell>
+                                                ))}
                                         </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </div>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell
+                                            colSpan={8}
+                                            className={`sm:h-24 text-center w-full font-bold text-xl `}
+                                        >
+                                            {notfound}
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
                     </div>
                 </div>
             </div>

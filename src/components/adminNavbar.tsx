@@ -22,6 +22,11 @@ const AdminNavbar = () => {
             path: "/admin/products",
         },
         {
+            name: "categories",
+            icon: <Shirt />,
+            path: "/admin/categories",
+        },
+        {
             name: "sales",
             icon: <BadgeDollarSign />,
             path: "/admin/sales",

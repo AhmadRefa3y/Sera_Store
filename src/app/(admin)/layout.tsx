@@ -21,8 +21,6 @@ export default async function AdminLayout({
 }>) {
     const session = await auth();
 
-    console.log(session?.user);
-
     if (session?.user.role !== "admin") {
         return (
             <div className="flex h-screen w-full items-center justify-center flex-col gap-2 ">

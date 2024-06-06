@@ -17,37 +17,48 @@ const AddsizeDialog = () => {
     };
     return (
         <Dialog>
-            <DialogTrigger>اضافة حجم</DialogTrigger>
+            <DialogTrigger>
+                <Button>Add size</Button>
+            </DialogTrigger>
             <DialogContent>
                 <DialogHeader className="flex items-center">
-                    <DialogTitle>اضافة حجم</DialogTitle>
+                    <DialogTitle className="text-lg">Add size</DialogTitle>
                 </DialogHeader>
                 <form
-                    className=" flex items-center justify-center flex-col gap-2"
+                    className=" flex items-center justify-center  gap-2"
                     action={SaveType}
                 >
-                    <div className="flex  gap-2 w-full items-center  justify-center">
-                        <label htmlFor="name" className="font-bold">
-                            اسم الحجم
-                        </label>
-                        <input
-                            type="text"
-                            name="size-name"
-                            className="flex-1 p-2 border  border-stone-300"
-                        />
-                        <label
-                            htmlFor="name"
-                            className="font-bold"
-                            defaultValue={"#fffff"}
-                        >
-                            قيمة الحجم
-                        </label>
-                        <input
-                            type="text"
-                            name="size-value"
-                            className="flex-1 p-2 border border-stone-300"
-                        />
-                        <Button className="mr-auto ">اضافة</Button>
+                    <div className="flex flex-col  gap-2 w-full items-center justify-center">
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <label
+                                htmlFor="size-name"
+                                className="font-bold min-w-24 "
+                            >
+                                Size Name
+                            </label>
+                            <input
+                                type="text"
+                                name="size-name"
+                                id="size-name"
+                                className="flex-1 p-2 border  border-stone-300"
+                            />
+                        </div>
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <label
+                                htmlFor="size-value"
+                                className="font-bold min-w-24 "
+                                defaultValue={"#fffff"}
+                            >
+                                Size Value{" "}
+                            </label>
+                            <input
+                                type="text"
+                                name="size-value"
+                                id="size-value"
+                                className="flex-1 p-2 border border-stone-300"
+                            />
+                        </div>
+                        <Button className="ml-auto ">Add</Button>
                     </div>
                 </form>
             </DialogContent>

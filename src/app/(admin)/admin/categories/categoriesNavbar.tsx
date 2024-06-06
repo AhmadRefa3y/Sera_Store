@@ -1,7 +1,10 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const CategoriesNavbar = () => {
+    const pathName = usePathname();
     const Links = [
         {
             name: "sizes",
@@ -17,11 +20,13 @@ const CategoriesNavbar = () => {
         },
     ];
     return (
-        <div className="flex justify-center gap-4 items-center h-16 text-lg border-b border-b-stone-300">
+        <div className="flex justify-center gap-4 font-semibold items-center text-muted-foreground min-h-16 text-lg border-b border-b-stone-300">
             {Links.map((link) => (
                 <Link
                     href={link.href}
-                    className="hover:text-blue-500 cursor-pointer"
+                    className={`hover:text-black cursor-pointer ${
+                        pathName === link.href ? " text-black " : ""
+                    }`}
                 >
                     {link.name}
                 </Link>

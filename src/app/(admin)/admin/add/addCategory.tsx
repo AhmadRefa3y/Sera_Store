@@ -17,31 +17,41 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { type } from "@prisma/client";
+import { SuitableFor } from "@prisma/client";
+import { ObjectEnumValue } from "@prisma/client/runtime/library";
 import { useState } from "react";
-const AddCategory = ({ types }: { types: type[] }) => {
+import toast from "react-hot-toast";
+const AddCategory = () => {
     const [form, setform] = useState({
         typeID: "",
     });
     const SaveType = async (formData: FormData) => {
         const category = formData.get("category");
-        const res = await CreateCategory(category as string, form.typeID);
+        const res = await CreateCategory(category as string);
+        if (res.status === "ok") {
+            toast.success("Category created successfully");
+        }
     };
     return (
         <Dialog>
-            <DialogTrigger>اضافة نوع</DialogTrigger>
+            <DialogTrigger>
+                <Button>Add Category</Button>
+            </DialogTrigger>
             <DialogContent>
                 <DialogHeader className="flex items-center">
-                    <DialogTitle>اضافة نوع جديد</DialogTitle>
+                    <DialogTitle>Add Category</DialogTitle>
                 </DialogHeader>
                 <form
                     className=" flex flex-col items-center justify-center  gap-2"
                     action={SaveType}
                 >
-                    <div className="flex">
-                        <div className="flex-1 grow">
-                            <label htmlFor="name" className="font-bold">
-                                اسم النوع
+                    <div className="flex flex-col  gap-2 w-full items-center justify-center">
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <label
+                                htmlFor="name"
+                                className="font-bold min-w-36 "
+                            >
+                                Category Name
                             </label>
                             <input
                                 type="text"
@@ -49,32 +59,26 @@ const AddCategory = ({ types }: { types: type[] }) => {
                                 className="flex-1 p-2 border border-stone-300 w-full"
                             />
                         </div>
-                        <div>
-                            <label htmlFor="name" className="font-bold">
-                                الفئة{" "}
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <label
+                                htmlFor="name"
+                                className="font-bold min-w-36 "
+                            >
+                                For
                             </label>
                             <Select
                                 onValueChange={(id) => setform({ typeID: id })}
                             >
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="اختر فئة" />
+                                <SelectTrigger className="flex-1 rounded-none border-stone-300">
+                                    <SelectValue placeholder="choose a type" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectGroup>
-                                        {types.map((type) => (
-                                            <SelectItem
-                                                key={type.id}
-                                                value={type.id}
-                                            >
-                                                {type.name}{" "}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectGroup>
+                                    <SelectGroup></SelectGroup>
                                 </SelectContent>
                             </Select>
                         </div>
                     </div>
-                    <Button className="mr-auto ">اضافة</Button>
+                    <Button className="ml-auto ">Save</Button>
                 </form>
             </DialogContent>
         </Dialog>

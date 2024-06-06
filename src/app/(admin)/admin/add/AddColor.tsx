@@ -20,37 +20,49 @@ const AddColorDialog = () => {
     };
     return (
         <Dialog>
-            <DialogTrigger>اضافة لون</DialogTrigger>
-            <DialogContent>
+            <DialogTrigger>
+                <Button>Add Color</Button>
+            </DialogTrigger>
+            <DialogContent className="rounded-lg">
                 <DialogHeader className="flex items-center">
-                    <DialogTitle>اضافة لون</DialogTitle>
+                    <DialogTitle>Add Color</DialogTitle>
                 </DialogHeader>
                 <form
-                    className=" flex items-center justify-center flex-col gap-2"
+                    className=" flex items-center justify-center  gap-2"
                     action={SaveType}
                 >
-                    <div className="flex  gap-2 w-full items-center  justify-center">
-                        <label htmlFor="name" className="font-bold">
-                            اسم اللون
-                        </label>
-                        <input
-                            type="text"
-                            name="color-name"
-                            className="flex-1 p-2 border  border-stone-300"
-                        />
-                        <label
-                            htmlFor="name"
-                            className="font-bold"
-                            defaultValue={"#fffff"}
-                        >
-                            قيمة اللون
-                        </label>
-                        <input
-                            type="text"
-                            name="color-value"
-                            className="flex-1 p-2 border border-stone-300"
-                        />
-                        <Button className="mr-auto ">اضافة</Button>
+                    <div className="flex flex-col  gap-2 w-full items-center justify-center">
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <label
+                                htmlFor="color-name"
+                                className="font-bold min-w-24 "
+                            >
+                                Color Name{" "}
+                            </label>
+                            <input
+                                type="text"
+                                name="color-name"
+                                id="color-name"
+                                className="p-2 border flex-1  border-stone-300 "
+                            />
+                        </div>
+                        <div className="flex gap-2 items-center justify-center w-full">
+                            <label
+                                htmlFor="color-value"
+                                className="font-bold min-w-24"
+                                defaultValue={"#fffff"}
+                            >
+                                Color Value
+                            </label>
+                            <input
+                                type="text"
+                                name="color-value"
+                                id="color-value"
+                                className="p-2 border flex-1 border-stone-300"
+                            />
+                        </div>
+
+                        <Button className="ml-auto ">Add</Button>
                     </div>
                 </form>
             </DialogContent>

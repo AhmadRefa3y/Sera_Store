@@ -2,13 +2,19 @@ import { TableUi } from "@/components/ui/MainTable";
 import React from "react";
 import { sizesColumns } from "./SizesCoulmn";
 import DB from "@/lib/prismaDb";
+import AddColorDialog from "../../add/AddColor";
+import AddsizeDialog from "../../add/AddSize";
+import Heading from "@/components/ui/heading";
 
 const page = async () => {
     const sizes = await DB.size.findMany({});
-    console.log(sizes);
 
     return (
         <div>
+            <div className="flex justify-between">
+                <Heading title="sizes" description="Manage your sizes" />
+                <AddsizeDialog />
+            </div>
             <TableUi
                 columns={sizesColumns}
                 data={sizes}

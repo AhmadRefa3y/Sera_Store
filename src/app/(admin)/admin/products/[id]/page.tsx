@@ -13,7 +13,6 @@ const page = async ({ params }: { params: { id: string } }) => {
     const sizes = await DB.size.findMany();
     const colors = await DB.color.findMany();
     const categories = await DB.category.findMany();
-    const types = await DB.type.findMany();
 
     return (
         <ProductForm
@@ -21,7 +20,6 @@ const page = async ({ params }: { params: { id: string } }) => {
             sizes={sizes}
             colors={colors}
             initialData={product}
-            types={types}
         />
     );
 };

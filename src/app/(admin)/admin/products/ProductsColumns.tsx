@@ -30,7 +30,7 @@ export type ProductsColumn = {
     category: string;
     size: string;
     color: string;
-    type: string;
+    For: string;
     images: string[];
     isFeatured: boolean;
     isArchived: boolean;
@@ -109,7 +109,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
         },
 
         cell: ({ row }) => {
-            return row.original.type;
+            return row.original.For;
         },
     },
     {

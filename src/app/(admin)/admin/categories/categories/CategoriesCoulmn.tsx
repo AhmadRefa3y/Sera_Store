@@ -26,7 +26,6 @@ import Image from "next/image";
 export type categoryColumn = {
     id: string;
     name: string;
-    for: string;
 };
 export const categoriesColumns: ColumnDef<categoryColumn>[] = [
     {

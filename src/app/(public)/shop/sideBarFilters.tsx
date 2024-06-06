@@ -1,5 +1,5 @@
 "use client";
-import { Category, Color, Size, type } from "@prisma/client";
+import { Category, Color, Size, SuitableFor } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useState, useEffect } from "react";
 
@@ -7,12 +7,10 @@ const SideBarFilters = ({
     categories,
     colors,
     sizes,
-    types,
 }: {
     categories: Category[];
     colors: Color[];
     sizes: Size[];
-    types: type[];
 }) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -23,7 +21,7 @@ const SideBarFilters = ({
         params.get("categories")?.split("--") || []
     );
     const [activetypes, setActivetypes] = useState<string[]>(
-        params.get("types")?.split("--") || []
+        params.get("suitableFor")?.split("--") || []
     );
     const [activeSizes, setActiveSizes] = useState<string[]>(
         params.get("size")?.split("--") || []
@@ -79,35 +77,35 @@ const SideBarFilters = ({
                 <div className="flex flex-col gap-2 my-5">
                     <div>For</div>
                     <div className="flex flex-col gap-1 text-sm">
-                        {types.map((type, typeIdx) => (
+                        {Object.values(SuitableFor).map((item, typeIdx) => (
                             <li
-                                key={type.name}
+                                key={item}
                                 className="flex items-center cursor-pointer"
                             >
                                 <input
                                     type="checkbox"
-                                    name={type.name}
+                                    name={item}
                                     id={`type-${typeIdx}`}
                                     onChange={() =>
                                         handleCheckboxChange(
-                                            "types",
-                                            type.name,
+                                            "suitableFor",
+                                            item,
                                             setActivetypes,
                                             activetypes
                                         )
                                     }
-                                    checked={activetypes.includes(type.name)}
+                                    checked={activetypes.includes(item)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
                                 <label
                                     htmlFor={`type-${typeIdx}`}
                                     className={`ml-3 text-sm text-gray-600 cursor-pointer  ${
-                                        activetypes.includes(type.name)
+                                        activetypes.includes(item)
                                             ? "text-red-600"
                                             : ""
                                     }`}
                                 >
-                                    {type.name}
+                                    {item}
                                 </label>
                             </li>
                         ))}

@@ -15,7 +15,6 @@ const page = async () => {
             color: true,
             orderItems: true,
             size: true,
-            type: true,
             _count: true,
         },
     });
@@ -24,7 +23,7 @@ const page = async () => {
         return {
             id: product.id,
             category: product.category.name,
-            type: product.type.name,
+            For: product.SuitableFor,
             color: product.color.name,
             images: product.images.map((image) => image.url),
             name: product.name,

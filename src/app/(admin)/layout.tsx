@@ -6,6 +6,8 @@ import { Toaster } from "react-hot-toast";
 import AdminNavbar from "@/components/adminNavbar";
 import { auth } from "@/auth";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const inter = Alexandria({ subsets: ["latin"] });
 
@@ -21,6 +23,9 @@ export default async function AdminLayout({
 }>) {
     const session = await auth();
 
+    if (!session) {
+        redirect("/api/auth/signin");
+    }
     if (session?.user.role !== "admin") {
         return (
             <div className="flex h-screen w-full items-center justify-center flex-col gap-2 ">

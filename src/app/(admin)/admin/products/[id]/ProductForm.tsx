@@ -1,10 +1,17 @@
 "use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Category, Color, Image, Product, Size, type } from "@prisma/client";
+import {
+    Category,
+    Color,
+    Image,
+    Product,
+    Size,
+    SuitableFor,
+} from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -32,7 +39,6 @@ import ImageUpload from "@/components/ImageUpload";
 import AlertModal from "@/components/Modals/AlertModal";
 import { CreateProduct, UpdateProduct } from "@/actions/products";
 import Heading from "@/components/ui/heading";
-import AddTypeDialog from "../../add/AddTypeDialog";
 
 interface ProductFormProps {
     initialData:
@@ -43,13 +49,19 @@ interface ProductFormProps {
     categories: Category[];
     sizes: Size[];
     colors: Color[];
-    types: type[];
 }
+
+const SuitableForDD = Object.keys(SuitableFor) as unknown as readonly [
+    SuitableFor,
+    ...SuitableFor[]
+];
+console.log(SuitableForDD);
+
 const formSchema = z.object({
     name: z.string().min(1),
     images: z.object({ url: z.string() }).array(),
     price: z.coerce.number().min(1),
-    typeID: z.string().min(1),
+    suitableFor: z.enum(SuitableForDD),
     categoryId: z.string().min(1),
     colorId: z.string().min(1),
     sizeId: z.string().min(1),
@@ -63,21 +75,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
     categories,
     sizes,
     colors,
-    types,
 }) => {
-    console.log(types);
-
     const params = useParams();
     const router = useRouter();
-    const [TypeID, setTypeID] = useState<string | undefined>(
-        initialData?.typeId
-    );
-
-    console.log(TypeID);
-
-    const FilterdCategories = categories.filter((category) => {
-        return category.typeId === TypeID;
-    });
 
     const title = initialData ? "Edit Product" : "add Product";
     const description = initialData
@@ -95,7 +95,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
         defaultValues: initialData
             ? {
                   ...initialData,
-                  typeID: initialData?.typeId,
                   price: parseFloat(String(initialData?.price)),
               }
             : {
@@ -105,7 +104,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   categoryId: "",
                   colorId: "",
                   sizeId: "",
-                  typeID: "",
+                  suitableFor: "all",
                   isArchived: false,
                   isFeatured: false,
               },
@@ -121,7 +120,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 await UpdateProduct({ ...data, id: initialData.id });
                 router.push(`/admin/products`);
             } else {
-                await CreateProduct(data);
+                const res = await CreateProduct(data);
+                console.log(res);
                 router.push(`/admin/products`);
             }
             toast.success(toastMessage);
@@ -251,7 +251,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
                         <FormField
                             control={form.control}
-                            name="typeID"
+                            name="suitableFor"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>for</FormLabel>
@@ -259,7 +259,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                         disabled={loading}
                                         onValueChange={(value) => {
                                             field.onChange(value);
-                                            setTypeID(value);
                                         }}
                                         value={field.value}
                                         defaultValue={field.value}
@@ -273,14 +272,16 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {types.map((type) => (
-                                                <SelectItem
-                                                    key={type.id}
-                                                    value={type.id}
-                                                >
-                                                    {type.name}
-                                                </SelectItem>
-                                            ))}
+                                            {Object.values(SuitableFor).map(
+                                                (type) => (
+                                                    <SelectItem
+                                                        key={type}
+                                                        value={type}
+                                                    >
+                                                        {type}
+                                                    </SelectItem>
+                                                )
+                                            )}
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -308,27 +309,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent className="w-full ">
-                                            {FilterdCategories.map(
-                                                (Category) => (
-                                                    <SelectItem
-                                                        key={Category.id}
-                                                        value={Category.id}
-                                                    >
-                                                        {Category.name}
-                                                    </SelectItem>
-                                                )
-                                            )}
-                                            {FilterdCategories.length === 0 && (
+                                            {categories.map((Category) => (
                                                 <SelectItem
-                                                    value="none"
-                                                    disabled
-                                                    className=" flex  justify-center w-full text-center "
+                                                    key={Category.id}
+                                                    value={Category.id}
                                                 >
-                                                    <span>
-                                                        Select a Category
-                                                    </span>
+                                                    {Category.name}
                                                 </SelectItem>
-                                            )}
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />

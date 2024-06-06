@@ -7,6 +7,7 @@ export const GetProducts = async (Filters?: any) => {
     const priceFIltersSpilted = priceFIlter?.split("--");
     const categories = Filters.categories?.split("--");
     const sizes = Filters?.size?.split("--");
+    const suitableFor = Filters?.suitableFor?.split("--");
 
     try {
         const products = await DB.product.findMany({
@@ -32,6 +33,9 @@ export const GetProducts = async (Filters?: any) => {
                       }
                     : undefined,
                 isArchived: false,
+                SuitableFor: suitableFor?.length
+                    ? { in: suitableFor }
+                    : undefined,
             },
             include: {
                 images: true,

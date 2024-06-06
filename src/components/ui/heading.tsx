@@ -6,7 +6,7 @@ interface TheadingProps {
 const Heading: React.FC<TheadingProps> = ({ description, title }) => {
     return (
         <div>
-            <h2 className="text-3xl font-bold tracking-tight my-3">{title}</h2>
+            <h2 className="text-3xl font-bold tracking-tight my-1">{title}</h2>
             <p className="text-sm text-muted-foreground ">{description}</p>
         </div>
     );

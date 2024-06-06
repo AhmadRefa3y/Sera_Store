@@ -8,7 +8,6 @@ const page = async ({ searchParams }: { searchParams: any }) => {
     const categories = await DB.category.findMany();
     const colors = await DB.color.findMany();
     const sizes = await DB.size.findMany();
-    const types = await DB.type.findMany();
 
     return (
         <div
@@ -19,7 +18,6 @@ const page = async ({ searchParams }: { searchParams: any }) => {
                 categories={categories}
                 colors={colors}
                 sizes={sizes}
-                types={types}
             />
             <Suspense fallback={<Spinner />}>
                 <ProductsGrid searchParams={searchParams} />

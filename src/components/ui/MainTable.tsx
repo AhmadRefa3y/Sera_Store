@@ -88,12 +88,12 @@ export function TableUi<TData, TValue>({
             <div className="flex gap-2 items-center justify-normal  mt-1 ">
                 {filterEnabled && (
                     <div className="flex items-center w-full sm:w-[250px] py-4 relative">
-                        <legend className="px-2 top-0 w-fit  left-4 absolute whitespace-nowrap sm:text-base bg-[#fafafa] rounded-md font-extrabold ">
+                        <legend className="px-2 top-0 w-fit text-xs  left-4 absolute whitespace-nowrap sm:text-base bg-[#fafafa] rounded-md ">
                             {filterlabel}
                         </legend>
                         <Input
                             className="flex-1 bg-[#fafafa] outline-none text-black  shadow-md
-                           border-sky-400 sm:border-2 text-lg placeholder:text-black/70"
+                           border-sky-400 focus-visible:border-pink-700 duration-300 sm:border-2 text-lg placeholder:text-black/70"
                             placeholder={filterplaceholder}
                             value={
                                 (table

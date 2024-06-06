@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 
 export const CreateProduct = async (data: ProductFormValues) => {
     try {
-        const product = DB.product.create({
+        const product = await DB.product.create({
             data: {
                 name: data.name,
                 price: data.price,
@@ -16,15 +16,17 @@ export const CreateProduct = async (data: ProductFormValues) => {
                 sizeId: data.sizeId,
                 isArchived: data.isArchived,
                 isFeatured: data.isFeatured,
-                typeId: data.typeID,
                 images: {
                     create: data.images.map((image) => ({
                         url: image.url,
                     })),
                 },
+                SuitableFor: data.suitableFor,
             },
         });
         revalidatePath("/", "layout");
+        console.log(product);
+
         return {
             status: "ok",
             data: product,
@@ -53,10 +55,10 @@ export const UpdateProduct = async (data: UpdateProductFormValues) => {
                 sizeId: data.sizeId,
                 isArchived: data.isArchived,
                 isFeatured: data.isFeatured,
-                typeId: data.typeID,
                 images: {
                     deleteMany: {},
                 },
+                SuitableFor: data.suitableFor,
             },
         });
         const product = await DB.product.update({

@@ -73,8 +73,8 @@ model Category {
 }
 
 enum SuitableFor {
-  male
-  female
+  men
+  women
   kids
   baby
   all

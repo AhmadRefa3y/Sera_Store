@@ -61,7 +61,7 @@ const formSchema = z.object({
     name: z.string().min(1),
     images: z.object({ url: z.string() }).array(),
     price: z.coerce.number().min(1),
-    suitableFor: z.enum(SuitableForDD),
+    SuitableFor: z.enum(SuitableForDD),
     categoryId: z.string().min(1),
     colorId: z.string().min(1),
     sizeId: z.string().min(1),
@@ -90,6 +90,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
+    console.log(initialData);
+
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData
@@ -104,7 +106,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   categoryId: "",
                   colorId: "",
                   sizeId: "",
-                  suitableFor: "all",
+                  SuitableFor: "all",
                   isArchived: false,
                   isFeatured: false,
               },
@@ -251,7 +253,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 
                         <FormField
                             control={form.control}
-                            name="suitableFor"
+                            name="SuitableFor"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>for</FormLabel>
@@ -264,7 +266,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                         defaultValue={field.value}
                                     >
                                         <FormControl>
-                                            <SelectTrigger>
+                                            <SelectTrigger className="capitalize">
                                                 <SelectValue
                                                     defaultValue={field.value}
                                                     placeholder="choose type"

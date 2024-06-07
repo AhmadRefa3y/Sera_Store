@@ -7,21 +7,21 @@ const DiscountSection = () => (
         <div> Online Only</div>
         <div className="flex items-center justify-center gap-4 text-white text-sm">
             <Link
-                href={"/shop?types=women"}
+                href={"/shop?suitableFor=Female"}
                 className="bg-black px-5 py-2 text-center w-fit rounded-none"
             >
                 Women
             </Link>
 
             <Link
-                href={"/shop?types=men"}
+                href={"/shop?suitableFor=male"}
                 className="bg-black px-5 py-2 text-center w-fit rounded-none"
             >
                 Men
             </Link>
 
             <Link
-                href={"/shop?types=kids"}
+                href={"/shop?suitableFor=kids"}
                 className="bg-black px-5 py-2 text-center w-fit rounded-none"
             >
                 Kids

@@ -5,9 +5,28 @@ import { Suspense } from "react";
 import SideBarFilters from "./sideBarFilters";
 
 const page = async ({ searchParams }: { searchParams: any }) => {
-    const categories = await DB.category.findMany();
-    const colors = await DB.color.findMany();
-    const sizes = await DB.size.findMany();
+    const categories = await DB.category.findMany({
+        where: {
+            products: {
+                some: {},
+            },
+        },
+    });
+
+    const colors = await DB.color.findMany({
+        where: {
+            products: {
+                some: {},
+            },
+        },
+    });
+    const sizes = await DB.size.findMany({
+        where: {
+            products: {
+                some: {},
+            },
+        },
+    });
 
     return (
         <div

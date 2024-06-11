@@ -59,9 +59,9 @@ model Order {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   customerName String      @default("")
-  User         User        @relation(fields: [userId], references: [id])
+  User         User?       @relation(fields: [userId], references: [id])
   totalAmount  Float
-  userId       String
+  userId       String?
 }
 
 model Category {

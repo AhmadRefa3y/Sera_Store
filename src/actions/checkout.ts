@@ -1,6 +1,7 @@
 "use server";
 import DB from "@/lib/prismaDb";
 import { stripe } from "@/lib/stripe";
+import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import { promise } from "zod";
 
@@ -47,11 +48,14 @@ export async function CreateCheckoutSession({ products }: props) {
         });
     });
 
+    let ItemsTotal = 0;
+
+    Getproducts.forEach((item) => {
+        ItemsTotal += item.price * (item.quantity || 1);
+    });
     const order = await DB.order.create({
         data: {
-            totalAmount: Getproducts.reduce(
-                (acc, product) => acc + product.price * product.quantity,
-            )
+            totalAmount: ItemsTotal,
             orderItems: {
                 create: Getproducts.map((product) => ({
                     product: {
@@ -61,15 +65,20 @@ export async function CreateCheckoutSession({ products }: props) {
                     },
                     quantity: product.quantity,
                     totalPrice: product.price * product.quantity,
-                    productId: product.id,
                 })),
             },
         },
     });
+    console.log(order);
+
     const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
+        metadata: {
+            orderId: order.id,
+        },
         mode: "payment",
         success_url: "http://localhost:3000/cart",
         cancel_url: "http://localhost:3000/cart",
     });
+    redirect(session.url as string);
 }

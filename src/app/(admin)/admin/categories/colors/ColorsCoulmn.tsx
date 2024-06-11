@@ -52,6 +52,20 @@ export const colorsColumns: ColumnDef<colorColumn>[] = [
                 </div>
             );
         },
+
+        cell: ({ row }) => {
+            return (
+                <div className="flex items-center justify-center">
+                    <div
+                        style={{
+                            backgroundColor: row.original.value,
+                        }}
+                        className="w-5 h-5 rounded-full"
+                    />
+                    <div className="ml-2 min-w-20">{row.original.value}</div>
+                </div>
+            );
+        },
     },
 
     // {

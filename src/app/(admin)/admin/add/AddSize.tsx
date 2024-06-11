@@ -9,16 +9,25 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { useState } from "react";
+import toast from "react-hot-toast";
 const AddsizeDialog = () => {
+    const [open, setOpen] = useState(false);
     const SaveType = async (formData: FormData) => {
         const sizeName = formData.get("size-name");
         const sizeValue = formData.get("size-value");
         const res = await Createsize(sizeName as string, sizeValue as string);
+        if (res.status === "ok") {
+            setOpen(false);
+            toast.success("size created successfully");
+        } else {
+            toast.error(" something went wrong");
+        }
     };
     return (
-        <Dialog>
-            <DialogTrigger>
-                <Button>Add size</Button>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger className="bg-black text-white rounded-md hover:bg-black/80 mt-1 h-fit p-3">
+                Add size
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader className="flex items-center">

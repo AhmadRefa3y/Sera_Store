@@ -264,7 +264,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                         defaultValue={field.value}
                                     >
                                         <FormControl>
-                                            <SelectTrigger>
+                                            <SelectTrigger className="capitalize">
                                                 <SelectValue
                                                     defaultValue={field.value}
                                                     placeholder="choose type"

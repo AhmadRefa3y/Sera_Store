@@ -40,18 +40,6 @@ export const categoriesColumns: ColumnDef<categoryColumn>[] = [
             );
         },
     },
-    {
-        accessorKey: "for",
-        header: ({ column }) => {
-            return (
-                <div>
-                    <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="for" />
-                    </div>
-                </div>
-            );
-        },
-    },
 
     // {
     //     accessorKey: "actions",

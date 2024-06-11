@@ -1,6 +1,7 @@
 "use server";
 
 import DB from "@/lib/prismaDb";
+import { revalidatePath } from "next/cache";
 
 export const CreateCategory = async (CategoryName: string) => {
     try {
@@ -9,7 +10,7 @@ export const CreateCategory = async (CategoryName: string) => {
                 name: CategoryName,
             },
         });
-
+        revalidatePath("/", "layout");
         return {
             status: "ok",
             data: Category,

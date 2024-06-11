@@ -1,6 +1,6 @@
 import { GetProducts } from "@/data/GetProducts";
 import { formatter } from "@/lib/utils";
-import { Prisma, Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

@@ -52,7 +52,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex gap-1 items-center justify-between px-2">
-                        <div>{row.original.name}</div>
+                        <div className="text-left">{row.original.name}</div>
                         <div>
                             <Dialog>
                                 <DialogTrigger>

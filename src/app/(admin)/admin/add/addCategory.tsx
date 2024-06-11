@@ -15,6 +15,7 @@ const AddCategory = () => {
     const SaveType = async (formData: FormData) => {
         const category = formData.get("category");
         const res = await CreateCategory(category as string);
+        console.log(res);
         if (res.status === "ok") {
             toast.success("Category created successfully");
             setOpen(false);

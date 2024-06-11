@@ -7,7 +7,9 @@ export const GetProducts = async (Filters?: any) => {
     const priceFIltersSpilted = priceFIlter?.split("--");
     const categories = Filters.categories?.split("--");
     const sizes = Filters?.size?.split("--");
+    const colors = Filters?.color?.split("--");
     const suitableFor = Filters?.suitableFor?.split("--");
+    console.log(Filters);
 
     try {
         const products = await DB.product.findMany({
@@ -29,6 +31,13 @@ export const GetProducts = async (Filters?: any) => {
                     ? {
                           value: {
                               in: sizes,
+                          },
+                      }
+                    : undefined,
+                color: colors?.length
+                    ? {
+                          name: {
+                              in: colors,
                           },
                       }
                     : undefined,

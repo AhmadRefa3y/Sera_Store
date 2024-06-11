@@ -7,6 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "EGP",
+    currency: "USD",
     useGrouping: false,
 });

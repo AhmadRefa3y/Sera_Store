@@ -21,7 +21,7 @@ export const CreateProduct = async (data: ProductFormValues) => {
                         url: image.url,
                     })),
                 },
-                SuitableFor: data.suitableFor,
+                SuitableFor: data.SuitableFor,
             },
         });
         revalidatePath("/", "layout");
@@ -58,7 +58,7 @@ export const UpdateProduct = async (data: UpdateProductFormValues) => {
                 images: {
                     deleteMany: {},
                 },
-                SuitableFor: data.suitableFor,
+                SuitableFor: data.SuitableFor,
             },
         });
         const product = await DB.product.update({

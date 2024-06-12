@@ -3,7 +3,6 @@ import DB from "@/lib/prismaDb";
 import { stripe } from "@/lib/stripe";
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
-import { promise } from "zod";
 
 interface props {
     products: {
@@ -75,6 +74,9 @@ export async function CreateCheckoutSession({ products }: props) {
         line_items: lineItems,
         metadata: {
             orderId: order.id,
+        },
+        phone_number_collection: {
+            enabled: true,
         },
         mode: "payment",
         success_url: "http://localhost:3000/cart",

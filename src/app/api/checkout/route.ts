@@ -40,6 +40,7 @@ export async function POST(req: Request) {
         .join(", ");
 
     if (event.type === "checkout.session.completed") {
+        console.log(session?.metadata?.orderId);
         const order = await DB.order.update({
             where: {
                 id: session?.metadata?.orderId,

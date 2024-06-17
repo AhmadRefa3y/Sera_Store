@@ -55,7 +55,6 @@ const SuitableForDD = Object.keys(SuitableFor) as unknown as readonly [
     SuitableFor,
     ...SuitableFor[]
 ];
-console.log(SuitableForDD);
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -90,8 +89,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
-    console.log(initialData);
-
     const form = useForm<ProductFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData
@@ -117,13 +114,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
         try {
             setLoading(true);
             if (initialData) {
-                console.log(data);
-
                 await UpdateProduct({ ...data, id: initialData.id });
                 router.push(`/admin/products`);
             } else {
                 const res = await CreateProduct(data);
-                console.log(res);
                 router.push(`/admin/products`);
             }
             toast.success(toastMessage);
@@ -177,15 +171,16 @@ const ProductForm: React.FC<ProductFormProps> = ({
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(OnSubmit)}
-                    className="space-y-8 w-full"
-                    key={23516}
+                    className="space-y-8 w-full flex gap-3 "
                 >
                     <FormField
                         control={form.control}
                         name="images"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>product images</FormLabel>
+                            <FormItem className="min-w-[350px] flex items-center flex-col">
+                                <FormLabel className="text-lg mx-auto text-center w-full py-2">
+                                    product images
+                                </FormLabel>
                                 <FormControl>
                                     <ImageUpload
                                         value={field.value.map(
@@ -213,7 +208,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                         )}
                     />
 
-                    <div className="md:grid md:grid-cols-3 gap-8">
+                    <div className="md:grid md:grid-cols-2 gap-8">
                         <FormField
                             control={form.control}
                             name="name"
@@ -448,15 +443,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                 </FormItem>
                             )}
                         />
+                        <Button
+                            disabled={loading}
+                            type="submit"
+                            className="col-span-2 capitalize ml-auto"
+                        >
+                            {action}
+                        </Button>
                     </div>
-
-                    <Button
-                        disabled={loading}
-                        type="submit"
-                        className="ml-auto capitalize"
-                    >
-                        {action}
-                    </Button>
                 </form>
             </Form>
         </>

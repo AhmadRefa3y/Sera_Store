@@ -1,32 +1,24 @@
 import { GetProducts } from "@/data/GetProducts";
 import { formatter } from "@/lib/utils";
-import { Prisma } from "@prisma/client";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import AddToCartButton from "./addToCartButton";
 
-type product = Prisma.ProductGetPayload<{
-    include: {
-        images: true;
-    };
-}>;
 const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
     const products = await GetProducts(searchParams);
 
     return (
-        <div className="flex w-full  justify-center h-full  flex-wrap gap-2 ">
+        <div className="flex w-full  justify-center items-start h-fit  flex-wrap gap-2 ">
             {products?.map((product) => (
                 <div
-                    className=" w-[265px]  group group/parent  flex items-start flex-col gap-1 "
+                    className=" w-[265px]  group group/parent  flex items-start flex-col gap-1  "
                     key={product.id}
                 >
-                    <div className=" group  w-full h-[260px] overflow-hidden bg-[#f8f8f8]  relative">
+                    <div className=" group  w-full h-[260px] overflow-hidden rounded-md bg-[#f8f8f8]  relative ">
                         <Image
                             src={product.images[0].url}
-                            width={400}
-                            height={400}
+                            fill
                             alt={""}
                             className="group-hover:scale-110 object-fill duration-1000 animate-in mx-auto"
                         />
@@ -45,6 +37,7 @@ const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
                                     price: product.price.toNumber(),
                                     category: product.category.name,
                                     color: product.color.name,
+                                    quantity: 1,
                                 }}
                             />
                             <button className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300">

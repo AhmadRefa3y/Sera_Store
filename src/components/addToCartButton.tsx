@@ -1,6 +1,7 @@
 "use client";
 import useCart, { CartProduct } from "@/lib/cartStore";
 import React from "react";
+import toast from "react-hot-toast";
 
 interface props {
     product: CartProduct;
@@ -8,19 +9,31 @@ interface props {
 const AddToCartButton = ({ product }: props) => {
     const cart = useCart();
 
+    const addToCartFunction = (product: CartProduct) => {
+        const IsItemAllreadyCart = cart.Items.find(
+            (item) => item.id === product.id
+        );
+
+        if (IsItemAllreadyCart) {
+            toast.error("Item allready in cart");
+            return;
+        }
+        cart.addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity: 1,
+            category: product.category,
+            color: product.color,
+        });
+        toast.success("product added to cart");
+    };
     return (
         <button
             className="p-2 bg-white rounded-full flex items-center justify-center hover:bg-slate-600 hover:text-white hover:scale-125 duration-300"
             onClick={() => {
-                cart.addToCart({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    quantity: 1,
-                    category: product.category,
-                    color: product.color,
-                });
+                addToCartFunction(product);
             }}
         >
             <svg

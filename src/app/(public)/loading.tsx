@@ -1,8 +1,8 @@
-import LoadingPage from "@/components/loadingComp";
+import Spinner from "@/components/loadingComp";
 import React from "react";
 
 const loading = () => {
-    return <LoadingPage />;
+    return <Spinner />;
 };
 
 export default loading;

@@ -68,7 +68,6 @@ export async function CreateCheckoutSession({ products }: props) {
             },
         },
     });
-    console.log(order);
 
     const session = await stripe.checkout.sessions.create({
         line_items: lineItems,

@@ -30,7 +30,7 @@ export default async function AdminLayout({
         return (
             <div className="flex h-screen w-full items-center justify-center flex-col gap-2 ">
                 <div className="text-3xl text-red-500">
-                    You don't have permission to view this page
+                    You don&apost have permission to view this page
                 </div>
                 <Link href="/" className="text-blue-500">
                     back to homepage
@@ -43,7 +43,7 @@ export default async function AdminLayout({
         <div className="flex  h-screen ">
             <AdminNavbar />
             <Toaster />
-            <main className="flex-grow w-full  max-w-screen-2xl mx-auto  px-4 overflow-y-auto min-h-screen">
+            <main className="flex-grow  w-full mx-auto  px-4 overflow-y-auto min-h-screen">
                 {children}
             </main>
         </div>

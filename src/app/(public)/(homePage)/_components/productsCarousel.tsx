@@ -1,5 +1,4 @@
 "use client";
-import Autoscroll from "embla-carousel-auto-scroll";
 
 import {
     Carousel,
@@ -9,72 +8,50 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { formatter } from "@/lib/utils";
-import { Prisma } from "@prisma/client";
+import { Prisma, SuitableFor } from "@prisma/client";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import FilterProducts from "./productsFilter";
 import Link from "next/link";
 type product = Prisma.ProductGetPayload<{
     include: {
         images: true;
+        category: true;
     };
 }>;
 const ProductsCarousel = ({ products }: { products: product[] }) => {
     const [filters, setfilters] = useState<{
         category: "men" | "women" | "kids" | "all";
-    } | null>({
+    }>({
         category: "all",
     });
 
-    const categories = [
-        { name: "All", value: "all" },
-        { name: "Men", value: "men" },
-        { name: "Women", value: "women" },
-        { name: "Kids", value: "kids" },
-    ];
-    const formattedProducts = products.map((product) => ({
-        category: "men",
-        ...product,
-    }));
-
-    const filteerdProducts = formattedProducts.filter((product) => {
+    const filteerdProducts = products.filter((product) => {
         if (filters?.category === "all") return product;
-        if (product?.category === filters?.category) {
+        if (product?.SuitableFor === filters?.category) {
             return product;
-        } else return null;
+        }
     });
 
     return (
         <div className="mx-8 ">
-            <FilterProducts
-                categories={categories}
-                filters={filters}
-                setfilters={setfilters}
-            />
+            <FilterProducts filters={filters} setfilters={setfilters} />
             <Carousel
-                opts={{
-                    align: "start",
-                    loop: true,
-                }}
-                className=" mx-auto h-[350px] my-5 "
-                dir="ltr"
-                plugins={[Autoscroll({ stopOnInteraction: false })]}
+                className=" mx-auto  "
+                opts={{ loop: true, align: "start", slidesToScroll: 3 }}
             >
-                <CarouselContent
-                    className=" mx-auto flex items-center justify-center "
-                    dir="ltr"
-                >
+                <CarouselContent className=" mx-auto w-full flex items-center justify-start h-full  ">
                     {filteerdProducts.length > 0 ? (
                         filteerdProducts.map((product, index) => (
                             <CarouselItem
                                 key={index}
-                                className="md:basis-1/2 lg:basis-1/3 pl-2 py-2 h-full"
+                                className="mx-auto flex items-center md:basis-1/2 lg:basis-1/4 justify-center h-full relative pl-4 "
                             >
-                                <div className="group group/parent rounded-md flex items-center h-full justify-center flex-col ">
+                                <div className="group group/parent w-full  rounded-md flex items-center h-full justify-center flex-col ">
                                     <div
                                         key={product.id}
-                                        className=" group  w-full h-[260px] overflow-hidden  bg-[#f8f8f8] p-1 relative"
+                                        className=" group  w-full h-[300px] rounded-sm overflow-hidden  bg-[#f8f8f8] p-1 relative"
                                     >
                                         <Image
                                             src={product.images[0].url}
@@ -111,8 +88,8 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="flex flex-col items-center justify-center gap-2 pt-2 w-full text-sm ">
-                                        <p className="  overflow-hidden text-center text-nowrap w-full ">
+                                    <div className="flex flex-col items-center justify-between gap-2 h-[80px] pt-2 w-full font-semibold text-black ">
+                                        <p className="  overflow-hidden text-center  w-[80%] my-auto ">
                                             {product.name}
                                         </p>
 
@@ -126,18 +103,18 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                             </CarouselItem>
                         ))
                     ) : (
-                        <CarouselItem
-                            key={Math.random()}
-                            className="basis-[100%] "
+                        <div
+                            key={13}
+                            className="h-[380px] mx-auto flex items-center justify-center "
                         >
-                            <div className="w-full group group/parent h-[500px] p-2  rounded-md flex items-center justify-center flex-col ">
-                                <p>No Products</p>
+                            <div className="w-full  p-2  rounded-md flex items-center justify-center flex-col ">
+                                <p>No Products Found</p>
                             </div>
-                        </CarouselItem>
+                        </div>
                     )}
                 </CarouselContent>
-                <CarouselNext dir="ltr" />
-                <CarouselPrevious dir="ltr" />
+                <CarouselNext />
+                <CarouselPrevious />
             </Carousel>
         </div>
     );

@@ -3,16 +3,19 @@ import BillboardSection from "./_components/Billboard";
 import DiscountSection from "./_components/discount";
 import ProductsCarousel from "./_components/productsCarousel";
 import Footer from "./_components/footer";
+import ImageCarousel from "./_components/imageCarousel";
 
 export default async function Home() {
     const products = await DB.product.findMany({
         include: {
             images: true,
+            category: true,
         },
     });
     return (
-        <div className="flex-1 flex flex-col justify-between">
-            <div className="flex flex-col gap-2 w-full max-w-screen-lg mx-auto overflow-hidden  px-4">
+        <div className="flex-1 flex flex-col justify-between gap-2 min-h-screen">
+            <div className="flex flex-col gap-2 w-full max-w-screen-xl mx-auto overflow-hidden  px-4">
+                <ImageCarousel />
                 <DiscountSection />
                 <BillboardSection />
                 <ProductsCarousel products={products} />

@@ -1,6 +1,5 @@
 "use client";
 import { CreateColor } from "@/actions/colors";
-import { CreateType } from "@/actions/types";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { HexColorPicker } from "react-colorful";
@@ -54,7 +53,6 @@ const AddColorDialog = () => {
     /// Add Or Update Color
     const OnSubmit = async (data: ColorFormValues) => {
         setLoading(true);
-        console.log(data);
         const res = await CreateColor(data.name, data.value);
         if (res.status === "ok") {
             toast.success("Color created successfully");
@@ -106,27 +104,45 @@ const AddColorDialog = () => {
                                     <FormItem>
                                         <FormLabel className="flex gap-2">
                                             Color Value
-                                            <div>{color}</div>
                                         </FormLabel>
                                         <FormControl>
-                                            <div className="flex justify-start">
-                                                <div
-                                                    className="h-9 w-9 rounded-full mr-2"
-                                                    style={{
-                                                        backgroundColor: color,
-                                                    }}
-                                                />
-
-                                                <HexColorPicker
-                                                    color={color}
-                                                    onChange={(newColor) => {
-                                                        setColor(newColor);
+                                            <div className="flex justify-start flex-col gap-2">
+                                                <Input
+                                                    disabled={loading}
+                                                    type="text"
+                                                    placeholder="Color Value"
+                                                    {...field}
+                                                    onChange={(e) => {
+                                                        setColor(
+                                                            e.target.value
+                                                        );
                                                         form.setValue(
                                                             "value",
-                                                            newColor
+                                                            e.target.value
                                                         ); // Update the "value" field in the form
                                                     }}
-                                                />
+                                                ></Input>
+                                                <div className="flex gap-3">
+                                                    <HexColorPicker
+                                                        color={color}
+                                                        onChange={(
+                                                            newColor
+                                                        ) => {
+                                                            setColor(newColor);
+                                                            form.setValue(
+                                                                "value",
+                                                                newColor
+                                                            ); // Update the "value" field in the form
+                                                        }}
+                                                    />
+                                                    <div
+                                                        className="h-9 w-9 rounded-full mr-2"
+                                                        style={{
+                                                            backgroundColor:
+                                                                color,
+                                                        }}
+                                                    />{" "}
+                                                </div>
                                             </div>
                                         </FormControl>
                                         <FormMessage />

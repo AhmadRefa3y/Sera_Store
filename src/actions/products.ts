@@ -25,7 +25,6 @@ export const CreateProduct = async (data: ProductFormValues) => {
             },
         });
         revalidatePath("/", "layout");
-        console.log(product);
 
         return {
             status: "ok",

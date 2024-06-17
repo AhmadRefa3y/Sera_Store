@@ -2,6 +2,7 @@
 
 import SortableHeader from "@/components/SortColumn";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
 export type OrderColumn = {
     id: string;
@@ -38,21 +39,10 @@ export const OrdersColumns: ColumnDef<OrderColumn>[] = [
             );
         },
         cell: ({ row }) => {
-            return <div>{row.original.date?.toDateString()}</div>;
+            return <div>{format(row.original.date, "dd/MM/yyyy")}</div>;
         },
     },
-    {
-        accessorKey: "products",
-        header: ({ column }) => {
-            return (
-                <div>
-                    <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="products" />
-                    </div>
-                </div>
-            );
-        },
-    },
+
     {
         accessorKey: "phone",
         header: ({ column }) => {
@@ -83,7 +73,7 @@ export const OrdersColumns: ColumnDef<OrderColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="totalAmount" />
+                        <SortableHeader column={column} label="total Amount" />
                     </div>
                 </div>
             );
@@ -95,11 +85,12 @@ export const OrdersColumns: ColumnDef<OrderColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="isPaid" />
+                        <SortableHeader column={column} label="Paid" />
                     </div>
                 </div>
             );
         },
+        size: 100,
     },
     {
         accessorKey: "isDelivered",
@@ -107,11 +98,12 @@ export const OrdersColumns: ColumnDef<OrderColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="isDelivered" />
+                        <SortableHeader column={column} label="Delivered" />
                     </div>
                 </div>
             );
         },
+        size: 100,
     },
     // {
     //     accessorKey: "actions",

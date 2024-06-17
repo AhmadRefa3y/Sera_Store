@@ -1,5 +1,6 @@
 import {
     BadgeDollarSign,
+    Layers3,
     LayoutDashboard,
     LineChart,
     Shirt,
@@ -12,7 +13,7 @@ import React from "react";
 const AdminNavbar = () => {
     const links = [
         {
-            name: "Dashboard",
+            name: "Overview",
             icon: <LayoutDashboard />,
             path: "/admin",
         },
@@ -23,13 +24,8 @@ const AdminNavbar = () => {
         },
         {
             name: "categories",
-            icon: <Shirt />,
+            icon: <Layers3 />,
             path: "/admin/categories/sizes",
-        },
-        {
-            name: "sales",
-            icon: <BadgeDollarSign />,
-            path: "/admin/sales",
         },
         {
             name: "orders",
@@ -41,11 +37,7 @@ const AdminNavbar = () => {
             icon: <User />,
             path: "/admin/users",
         },
-        {
-            name: "reports",
-            icon: <LineChart />,
-            path: "/admin/reports",
-        },
+
         {
             name: "Store",
             icon: <LineChart />,

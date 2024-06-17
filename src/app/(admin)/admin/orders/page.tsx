@@ -3,6 +3,7 @@ import Heading from "@/components/ui/heading";
 import DB from "@/lib/prismaDb";
 import React from "react";
 import { OrderColumn, OrdersColumns } from "./OrdersColumns";
+import Container from "@/components/Container";
 
 const page = async () => {
     const orders = await DB.order.findMany({
@@ -12,6 +13,9 @@ const page = async () => {
                     product: true,
                 },
             },
+        },
+        orderBy: {
+            createdAt: "desc",
         },
     });
 
@@ -30,21 +34,26 @@ const page = async () => {
         };
     });
     return (
-        <div className="flex flex-col gap-4">
-            <div className="flex justify-between items-center border-b border-b-stone-300">
-                <Heading description="Show all Users" title="Users" />
+        <Container>
+            <div className="flex flex-col gap-4  ">
+                <div className="flex justify-between items-center border-b border-b-stone-300">
+                    <Heading
+                        description="Manage Orders For Your Store"
+                        title={`Orders (${orders.length})`}
+                    />
+                </div>
+                <TableUi
+                    columns={OrdersColumns}
+                    data={formattedOrders}
+                    notfound="No Uers found"
+                    filterAccessorKey="customerName"
+                    filterEnabled={true}
+                    filterlabel="search by name"
+                    filterplaceholder="Filter by customer name..."
+                    visabilty={true}
+                />
             </div>
-            <TableUi
-                columns={OrdersColumns}
-                data={formattedOrders}
-                notfound="No Uers found"
-                filterAccessorKey="name"
-                filterEnabled={true}
-                filterlabel="search by name"
-                filterplaceholder="Name"
-                visabilty={true}
-            />
-        </div>
+        </Container>
     );
 };
 

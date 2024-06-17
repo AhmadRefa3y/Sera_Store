@@ -56,7 +56,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
                         <div>
                             <Dialog>
                                 <DialogTrigger>
-                                    <div className="w-[50px] h-[50px] overflow-hidden">
+                                    <div className="w-[50px] h-[50px] overflow-hidden rounded-sm">
                                         <Image
                                             src={row.original.images[0]}
                                             alt={""}
@@ -65,7 +65,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
                                         />
                                     </div>
                                 </DialogTrigger>
-                                <DialogContent className="h-[400px] w-[400px] rounded-lg overflow-hidden p-0">
+                                <DialogContent className="h-[400px] w-[400px] rounded-md overflow-hidden p-0 border-none">
                                     <Image
                                         src={row.original.images[0]}
                                         alt={""}
@@ -97,7 +97,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
         },
     },
     {
-        accessorKey: "type",
+        accessorKey: "For",
         header: ({ column }) => {
             return (
                 <div>
@@ -165,7 +165,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="isArchived" />
+                        <SortableHeader column={column} label="Archived" />
                     </div>
                 </div>
             );
@@ -188,7 +188,7 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
             return (
                 <div>
                     <div className="flex px-2 items-center justify-center gap-1 select-none cursor-pointer  w-full">
-                        <SortableHeader column={column} label="isFeatured" />
+                        <SortableHeader column={column} label="Featured" />
                     </div>
                 </div>
             );

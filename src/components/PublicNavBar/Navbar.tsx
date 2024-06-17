@@ -17,35 +17,30 @@ import { Button } from "../ui/button";
 
 const Navbar = () => {
     const session = useSession();
-    console.log(session.data?.user);
 
     const links = [
         {
             name: "Women",
-            path: "/women",
+            path: "/shop?suitableFor=women",
             FlyoutContent: <PricingContent />,
         },
         {
             name: "Men",
-            path: "/shop?types=men",
+            path: "/shop?suitableFor=men",
             FlyoutContent: <PricingContent />,
         },
         {
             name: "Baby",
-            path: "/",
+            path: "/shop?suitableFor=baby",
             FlyoutContent: <PricingContent />,
         },
         {
             name: "Kids",
-            path: "/",
+            path: "/shop?suitableFor=kids",
         },
         {
             name: "Sports Wear",
-            path: "/",
-        },
-        {
-            name: "Discounts",
-            path: "/",
+            path: "/shop?categories=sports",
         },
     ];
     return (

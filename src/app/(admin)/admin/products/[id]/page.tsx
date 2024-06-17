@@ -10,27 +10,9 @@ const page = async ({ params }: { params: { id: string } }) => {
             images: true,
         },
     });
-    const sizes = await DB.size.findMany({
-        where: {
-            products: {
-                some: {},
-            },
-        },
-    });
-    const colors = await DB.color.findMany({
-        where: {
-            products: {
-                some: {},
-            },
-        },
-    });
-    const categories = await DB.category.findMany({
-        where: {
-            products: {
-                some: {},
-            },
-        },
-    });
+    const sizes = await DB.size.findMany({});
+    const colors = await DB.color.findMany({});
+    const categories = await DB.category.findMany({});
 
     return (
         <ProductForm

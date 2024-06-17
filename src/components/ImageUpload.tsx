@@ -76,6 +76,7 @@ const ImageUpload: React.FC<imageUploadProps> = ({
                             disabled={disabled}
                             variant={"secondary"}
                             onClick={onclick}
+                            className="w-full"
                         >
                             Upload Images <ImagePlus className="h-4 w-4 ml-2" />
                         </Button>

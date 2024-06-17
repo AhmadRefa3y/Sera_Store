@@ -1,31 +1,33 @@
+import { SuitableFor } from "@prisma/client";
+
 const FilterProducts = ({
-    categories,
     setfilters,
     filters,
 }: {
-    categories: { name: string; value: string }[];
     setfilters: any;
     filters: {
         category: "men" | "women" | "kids" | "all";
     } | null;
 }) => {
+    const SuitableForEnums = Object.keys(SuitableFor);
+
     return (
         <div className="flex gap-2 w-full items-center justify-center py-2">
-            {categories.map((category) => (
+            {SuitableForEnums.map((category) => (
                 <button
-                    key={category.value}
+                    key={category}
                     onClick={() =>
                         setfilters({
-                            category: category.value,
+                            category: category,
                         })
                     }
-                    className={`w-fit rounded-full px-4 py-1 text-black border border-black font-bold text-sm ${
-                        category.value === filters?.category
-                            ? "text-white border-none bg-red-500"
+                    className={`w-fit rounded-full px-4 py-1 text-black border border-black font-bold text-sm capitalize ${
+                        category === filters?.category
+                            ? "text-white border-none bg-red-500 "
                             : ""
                     }`}
                 >
-                    {category.name}
+                    {category}
                 </button>
             ))}
         </div>

@@ -1,65 +1,87 @@
-import {
-    AreaChart,
-    BadgeDollarSign,
-    FileUp,
-    ShoppingBag,
-    TrendingUp,
-} from "lucide-react";
+import { CreditCard, DollarSign, Package } from "lucide-react";
 import React from "react";
-import AddTypeDialog from "./add/AddTypeDialog";
+import DB from "@/lib/prismaDb";
+import Heading from "@/components/ui/heading";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatter } from "@/lib/utils";
+import { Overview } from "@/components/OverView";
+import getGraphData from "@/data/graphData";
 
-const AdminHomePage = () => {
+const AdminHomePage = async () => {
+    const PaidORders = await DB.order.findMany({
+        where: {
+            isPaid: true,
+        },
+        select: {
+            _count: true,
+            totalAmount: true,
+            createdAt: true,
+        },
+    });
+    const TotalSRevenue = PaidORders.reduce(
+        (acc, curr) => acc + curr.totalAmount,
+        0
+    );
+
+    const graphData = getGraphData(PaidORders);
+
     return (
-        <div className="flex gap-2 bg-blue-400 h-full p-2">
-            <div className="basis-[60%] bg-green-600 w-full h-full grow flex">
-                <div className="h-[140px] w-full flex gap-1 bg-red-500 p-2">
-                    <div className="flex flex-col gap-4 grow font-bold bg-[#151616] text-muted px-3 text-lg  justify-center rounded-lg">
-                        <div className="flex gap-2">
-                            <AreaChart />
-                            <span className="text-muted font-light">
-                                Total Sales
-                            </span>{" "}
-                        </div>
-                        <div className="flex gap-2 justify-between ">
-                            <div>5646864.19 $</div>
-                            <div>
-                                <TrendingUp className="rotate-[270]" />
+        <div className="flex-col">
+            <div className="flex-1 space-y-4 p-8 pt-6">
+                <Heading
+                    title="Dashboard"
+                    description="Overview of your store"
+                />
+                <Separator />
+                <div className="grid gap-4 grid-cols-3">
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium">
+                                Total Revenue
+                            </CardTitle>
+                            <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">
+                                {formatter.format(TotalSRevenue)}
                             </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 grow font-bold bg-[#151616] text-muted px-3 text-lg  justify-center rounded-lg">
-                        <div className="flex gap-2">
-                            <BadgeDollarSign />
-                            <span className="text-muted font-light">
-                                {" "}
-                                Total Revenue{" "}
-                            </span>{" "}
-                        </div>
-                        <div className="flex gap-2 justify-between ">
-                            <div>15732.19 $</div>
-
-                            <div>
-                                <TrendingUp className="rotate-[270]" />
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium">
+                                Sales
+                            </CardTitle>
+                            <CreditCard className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">
+                                +{PaidORders.length}
                             </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-4 grow font-bold bg-[#151616] text-muted px-3 text-lg  justify-center rounded-lg">
-                        <div className="flex gap-2">
-                            <ShoppingBag />
-                            <span className="text-muted font-light">
-                                Total Orders
-                            </span>{" "}
-                        </div>
-                        <div className="flex gap-2 justify-between ">
-                            <div>150 K</div>
-                            <div>
-                                <TrendingUp className="rotate-[270]" />
-                            </div>
-                        </div>
-                    </div>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium">
+                                Products In Stock
+                            </CardTitle>
+                            <Package className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">{3}</div>
+                        </CardContent>
+                    </Card>
                 </div>
+                <Card className="col-span-4">
+                    <CardHeader>
+                        <CardTitle>Overview</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pl-2">
+                        <Overview data={graphData} />
+                    </CardContent>
+                </Card>
             </div>
-            <div className="basis-[40%] bg-yellow-300  w-full h-full grow"></div>
         </div>
     );
 };

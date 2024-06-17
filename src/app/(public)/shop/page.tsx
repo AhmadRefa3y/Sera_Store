@@ -1,4 +1,4 @@
-import { Spinner } from "@/components/loadingComp";
+import Spinner from "@/components/loadingComp";
 import ProductsGrid from "@/components/products";
 import DB from "@/lib/prismaDb";
 import { Suspense } from "react";

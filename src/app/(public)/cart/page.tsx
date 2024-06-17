@@ -37,7 +37,7 @@ const CartPage = () => {
             <div className="flex flex-1 gap-16">
                 <div className=" flex-1 max-h-full flex flex-col gap-3">
                     {cart.Items.map((item) => (
-                        <div className="flex gap-4 p-4">
+                        <div className="flex gap-4 p-4" key={item.id}>
                             <div>
                                 <div className="relative h-24 w-24 rounded-md overflow-hidden sm:h-48 sm:w-48">
                                     <Image

@@ -9,7 +9,6 @@ export const GetProducts = async (Filters?: any) => {
     const sizes = Filters?.size?.split("--");
     const colors = Filters?.color?.split("--");
     const suitableFor = Filters?.suitableFor?.split("--");
-    console.log(Filters);
 
     try {
         const products = await DB.product.findMany({

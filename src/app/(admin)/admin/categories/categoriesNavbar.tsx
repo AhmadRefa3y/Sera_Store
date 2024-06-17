@@ -21,8 +21,9 @@ const CategoriesNavbar = () => {
     ];
     return (
         <div className="flex justify-center gap-4 font-semibold items-center text-muted-foreground min-h-16 text-lg border-b border-b-stone-300">
-            {Links.map((link) => (
+            {Links.map((link, index) => (
                 <Link
+                    key={index}
                     href={link.href}
                     className={`hover:text-black cursor-pointer ${
                         pathName === link.href ? " text-black " : ""

@@ -1,6 +1,5 @@
 "use client";
 import { Createsize } from "@/actions/Sizes";
-import { CreateType } from "@/actions/types";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,

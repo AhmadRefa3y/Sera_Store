@@ -1,7 +1,7 @@
 "use client";
 import { Category, Color, Size, SuitableFor } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useMemo } from "react";
 
 const SideBarFilters = ({
     categories,
@@ -15,7 +15,10 @@ const SideBarFilters = ({
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const params = new URLSearchParams(searchParams.toString());
+    const params = useMemo(
+        () => new URLSearchParams(searchParams.toString()),
+        [searchParams]
+    );
 
     const [activeCategories, setActiveCategories] = useState<string[]>(
         params.get("categories")?.split("--") || []

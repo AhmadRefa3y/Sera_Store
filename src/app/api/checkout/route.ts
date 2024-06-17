@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         .join(", ");
 
     if (event.type === "checkout.session.completed") {
-        const order = await DB.order.update({
+        await DB.order.update({
             where: {
                 id: session?.metadata?.orderId,
             },
@@ -55,6 +55,7 @@ export async function POST(req: Request) {
             },
         });
     }
+    console.log(session);
 
     return new NextResponse(null, { status: 200 });
 }

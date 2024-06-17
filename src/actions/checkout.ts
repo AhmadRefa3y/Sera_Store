@@ -78,8 +78,10 @@ export async function CreateCheckoutSession({ products }: props) {
             enabled: true,
         },
         mode: "payment",
-        success_url: "http://localhost:3000/cart",
-        cancel_url: "http://localhost:3000/cart",
+        success_url:
+            "http://serastore-ahmadrefa3ys-projects.vercel.app/cart?success=true",
+        cancel_url:
+            "http://serastore-ahmadrefa3ys-projects.vercel.app/cart?canceled=true",
     });
     redirect(session.url as string);
 }

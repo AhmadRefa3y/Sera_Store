@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "../globals.css";
 import Navbar from "@/components/PublicNavBar/Navbar";
 import { Toaster } from "react-hot-toast";
-import Container from "@/components/Container";
 
 export const metadata: Metadata = {
     title: "Sera Store",

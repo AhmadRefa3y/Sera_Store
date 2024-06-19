@@ -44,7 +44,7 @@ const Navbar = () => {
         },
     ];
     return (
-        <div className="flex sm:justify-between justify-center h-32 items-center sm:px-10  py-2 ">
+        <div className="flex sm:justify-between justify-center h-32 items-center sm:px-10  py-2 text-xl ">
             <div className="basis-[25%] hidden sm:inline-flex">
                 <div className="flex items-center justify-between border-b pb-1 border-black w-fit">
                     <input
@@ -55,7 +55,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="flex flex-col justify-center items-center gap-2 sm:basis-[50%] basis-full ">
-                <Link className="text-3xl py-3" href={"/"}>
+                <Link className="text-5xl py-3" href={"/"}>
                     Sera Store
                 </Link>
                 <div className=" z-50 w-full justify-center text-black gap-4  px-3  hidden lg:flex">

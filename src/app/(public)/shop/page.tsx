@@ -2,7 +2,7 @@ import Spinner from "@/components/loadingComp";
 import ProductsGrid from "@/components/products";
 import DB from "@/lib/prismaDb";
 import { Suspense } from "react";
-import SideBarFilters from "./sideBarFilters";
+import SideBarFilters from "./sideBarFiltersTop";
 
 const page = async ({ searchParams }: { searchParams: any }) => {
     const categories = await DB.category.findMany({
@@ -30,7 +30,7 @@ const page = async ({ searchParams }: { searchParams: any }) => {
 
     return (
         <div
-            className="w-full flex flex-row gap-2  max-w-screen-xl mx-auto grow  "
+            className="w-full flex flex-col gap-2  max-w-screen-xl mx-auto grow mb-3  "
             key={Math.random()}
         >
             <SideBarFilters

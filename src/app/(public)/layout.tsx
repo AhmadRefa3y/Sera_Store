@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import Navbar from "@/components/PublicNavBar/Navbar";
 import { Toaster } from "react-hot-toast";
+import Container from "@/components/Container";
 
 export const metadata: Metadata = {
     title: "Sera Store",
@@ -14,12 +15,10 @@ export default function PublicLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <>
+        <div className="max-w-screen-xl mx-auto min-h-screen flex flex-col px-2">
             <Toaster />
             <Navbar />
-            <main className="w-full h-full flex  mx-auto flex-1 ">
-                {children}
-            </main>
-        </>
+            <main className="flex-1 flex flex-col ">{children}</main>
+        </div>
     );
 }

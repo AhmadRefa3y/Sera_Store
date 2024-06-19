@@ -46,12 +46,12 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                         filteerdProducts.map((product, index) => (
                             <CarouselItem
                                 key={index}
-                                className="mx-auto flex items-center md:basis-1/2 lg:basis-1/4 justify-center h-full relative pl-4 "
+                                className="mx-auto flex items-center basis-1/2 lg:basis-1/4 justify-center h-full relative pl-4 "
                             >
                                 <div className="group group/parent w-full  rounded-md flex items-center h-full justify-center flex-col ">
                                     <div
                                         key={product.id}
-                                        className=" group  w-full h-[300px] rounded-sm overflow-hidden  bg-[#f8f8f8] p-1 relative"
+                                        className=" group  w-full md:h-[300px] h-[150px] rounded-sm overflow-hidden  bg-[#f8f8f8] p-1 relative"
                                     >
                                         <Image
                                             src={product.images[0].url}
@@ -105,7 +105,7 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                     ) : (
                         <div
                             key={13}
-                            className="h-[380px] mx-auto flex items-center justify-center "
+                            className="md:h-[300px] h-[150px] mx-auto flex items-center justify-center "
                         >
                             <div className="w-full  p-2  rounded-md flex items-center justify-center flex-col ">
                                 <p>No Products Found</p>

@@ -16,7 +16,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${Inter.className}  min-h-screen flex flex-col bg-[#fafafa] capitalize font-bold h-full`}
+                className={`${Inter.className}bg-[#fafafa] capitalize overflow-y-scroll `}
             >
                 <SessionProviderWrapper>{children}</SessionProviderWrapper>
             </body>

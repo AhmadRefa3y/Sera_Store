@@ -13,8 +13,8 @@ export default async function Home() {
         },
     });
     return (
-        <div className="flex-1 flex flex-col justify-between gap-2 min-h-screen">
-            <div className="flex flex-col gap-2 w-full max-w-screen-xl mx-auto overflow-hidden  px-4">
+        <div className="flex-1 flex flex-col justify-between gap-2 ">
+            <div className="flex flex-col gap-2 w-full   overflow-hidden ">
                 <ImageCarousel />
                 <DiscountSection />
                 <BillboardSection />

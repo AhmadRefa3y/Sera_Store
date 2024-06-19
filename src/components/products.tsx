@@ -9,13 +9,13 @@ const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
     const products = await GetProducts(searchParams);
 
     return (
-        <div className="flex w-full  justify-center items-start h-fit  flex-wrap gap-2 ">
+        <div className="flex w-full  justify-start items-start h-fit  flex-wrap gap-2 ">
             {products?.map((product) => (
                 <div
-                    className=" w-[265px]  group group/parent  flex items-start flex-col gap-1  "
+                    className=" w-[265px]  group group/parent  flex items-start flex-col gap-1  border border-stone-300"
                     key={product.id}
                 >
-                    <div className=" group  w-full h-[260px] overflow-hidden rounded-md bg-[#f8f8f8]  relative ">
+                    <div className=" group  w-full h-[260px] overflow-hidden  bg-[#f8f8f8]  relative  ">
                         <Image
                             src={product.images[0].url}
                             fill

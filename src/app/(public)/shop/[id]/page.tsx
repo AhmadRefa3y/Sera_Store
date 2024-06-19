@@ -38,7 +38,7 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
         quantity: 1,
     };
     return (
-        <div className="flex flex-col max-w-screen-xl  w-full px-2 sm:mt-10  mx-auto">
+        <div className="flex-1 flex flex-col ">
             <ProductDetail product={product} />
         </div>
     );
@@ -52,7 +52,7 @@ const ProductDetail = ({
     product: CartProduct & { size: string };
 }) => {
     return (
-        <div className="flex gap-2 font-normal h-full text-sm flex-col sm:flex-row pb-3">
+        <div className="flex gap-2 font-normal h-full text-sm flex-col sm:flex-row pb-3 flex-1  ">
             <div className="sm:basis-[40%]">
                 <div className="w-full h-full mx-auto relative">
                     <Image

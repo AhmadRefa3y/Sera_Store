@@ -88,7 +88,7 @@ const SideBarFilters = ({
 
     return (
         <div className="flex flex-col gap-4">
-            <div className="flex  w-full items-center  justify-start gap-4">
+            <div className="flex flex-wrap  w-full items-center  justify-start gap-4">
                 <Popover
                     open={popoversOpen.types}
                     onOpenChange={() => {

@@ -83,23 +83,28 @@ const Navbar = () => {
                                 />
                             </div>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuLabel>
+                        <DropdownMenuContent className="p-3 text-xl">
+                            <DropdownMenuLabel className="p-1 text-xl">
                                 {session.data?.user.name}
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             {session.data.user.role === "admin" && (
-                                <DropdownMenuItem>
-                                    <Link href={"/admin"}>Dashboard</Link>
+                                <DropdownMenuItem className="p-0 text-xl">
+                                    <Link
+                                        href={"/admin"}
+                                        className="w-full p-1"
+                                    >
+                                        Dashboard
+                                    </Link>
                                 </DropdownMenuItem>
                             )}
-                            <DropdownMenuItem>
+                            <DropdownMenuItem className="p-0 ">
                                 <Button
                                     onClick={() => {
                                         signOut();
                                     }}
                                     variant={"ghost"}
-                                    className=" w-full  justify-start py-0 h-full px-0"
+                                    className=" w-full  justify-start p-1 h-full text-xl"
                                 >
                                     LogOut
                                 </Button>

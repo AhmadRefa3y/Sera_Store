@@ -14,10 +14,12 @@ export default function PublicLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="max-w-screen-xl mx-auto min-h-screen flex flex-col px-2 overflow-hidden">
-            <Toaster />
-            <Navbar />
-            <main className="flex-1 flex flex-col ">{children}</main>
+        <div className="overflow-y-scroll max-h-screen">
+            <div className="max-w-screen-xl mx-auto min-h-screen flex flex-col px-2 ">
+                <Toaster />
+                <Navbar />
+                <main className="flex-1 flex flex-col ">{children}</main>
+            </div>
         </div>
     );
 }

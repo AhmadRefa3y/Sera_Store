@@ -35,7 +35,7 @@ const page = async () => {
     });
     return (
         <Container>
-            <div className="flex flex-col gap-4  ">
+            <div className="flex flex-col gap-1  flex-1">
                 <div className="flex justify-between items-center border-b border-b-stone-300">
                     <Heading
                         description="Manage Orders For Your Store"

@@ -6,7 +6,7 @@ const Container = ({
     children: React.ReactNode;
 }>) => {
     return (
-        <div className="max-w-screen-2xl mx-auto min-h-[calc(100vh-128px)]">
+        <div className="max-w-screen-2xl mx-auto min-h-screen flex flex-col ">
             {children}
         </div>
     );

@@ -40,10 +40,10 @@ export default async function AdminLayout({
     }
 
     return (
-        <div className="flex  h-screen ">
+        <div className="flex min-h-screen max-h-screen overflow-hidden  ">
             <AdminNavbar />
             <Toaster />
-            <main className="flex-grow  w-full mx-auto  px-4 overflow-y-auto min-h-screen">
+            <main className="flex-grow  w-full mx-auto  px-4  max-h-screen overflow-y-scroll">
                 {children}
             </main>
         </div>

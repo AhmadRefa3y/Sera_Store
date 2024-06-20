@@ -15,9 +15,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${Inter.className} bg-[#fafafa] capitalize overflow-y-scroll `}
-            >
+            <body className={`${Inter.className} bg-[#fafafa] capitalize  `}>
                 <SessionProviderWrapper>{children}</SessionProviderWrapper>
             </body>
         </html>

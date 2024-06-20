@@ -225,10 +225,11 @@ export const ProductsColumns: ColumnDef<ProductsColumn>[] = [
                         <MoreHorizontal />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Link href={`/admin/products/${row.original.id}`}>
+                        <DropdownMenuItem className="text-lg font-bold">
+                            <Link
+                                href={`/admin/products/${row.original.id}`}
+                                className="w-full"
+                            >
                                 edit
                             </Link>
                         </DropdownMenuItem>

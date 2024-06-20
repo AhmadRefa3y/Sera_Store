@@ -70,7 +70,7 @@ export function TableUi<TData, TValue>({
         getCoreRowModel: getCoreRowModel(),
         initialState: {
             pagination: {
-                pageSize: 15,
+                pageSize: 14,
             },
         },
         getPaginationRowModel: getPaginationRowModel(),
@@ -84,10 +84,10 @@ export function TableUi<TData, TValue>({
     });
 
     return (
-        <div className="  mx-auto w-full ">
+        <div className="  mx-auto w-full flex-1 flex flex-col">
             <div className="flex gap-2 items-center justify-normal  mt-1 ">
                 {filterEnabled && (
-                    <div className="flex items-center w-full sm:w-[250px] py-4 relative">
+                    <div className="flex items-center w-full sm:w-[250px]  relative">
                         <Input
                             className="flex-1 bg-[#fafafa]  text-black
                             duration-300   placeholder:text-black/70"
@@ -106,7 +106,9 @@ export function TableUi<TData, TValue>({
                     </div>
                 )}
             </div>
-            <div className={`max-w-full relative  p-2 sm:px-0`}>
+            <div
+                className={`max-w-full relative  p-2 sm:px-0 h-full flex flex-col flex-1`}
+            >
                 <div className="overflow-x-auto   border border-stone-200 rounded-md">
                     <Table className={`bg-[#fafafa]  overflow-hidden   `}>
                         <TableHeader>
@@ -183,7 +185,7 @@ export function TableUi<TData, TValue>({
                         </TableBody>
                     </Table>
                 </div>
-                <div className="flex gap-2 mt-1 justify-end">
+                <div className="flex gap-2 mt-auto py-2 justify-end">
                     <Button
                         variant={"ghost"}
                         onClick={() => table.previousPage()}

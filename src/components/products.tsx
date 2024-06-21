@@ -4,9 +4,10 @@ import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./addToCartButton";
+import { ProductType } from "@/app/(public)/shop/productsClient";
 
 const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
-    const products = await GetProducts(searchParams);
+    const products: ProductType[] | undefined = await GetProducts(searchParams);
 
     return (
         <div className="flex w-full  justify-start items-start h-fit  flex-wrap gap-2 ">
@@ -17,7 +18,7 @@ const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
                 >
                     <div className=" group  w-full h-[260px] overflow-hidden  bg-[#f8f8f8]  relative  ">
                         <Image
-                            src={product.images[0].url}
+                            src={product.image}
                             fill
                             alt={""}
                             className="group-hover:scale-110 object-fill duration-1000 animate-in mx-auto"
@@ -32,11 +33,11 @@ const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
                             <AddToCartButton
                                 product={{
                                     id: product.id,
-                                    image: product.images[0].url,
+                                    image: product.image,
                                     name: product.name,
-                                    price: product.price.toNumber(),
-                                    category: product.category.name,
-                                    color: product.color.name,
+                                    price: product.price,
+                                    category: product.category,
+                                    color: product.color,
                                     quantity: 1,
                                 }}
                             />

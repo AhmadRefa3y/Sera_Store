@@ -1,4 +1,5 @@
 "use server";
+import { ProductType } from "@/app/(public)/shop/productsClient";
 import DB from "@/lib/prismaDb";
 
 export const GetProducts = async (Filters?: any) => {
@@ -20,12 +21,7 @@ export const GetProducts = async (Filters?: any) => {
                           },
                       }
                     : undefined,
-                // price: priceFIlter
-                //     ? {
-                //           gte: priceFIltersSpilted[0],
-                //           lte: priceFIltersSpilted[1],
-                //       }
-                //     : undefined,
+
                 size: sizes?.length
                     ? {
                           value: {
@@ -68,8 +64,19 @@ export const GetProducts = async (Filters?: any) => {
                 createdAt: nameFIlter === "new" ? "desc" : undefined,
             },
         });
-
-        return products;
+        const formattedProducts: ProductType[] = products.map((product) => {
+            return {
+                id: product.id,
+                name: product.name,
+                category: product.category.name,
+                image: product.images[0].url,
+                color: product.color.name,
+                price: Number(product.price),
+                size: product.size.value,
+                SuitableFor: product.SuitableFor,
+            };
+        });
+        return formattedProducts;
     } catch (error) {
         console.log(error);
     }

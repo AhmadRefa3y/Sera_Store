@@ -5,7 +5,9 @@ export default async function getFilters() {
     const categories = await DB.category.findMany({
         where: {
             products: {
-                some: {},
+                some: {
+                    isArchived: false,
+                },
             },
         },
     });
@@ -13,14 +15,14 @@ export default async function getFilters() {
     const colors = await DB.color.findMany({
         where: {
             products: {
-                some: {},
+                some: { isArchived: false },
             },
         },
     });
     const sizes = await DB.size.findMany({
         where: {
             products: {
-                some: {},
+                some: { isArchived: false },
             },
         },
     });

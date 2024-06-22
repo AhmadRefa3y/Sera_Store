@@ -4,7 +4,7 @@ import { formatter } from "@/lib/utils";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Prisma, PrismaClient, Product } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
 import Spinner from "@/components/loadingComp";
@@ -24,11 +24,11 @@ const ProductsGrid = () => {
     const [products, setProducts] = useState<ProductType[]>([]);
     const [loading, setloading] = useState(true);
     const searchParams = useSearchParams();
-    const params = new URLSearchParams(searchParams.toString());
-
-    console.log(products);
+    const params = useMemo(
+        () => new URLSearchParams(searchParams.toString()),
+        [searchParams]
+    );
     useEffect(() => {
-        setloading(true);
         async function FetchProducts() {
             const products = await GetProducts({
                 categories: params.get("categories"),
@@ -43,7 +43,7 @@ const ProductsGrid = () => {
             setloading(false);
         }
         FetchProducts();
-    }, [searchParams]);
+    }, [params]);
 
     return (
         <div className="flex w-full  justify-start items-start h-full  flex-wrap gap-2 flex-1">

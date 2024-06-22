@@ -29,6 +29,7 @@ const ProductsGrid = () => {
         [searchParams]
     );
     useEffect(() => {
+        setloading(true);
         async function FetchProducts() {
             const products = await GetProducts({
                 categories: params.get("categories"),

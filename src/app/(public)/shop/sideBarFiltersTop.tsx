@@ -18,6 +18,7 @@ const SideBarFilters = () => {
         () => new URLSearchParams(searchParams.toString()),
         [searchParams]
     );
+
     const [Vairants, setVairants] = useState<{
         categories: Category[];
         colors: Color[];
@@ -55,6 +56,23 @@ const SideBarFilters = () => {
     const [activeColors, setActiveColors] = useState<string[]>(
         params.get("color")?.split("--") || []
     );
+
+    // wrap activeVariants state in a useCallback
+    const activeVariantsa = useMemo(() => {
+        return {
+            categories: params.get("categories")?.split("--") || [],
+            types: params.get("suitableFor")?.split("--") || [],
+            sizes: params.get("size")?.split("--") || [],
+            colors: params.get("color")?.split("--") || [],
+        };
+    }, [params]);
+
+    const [activeVariants, setactiveVariants] = useState({
+        categories: params.get("categories")?.split("--") || [],
+        types: params.get("suitableFor")?.split("--") || [],
+        sizes: params.get("size")?.split("--") || [],
+        colors: params.get("color")?.split("--") || [],
+    });
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -299,43 +317,94 @@ const SideBarFilters = () => {
                     </PopoverContent>
                 </Popover>
             </div>
-            <div className="flex gap-2  min-h-8">
-                <span>selected filters</span>
-                <div className="flex flex-wrap gap-2">
-                    {activetypes.map((type) => (
-                        <span
-                            key={type}
-                            className="bg-black text-white rounded-full px-2 py-1"
+            {(activeCategories.length > 0 ||
+                activeSizes.length > 0 ||
+                activetypes.length > 0 ||
+                activeColors.length > 0) && (
+                <div className="flex gap-2  min-h-8">
+                    <span>selected filters</span>
+                    <div className="flex flex-wrap gap-2">
+                        {activetypes.map((type) => (
+                            <button
+                                key={type}
+                                className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
+                                onClick={() => {
+                                    handleCheckboxChange(
+                                        "suitableFor",
+                                        type,
+                                        setActivetypes,
+                                        activetypes
+                                    );
+                                }}
+                            >
+                                {type}
+                            </button>
+                        ))}
+                        {activeCategories.map((category) => (
+                            <button
+                                key={category}
+                                className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
+                                onClick={() => {
+                                    handleCheckboxChange(
+                                        "categories",
+                                        category,
+                                        setActiveCategories,
+                                        activeCategories
+                                    );
+                                }}
+                            >
+                                {category}
+                            </button>
+                        ))}
+                        {activeSizes.map((size) => (
+                            <button
+                                key={size}
+                                className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
+                                onClick={() => {
+                                    handleCheckboxChange(
+                                        "size",
+                                        size,
+                                        setActiveSizes,
+                                        activeSizes
+                                    );
+                                }}
+                            >
+                                {size}
+                            </button>
+                        ))}
+                        {activeColors.map((color) => (
+                            <button
+                                key={color}
+                                className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
+                                onClick={() => {
+                                    handleCheckboxChange(
+                                        "color",
+                                        color,
+                                        setActiveColors,
+                                        activeColors
+                                    );
+                                }}
+                            >
+                                {color}
+                            </button>
+                        ))}
+                        <button
+                            className="bg-red-500 hover:bg-red-500 text-white rounded-full px-2 py-1"
+                            onClick={() => {
+                                setActivetypes([]);
+                                setActiveCategories([]);
+                                setActiveColors([]);
+                                setActiveSizes([]);
+                                router.push(`${pathname}`, {
+                                    scroll: false,
+                                });
+                            }}
                         >
-                            {type}
-                        </span>
-                    ))}
-                    {activeCategories.map((category) => (
-                        <span
-                            key={category}
-                            className="bg-black text-white rounded-full px-2 py-1"
-                        >
-                            {category}
-                        </span>
-                    ))}
-                    {activeSizes.map((size) => (
-                        <span
-                            key={size}
-                            className="bg-black text-white rounded-full px-2 py-1"
-                        >
-                            {size}
-                        </span>
-                    ))}
-                    {activeColors.map((color) => (
-                        <span
-                            key={color}
-                            className="bg-black text-white rounded-full px-2 py-1"
-                        >
-                            {color}
-                        </span>
-                    ))}{" "}
+                            Clear all
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

@@ -7,6 +7,10 @@ import ImageCarousel from "./_components/imageCarousel";
 
 export default async function Home() {
     const products = await DB.product.findMany({
+        where: {
+            isArchived: false,
+            isFeatured: true,
+        },
         include: {
             images: true,
             category: true,

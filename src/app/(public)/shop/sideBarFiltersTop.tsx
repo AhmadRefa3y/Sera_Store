@@ -10,7 +10,15 @@ import {
 } from "@/components/ui/popover";
 import { ArrowDown } from "lucide-react";
 import getFilters from "@/data/GetFilters";
-const SideBarFilters = () => {
+const SideBarFilters = ({
+    categories,
+    colors,
+    sizes,
+}: {
+    categories: Category[];
+    colors: Color[];
+    sizes: Size[];
+}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -19,30 +27,14 @@ const SideBarFilters = () => {
         [searchParams]
     );
 
-    const [Vairants, setVairants] = useState<{
-        categories: Category[];
-        colors: Color[];
-        sizes: Size[];
-    }>({
-        categories: [],
-        colors: [],
-        sizes: [],
-    });
-
-    useEffect(() => {
-        async function FetchVairnts() {
-            const GetVariants = await getFilters();
-            setVairants(GetVariants);
-        }
-        FetchVairnts();
-    }, []);
-
     const [popoversOpen, setpopoversOpen] = useState({
         categories: false,
         types: false,
         sizes: false,
         colors: false,
     });
+
+    console.log(params);
 
     const [activeCategories, setActiveCategories] = useState<string[]>(
         params.get("categories")?.split("--") || []
@@ -56,23 +48,6 @@ const SideBarFilters = () => {
     const [activeColors, setActiveColors] = useState<string[]>(
         params.get("color")?.split("--") || []
     );
-
-    // wrap activeVariants state in a useCallback
-    const activeVariantsa = useMemo(() => {
-        return {
-            categories: params.get("categories")?.split("--") || [],
-            types: params.get("suitableFor")?.split("--") || [],
-            sizes: params.get("size")?.split("--") || [],
-            colors: params.get("color")?.split("--") || [],
-        };
-    }, [params]);
-
-    const [activeVariants, setactiveVariants] = useState({
-        categories: params.get("categories")?.split("--") || [],
-        types: params.get("suitableFor")?.split("--") || [],
-        sizes: params.get("size")?.split("--") || [],
-        colors: params.get("color")?.split("--") || [],
-    });
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
@@ -192,7 +167,7 @@ const SideBarFilters = () => {
                         className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
                         align="start"
                     >
-                        {Vairants.categories.map((category, categoryIdx) => (
+                        {categories.map((category, categoryIdx) => (
                             <Button
                                 key={`category-${categoryIdx}`}
                                 variant={"outline"}
@@ -243,7 +218,7 @@ const SideBarFilters = () => {
                         className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
                         align="start"
                     >
-                        {Vairants.sizes.map((size, sizeIdx) => (
+                        {sizes.map((size, sizeIdx) => (
                             <Button
                                 key={`size-${sizeIdx}`}
                                 variant={"outline"}
@@ -292,7 +267,7 @@ const SideBarFilters = () => {
                         className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
                         align="start"
                     >
-                        {Vairants.colors.map((color, colorIdx) => (
+                        {colors.map((color, colorIdx) => (
                             <Button
                                 key={`color-${colorIdx}`}
                                 variant={"outline"}
@@ -317,10 +292,10 @@ const SideBarFilters = () => {
                     </PopoverContent>
                 </Popover>
             </div>
-            {(activeCategories.length > 0 ||
-                activeSizes.length > 0 ||
-                activetypes.length > 0 ||
-                activeColors.length > 0) && (
+            {activeCategories.length > 0 ||
+            activeSizes.length > 0 ||
+            activetypes.length > 0 ||
+            activeColors.length > 0 ? (
                 <div className="flex gap-2  min-h-8">
                     <span>selected filters</span>
                     <div className="flex flex-wrap gap-2">
@@ -391,19 +366,21 @@ const SideBarFilters = () => {
                         <button
                             className="bg-red-500 hover:bg-red-500 text-white rounded-full px-2 py-1"
                             onClick={() => {
+                                router.push(`${pathname}`, {
+                                    scroll: false,
+                                });
                                 setActivetypes([]);
                                 setActiveCategories([]);
                                 setActiveColors([]);
                                 setActiveSizes([]);
-                                router.push(`${pathname}`, {
-                                    scroll: false,
-                                });
                             }}
                         >
                             Clear all
                         </button>
                     </div>
                 </div>
+            ) : (
+                <div className="flex gap-2  min-h-8"> No filters selected </div>
             )}
         </div>
     );

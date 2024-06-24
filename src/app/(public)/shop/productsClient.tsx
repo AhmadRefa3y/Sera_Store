@@ -54,7 +54,7 @@ const ProductsGrid = () => {
                 products.length > 0 &&
                 products?.map((product) => (
                     <div
-                        className=" w-[265px]  group group/parent  flex items-start flex-col gap-1  border border-stone-300"
+                        className=" w-[265px]  group group/parent  flex items-start flex-col gap-1  border border-stone-300     hover:border-sky-400  duration-500  "
                         key={product.id}
                     >
                         <div className=" group  w-full h-[260px] overflow-hidden  bg-[#f8f8f8]  relative  ">
@@ -62,7 +62,7 @@ const ProductsGrid = () => {
                                 src={product.image}
                                 fill
                                 alt={""}
-                                className="group-hover:scale-110 object-fill duration-1000 animate-in mx-auto"
+                                className=" object-fill duration-1000 animate-in mx-auto"
                             />
                             <div className="flex items-center justify-center absolute -bottom-3 group-hover/parent:bottom-3 opacity-0  group-hover/parent:opacity-100 w-full gap-3 duration-300">
                                 <Link

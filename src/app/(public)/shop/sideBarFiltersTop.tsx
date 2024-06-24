@@ -10,15 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { ArrowDown } from "lucide-react";
 import getFilters from "@/data/GetFilters";
-const SideBarFilters = ({
-    categories,
-    colors,
-    sizes,
-}: {
-    categories: Category[];
-    colors: Color[];
-    sizes: Size[];
-}) => {
+const SideBarFilters = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -34,8 +26,23 @@ const SideBarFilters = ({
         colors: false,
     });
 
-    console.log(params);
+    const [Vairants, setVairants] = useState<{
+        categories: Category[];
+        colors: Color[];
+        sizes: Size[];
+    }>({
+        categories: [],
+        colors: [],
+        sizes: [],
+    });
 
+    useEffect(() => {
+        async function FetchVairnts() {
+            const GetVariants = await getFilters();
+            setVairants(GetVariants);
+        }
+        FetchVairnts();
+    }, []);
     const [activeCategories, setActiveCategories] = useState<string[]>(
         params.get("categories")?.split("--") || []
     );
@@ -167,7 +174,7 @@ const SideBarFilters = ({
                         className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
                         align="start"
                     >
-                        {categories.map((category, categoryIdx) => (
+                        {Vairants.categories.map((category, categoryIdx) => (
                             <Button
                                 key={`category-${categoryIdx}`}
                                 variant={"outline"}
@@ -218,7 +225,7 @@ const SideBarFilters = ({
                         className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
                         align="start"
                     >
-                        {sizes.map((size, sizeIdx) => (
+                        {Vairants.sizes.map((size, sizeIdx) => (
                             <Button
                                 key={`size-${sizeIdx}`}
                                 variant={"outline"}
@@ -267,7 +274,7 @@ const SideBarFilters = ({
                         className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
                         align="start"
                     >
-                        {colors.map((color, colorIdx) => (
+                        {Vairants.colors.map((color, colorIdx) => (
                             <Button
                                 key={`color-${colorIdx}`}
                                 variant={"outline"}

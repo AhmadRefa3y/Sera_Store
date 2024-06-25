@@ -64,7 +64,7 @@ const CollapsibleFilter = ({
                     </span>
                     <span className="flex  text-black text-xs items-center justify-center h-[28px]">
                         {activeFilters.slice(0, 2).map((item, id) => (
-                            <span>
+                            <span key={`${item}-${id}`}>
                                 {item}{" "}
                                 {id === 0 && activeFilters.length > 1 && ","}
                             </span>

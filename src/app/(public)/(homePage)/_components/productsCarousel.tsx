@@ -105,7 +105,7 @@ const ProductsCarousel = ({ products }: { products: product[] }) => {
                     ) : (
                         <div
                             key={13}
-                            className="md:h-[380px] h-[150px] mx-auto flex items-center justify-center "
+                            className="md:h-[380px] h-[230px] mx-auto flex items-center justify-center "
                         >
                             <div className="w-full  p-2  rounded-md flex items-center justify-center flex-col ">
                                 <p>No Products Found</p>

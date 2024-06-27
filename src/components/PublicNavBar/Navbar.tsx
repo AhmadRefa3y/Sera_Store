@@ -56,10 +56,15 @@ const Navbar = () => {
             </div>
             <div className="flex flex-col justify-center items-center gap-2 sm:basis-[50%] mr-auto">
                 <Link
-                    className="text-5xl py-3 relative sm:h-[100px] sm:w-[100px] h-[70px] w-[70px]"
+                    className="text-5xl py-3 relative sm:h-[65px] sm:w-[100px] h-[45px] w-[70px]"
                     href={"/"}
                 >
-                    <Image src={"/logo.svg"} fill alt={"logo"} />
+                    <Image
+                        src={"/logo.svg"}
+                        fill
+                        alt={"logo"}
+                        className="object-center object-fill"
+                    />
                 </Link>
                 <div className=" z-50 w-full justify-center text-black gap-4  px-3  hidden lg:flex">
                     {links.map((link) => (
@@ -73,7 +78,7 @@ const Navbar = () => {
                     ))}
                 </div>
             </div>
-            <div className=" gap-2 items-center justify-end  flex w-fit">
+            <div className="sm:basis-[25%] gap-2 items-center justify-end  flex w-fit">
                 {session.data?.user ? (
                     <DropdownMenu>
                         <DropdownMenuTrigger>

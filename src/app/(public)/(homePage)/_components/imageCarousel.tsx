@@ -15,24 +15,23 @@ const ImageCarousel = () => {
     const Images = [billboard1, billboard2];
     return (
         <Carousel
-            className=" mx-auto max-h-[calc(100vh-128px)]   overflow-hidden"
+            className=" mx-auto max-h-[calc(100vh-128px)]   w-full  overflow-hidden"
             dir="ltr"
             opts={{ slidesToScroll: 1, loop: true }}
         >
             <CarouselContent className=" mx-auto w-full flex items-center justify-start h-full">
                 {Images.map((image, index) => (
-                    <CarouselItem
-                        key={index}
-                        className="mx-auto flex items-center justify-center h-full relative  "
-                    >
-                        <Image
-                            src={image}
-                            alt=""
-                            width={image.width}
-                            height={image.height}
-                            className="w-full h-full object-center  cursor-grab "
-                            priority={true}
-                        />
+                    <CarouselItem key={index}>
+                        <div className="mx-auto flex items-center justify-center  min-h-[450px] sm:min-h-[600px] h-full relative  ">
+                            <Image
+                                src={image}
+                                alt=""
+                                fill
+                                quality={100}
+                                className="w-full h-full object-center object-cover  cursor-grab "
+                                priority={true}
+                            />
+                        </div>
                     </CarouselItem>
                 ))}
             </CarouselContent>

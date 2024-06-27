@@ -8,8 +8,11 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Sheet } from "lucide-react";
 import getFilters from "@/data/GetFilters";
+import { SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import CollapsibleFilter from "./collapsibleFilter";
+import MobileFilters from "./MobileFilters";
 const SideBarFilters = () => {
     const router = useRouter();
     const pathname = usePathname();
@@ -24,6 +27,12 @@ const SideBarFilters = () => {
         types: false,
         sizes: false,
         colors: false,
+    });
+    const [openFiltersMobile, setopenFiltersMobile] = useState({
+        categories: false,
+        color: false,
+        size: false,
+        suitableFor: false,
     });
 
     const [Vairants, setVairants] = useState<{
@@ -96,214 +105,260 @@ const SideBarFilters = () => {
         });
     };
 
+    const MobileFiltersItems: {
+        filterName: "categories" | "color" | "size" | "suitableFor";
+        filters: string[];
+        activeFilters: string[];
+        isFilterOpen: boolean;
+        setActiveFilter: React.Dispatch<React.SetStateAction<string[]>>;
+    }[] = [
+        {
+            filterName: "categories",
+            filters: Vairants.categories.map((category) => category.name),
+            activeFilters: activeCategories,
+            isFilterOpen: openFiltersMobile.categories,
+            setActiveFilter: setActiveCategories,
+        },
+        {
+            filterName: "suitableFor",
+            filters: Object.values(SuitableFor),
+            activeFilters: activetypes,
+            isFilterOpen: openFiltersMobile.suitableFor,
+            setActiveFilter: setActivetypes,
+        },
+        {
+            filterName: "size",
+            filters: Vairants.sizes.map((size) => size.value),
+            activeFilters: activeSizes,
+            isFilterOpen: openFiltersMobile.size,
+            setActiveFilter: setActiveSizes,
+        },
+        {
+            filterName: "color",
+            filters: Vairants.colors.map((color) => color.name),
+            activeFilters: activeColors,
+            isFilterOpen: openFiltersMobile.color,
+            setActiveFilter: setActiveColors,
+        },
+    ];
     return (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap  w-full items-center  justify-start gap-4">
-                <Popover
-                    open={popoversOpen.types}
-                    onOpenChange={() => {
-                        setpopoversOpen((prev) => ({
-                            ...prev,
-                            types: !prev.types,
-                        }));
-                    }}
-                >
-                    <PopoverTrigger
-                        className={`flex gap-2 capitalize ${
-                            popoversOpen.types && "text-red-500"
-                        }`}
+        <div>
+            <div className="sm:flex flex-col gap-4 hidden ">
+                <div className="flex flex-wrap  w-full items-center  justify-start gap-4 ">
+                    <Popover
+                        open={popoversOpen.types}
+                        onOpenChange={() => {
+                            setpopoversOpen((prev) => ({
+                                ...prev,
+                                types: !prev.types,
+                            }));
+                        }}
                     >
-                        for
-                        <ArrowDown
-                            className={`${
-                                popoversOpen.types && "rotate-180"
-                            } duration-300`}
-                        />
-                    </PopoverTrigger>
-                    <PopoverContent
-                        className="w-[170px] flex flex-col gap-2 rounded-none p-0  m-0"
-                        align="start"
+                        <PopoverTrigger
+                            className={`flex gap-2 capitalize ${
+                                popoversOpen.types && "text-red-500"
+                            }`}
+                        >
+                            for
+                            <ArrowDown
+                                className={`${
+                                    popoversOpen.types && "rotate-180"
+                                } duration-300`}
+                            />
+                        </PopoverTrigger>
+                        <PopoverContent
+                            className="w-[170px] flex flex-col gap-2 rounded-none p-0  m-0"
+                            align="start"
+                        >
+                            {Object.values(SuitableFor).map((item, typeIdx) => (
+                                <Button
+                                    key={item}
+                                    variant={"outline"}
+                                    className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
+                                    onClick={() => {
+                                        handleCheckboxChange(
+                                            "suitableFor",
+                                            item,
+                                            setActivetypes,
+                                            activetypes
+                                        );
+                                    }}
+                                >
+                                    <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
+                                        {activetypes.includes(item) && (
+                                            <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
+                                        )}
+                                    </div>
+                                    {item}
+                                </Button>
+                            ))}
+                        </PopoverContent>
+                    </Popover>
+                    <Popover
+                        open={popoversOpen.categories}
+                        onOpenChange={() => {
+                            setpopoversOpen((prev) => ({
+                                ...prev,
+                                categories: !prev.categories,
+                            }));
+                        }}
                     >
-                        {Object.values(SuitableFor).map((item, typeIdx) => (
-                            <Button
-                                key={item}
-                                variant={"outline"}
-                                className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
-                                onClick={() => {
-                                    handleCheckboxChange(
-                                        "suitableFor",
-                                        item,
-                                        setActivetypes,
-                                        activetypes
-                                    );
-                                }}
-                            >
-                                <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                    {activetypes.includes(item) && (
-                                        <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
-                                    )}
-                                </div>
-                                {item}
-                            </Button>
-                        ))}
-                    </PopoverContent>
-                </Popover>
-                <Popover
-                    open={popoversOpen.categories}
-                    onOpenChange={() => {
-                        setpopoversOpen((prev) => ({
-                            ...prev,
-                            categories: !prev.categories,
-                        }));
-                    }}
-                >
-                    <PopoverTrigger
-                        className={`flex gap-2 capitalize ${
-                            popoversOpen.categories && "text-red-500"
-                        }`}
+                        <PopoverTrigger
+                            className={`flex gap-2 capitalize ${
+                                popoversOpen.categories && "text-red-500"
+                            }`}
+                        >
+                            categories
+                            <ArrowDown
+                                className={`${
+                                    popoversOpen.categories && "rotate-180"
+                                } duration-300`}
+                            />
+                        </PopoverTrigger>
+                        <PopoverContent
+                            className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
+                            align="start"
+                        >
+                            {Vairants.categories.map(
+                                (category, categoryIdx) => (
+                                    <Button
+                                        key={`category-${categoryIdx}`}
+                                        variant={"outline"}
+                                        className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
+                                        onClick={() => {
+                                            handleCheckboxChange(
+                                                "categories",
+                                                category.name,
+                                                setActiveCategories,
+                                                activeCategories
+                                            );
+                                        }}
+                                    >
+                                        <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
+                                            {activeCategories.includes(
+                                                category.name
+                                            ) && (
+                                                <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
+                                            )}
+                                        </div>
+                                        {category.name}
+                                    </Button>
+                                )
+                            )}
+                        </PopoverContent>
+                    </Popover>
+                    <Popover
+                        open={popoversOpen.sizes}
+                        onOpenChange={() => {
+                            setpopoversOpen((prev) => ({
+                                ...prev,
+                                sizes: !prev.sizes,
+                            }));
+                        }}
                     >
-                        categories
-                        <ArrowDown
-                            className={`${
-                                popoversOpen.categories && "rotate-180"
-                            } duration-300`}
-                        />
-                    </PopoverTrigger>
-                    <PopoverContent
-                        className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
-                        align="start"
+                        <PopoverTrigger
+                            className={`flex gap-2 capitalize ${
+                                popoversOpen.sizes && "text-red-500"
+                            }`}
+                        >
+                            sizes
+                            <ArrowDown
+                                className={`${
+                                    popoversOpen.sizes && "rotate-180"
+                                } duration-300`}
+                            />
+                        </PopoverTrigger>
+                        <PopoverContent
+                            className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
+                            align="start"
+                        >
+                            {Vairants.sizes.map((size, sizeIdx) => (
+                                <Button
+                                    key={`size-${sizeIdx}`}
+                                    variant={"outline"}
+                                    className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
+                                    onClick={() => {
+                                        handleCheckboxChange(
+                                            "size",
+                                            size.value,
+                                            setActiveSizes,
+                                            activeSizes
+                                        );
+                                    }}
+                                >
+                                    <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
+                                        {activeSizes.includes(size.value) && (
+                                            <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
+                                        )}
+                                    </div>
+                                    {size.name}
+                                </Button>
+                            ))}
+                        </PopoverContent>
+                    </Popover>
+                    <Popover
+                        open={popoversOpen.colors}
+                        onOpenChange={() => {
+                            setpopoversOpen((prev) => ({
+                                ...prev,
+                                colors: !prev.colors,
+                            }));
+                        }}
                     >
-                        {Vairants.categories.map((category, categoryIdx) => (
-                            <Button
-                                key={`category-${categoryIdx}`}
-                                variant={"outline"}
-                                className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
-                                onClick={() => {
-                                    handleCheckboxChange(
-                                        "categories",
-                                        category.name,
-                                        setActiveCategories,
-                                        activeCategories
-                                    );
-                                }}
-                            >
-                                <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                    {activeCategories.includes(
-                                        category.name
-                                    ) && (
-                                        <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
-                                    )}
-                                </div>
-                                {category.name}
-                            </Button>
-                        ))}
-                    </PopoverContent>
-                </Popover>
-                <Popover
-                    open={popoversOpen.sizes}
-                    onOpenChange={() => {
-                        setpopoversOpen((prev) => ({
-                            ...prev,
-                            sizes: !prev.sizes,
-                        }));
-                    }}
-                >
-                    <PopoverTrigger
-                        className={`flex gap-2 capitalize ${
-                            popoversOpen.sizes && "text-red-500"
-                        }`}
-                    >
-                        sizes
-                        <ArrowDown
-                            className={`${
-                                popoversOpen.sizes && "rotate-180"
-                            } duration-300`}
-                        />
-                    </PopoverTrigger>
-                    <PopoverContent
-                        className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
-                        align="start"
-                    >
-                        {Vairants.sizes.map((size, sizeIdx) => (
-                            <Button
-                                key={`size-${sizeIdx}`}
-                                variant={"outline"}
-                                className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
-                                onClick={() => {
-                                    handleCheckboxChange(
-                                        "size",
-                                        size.value,
-                                        setActiveSizes,
-                                        activeSizes
-                                    );
-                                }}
-                            >
-                                <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                    {activeSizes.includes(size.value) && (
-                                        <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
-                                    )}
-                                </div>
-                                {size.name}
-                            </Button>
-                        ))}
-                    </PopoverContent>
-                </Popover>
-                <Popover
-                    open={popoversOpen.colors}
-                    onOpenChange={() => {
-                        setpopoversOpen((prev) => ({
-                            ...prev,
-                            colors: !prev.colors,
-                        }));
-                    }}
-                >
-                    <PopoverTrigger
-                        className={`flex gap-2 capitalize ${
-                            popoversOpen.colors && "text-red-500"
-                        }`}
-                    >
-                        colors
-                        <ArrowDown
-                            className={`${
-                                popoversOpen.colors && "rotate-180"
-                            } duration-300`}
-                        />
-                    </PopoverTrigger>
-                    <PopoverContent
-                        className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
-                        align="start"
-                    >
-                        {Vairants.colors.map((color, colorIdx) => (
-                            <Button
-                                key={`color-${colorIdx}`}
-                                variant={"outline"}
-                                className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
-                                onClick={() => {
-                                    handleCheckboxChange(
-                                        "color",
-                                        color.name,
-                                        setActiveColors,
-                                        activeColors
-                                    );
-                                }}
-                            >
-                                <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                    {activeColors.includes(color.name) && (
-                                        <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
-                                    )}
-                                </div>
-                                {color.name}
-                            </Button>
-                        ))}
-                    </PopoverContent>
-                </Popover>
+                        <PopoverTrigger
+                            className={`flex gap-2 capitalize ${
+                                popoversOpen.colors && "text-red-500"
+                            }`}
+                        >
+                            colors
+                            <ArrowDown
+                                className={`${
+                                    popoversOpen.colors && "rotate-180"
+                                } duration-300`}
+                            />
+                        </PopoverTrigger>
+                        <PopoverContent
+                            className="w-[170px] flex flex-col gap-2 rounded-none p-0 m-0 "
+                            align="start"
+                        >
+                            {Vairants.colors.map((color, colorIdx) => (
+                                <Button
+                                    key={`color-${colorIdx}`}
+                                    variant={"outline"}
+                                    className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
+                                    onClick={() => {
+                                        handleCheckboxChange(
+                                            "color",
+                                            color.name,
+                                            setActiveColors,
+                                            activeColors
+                                        );
+                                    }}
+                                >
+                                    <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
+                                        {activeColors.includes(color.name) && (
+                                            <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
+                                        )}
+                                    </div>
+                                    {color.name}
+                                </Button>
+                            ))}
+                        </PopoverContent>
+                    </Popover>
+                </div>
             </div>
+            <MobileFilters
+                Filters={MobileFiltersItems}
+                handleCheckboxChange={handleCheckboxChange}
+                openFilters={openFiltersMobile}
+                setFilterOpen={setopenFiltersMobile}
+            />
             {activeCategories.length > 0 ||
             activeSizes.length > 0 ||
             activetypes.length > 0 ||
             activeColors.length > 0 ? (
-                <div className="flex gap-2  min-h-8">
-                    <span>selected filters</span>
+                <div className="flex gap-2  sm:min-h-8 min-h-4 text-xs py-2">
+                    <span className="text-lg"> filters</span>
                     <div className="flex flex-wrap gap-2">
                         {activetypes.map((type) => (
                             <button
@@ -386,7 +441,10 @@ const SideBarFilters = () => {
                     </div>
                 </div>
             ) : (
-                <div className="flex gap-2  min-h-8"> No filters selected </div>
+                <div className="flex gap-2  min-h-8 w-full mx-auto items-center justify-center">
+                    {" "}
+                    No filters selected{" "}
+                </div>
             )}
         </div>
     );

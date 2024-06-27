@@ -54,7 +54,7 @@ const ProductDetail = ({
     return (
         <div className="flex gap-2 font-normal h-full text-sm flex-col sm:flex-row pb-3 flex-1  ">
             <div className="sm:basis-[40%]">
-                <div className="w-full h-full mx-auto relative">
+                <div className="sm:w-full sm:h-full mx-auto relative h-[340px] w-[340px]">
                     <Image
                         src={product.image}
                         fill

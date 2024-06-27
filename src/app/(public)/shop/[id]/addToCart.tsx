@@ -29,7 +29,7 @@ const AddToCart = (product: CartProduct) => {
     };
 
     return (
-        <div className="flex sm:gap-2 gap-1 flex-col sm:flex-row ">
+        <div className="flex sm:gap-2 gap-1 md:flex-col sm:flex-row ">
             <div className="flex justify-evenly border border-stone-300   sm:mx-0 px-1 sm:text-lg p-1">
                 <button onClick={() => setQuntity((pre) => pre + 1)}>
                     <Plus />

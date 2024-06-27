@@ -47,17 +47,17 @@ const ProductsGrid = () => {
     }, [params]);
 
     return (
-        <div className="flex w-full  justify-start items-start h-full  flex-wrap gap-2 flex-1">
+        <div className="flex w-full  justify-center items-start h-full  flex-wrap gap-2 flex-1">
             {loading ? (
                 <Spinner />
             ) : (
                 products.length > 0 &&
                 products?.map((product) => (
                     <div
-                        className=" w-[265px]  group group/parent  flex items-start flex-col gap-1  border border-stone-300     hover:border-sky-400  duration-500  "
+                        className=" sm:w-[265px] w-[160px]   group group/parent  flex items-start flex-col gap-1  border border-stone-300     hover:border-sky-400  duration-500  "
                         key={product.id}
                     >
-                        <div className=" group  w-full h-[260px] overflow-hidden  bg-[#f8f8f8]  relative  ">
+                        <div className=" group  w-full sm:h-[260px] h-[170px] overflow-hidden  bg-[#f8f8f8]  relative  ">
                             <Image
                                 src={product.image}
                                 fill

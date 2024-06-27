@@ -43,18 +43,17 @@ const SideBarFilters = () => {
         }
         FetchVairnts();
     }, []);
-    const [activeCategories, setActiveCategories] = useState<string[]>(
-        params.get("categories")?.split("--") || []
-    );
-    const [activetypes, setActivetypes] = useState<string[]>(
-        params.get("suitableFor")?.split("--") || []
-    );
-    const [activeSizes, setActiveSizes] = useState<string[]>(
-        params.get("size")?.split("--") || []
-    );
-    const [activeColors, setActiveColors] = useState<string[]>(
-        params.get("color")?.split("--") || []
-    );
+    const [activeCategories, setActiveCategories] = useState<string[]>([]);
+    const [activetypes, setActivetypes] = useState<string[]>([]);
+    const [activeSizes, setActiveSizes] = useState<string[]>([]);
+    const [activeColors, setActiveColors] = useState<string[]>([]);
+
+    useEffect(() => {
+        setActiveCategories(params.get("categories")?.split("--") || []);
+        setActivetypes(params.get("suitableFor")?.split("--") || []);
+        setActiveSizes(params.get("size")?.split("--") || []);
+        setActiveColors(params.get("color")?.split("--") || []);
+    }, [params]);
 
     const createQueryString = useCallback(
         (name: string, value: string) => {

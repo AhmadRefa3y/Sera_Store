@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const FlyoutLink = ({
@@ -12,6 +13,7 @@ export const FlyoutLink = ({
     FlyoutContent: React.ReactNode;
 }) => {
     const [open, setOpen] = useState(false);
+    const router = useRouter();
 
     const showFlyout = FlyoutContent && open;
 
@@ -21,7 +23,13 @@ export const FlyoutLink = ({
             onMouseLeave={() => setOpen(false)}
             className="relative w-fit h-fit"
         >
-            <Link href={href} className="relative text-black">
+            <button
+                className="relative text-black"
+                onClick={() => {
+                    router.push(href);
+                    router.refresh();
+                }}
+            >
                 {children}
                 <span
                     style={{
@@ -29,7 +37,7 @@ export const FlyoutLink = ({
                     }}
                     className="absolute -bottom-2 -left-2 -right-2 h-1 origin-left scale-x-0 rounded-full bg-indigo-300 transition-transform duration-300 ease-out"
                 />
-            </Link>
+            </button>
             <AnimatePresence>
                 {showFlyout && (
                     <motion.div

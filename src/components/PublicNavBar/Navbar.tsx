@@ -44,7 +44,7 @@ const Navbar = () => {
         },
     ];
     return (
-        <div className="flex sm:justify-between justify-center h-32 items-center sm:px-10  py-2 text-xl ">
+        <div className="flex sm:justify-between justify-center sm:h-32 h-fit items-center sm:px-10  py-2 text-xl ">
             <div className="basis-[25%] hidden sm:inline-flex">
                 <div className="flex items-center justify-between border-b pb-1 border-black w-fit">
                     <input
@@ -54,9 +54,12 @@ const Navbar = () => {
                     <Search />
                 </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-2 sm:basis-[50%] basis-full ">
-                <Link className="text-5xl py-3" href={"/"}>
-                    Sera Store
+            <div className="flex flex-col justify-center items-center gap-2 sm:basis-[50%] mr-auto">
+                <Link
+                    className="text-5xl py-3 relative sm:h-[100px] sm:w-[100px] h-[70px] w-[70px]"
+                    href={"/"}
+                >
+                    <Image src={"/logo.svg"} fill alt={"logo"} />
                 </Link>
                 <div className=" z-50 w-full justify-center text-black gap-4  px-3  hidden lg:flex">
                     {links.map((link) => (
@@ -70,7 +73,7 @@ const Navbar = () => {
                     ))}
                 </div>
             </div>
-            <div className=" gap-4 items-center justify-end basis-[25%] hidden sm:flex">
+            <div className=" gap-2 items-center justify-end  flex w-fit">
                 {session.data?.user ? (
                     <DropdownMenu>
                         <DropdownMenuTrigger>

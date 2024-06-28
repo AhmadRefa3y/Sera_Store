@@ -1,15 +1,22 @@
 "use server";
-import { ProductType } from "@/app/(public)/shop/productsClient";
+import { ProductType } from "@/app/(public)/shop/Products";
 import DB from "@/lib/prismaDb";
 
-export const GetProducts = async (Filters?: any) => {
+export const GetProducts = async (Filters: {
+    types: any;
+    categories: string | null;
+    sizes: string | null;
+    colors: string | null;
+    priceRange: string | null;
+    sort: string | null;
+}) => {
     const nameFIlter = Filters?.sort;
     const priceFIlter = Filters?.priceRange;
     const priceFIltersSpilted = priceFIlter?.split("--");
     const categories = Filters.categories?.split("--");
-    const sizes = Filters?.size?.split("--");
-    const colors = Filters?.color?.split("--");
-    const suitableFor = Filters?.suitableFor?.split("--");
+    const sizes = Filters?.sizes?.split("--");
+    const colors = Filters?.colors?.split("--");
+    const suitableFor = Filters?.types?.split("--");
 
     try {
         const products = await DB.product.findMany({

@@ -8,12 +8,10 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { ArrowDown, Sheet } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import getFilters from "@/data/GetFilters";
-import { SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import CollapsibleFilter from "./collapsibleFilter";
 import MobileFilters from "./MobileFilters";
-const SideBarFilters = () => {
+const Filters = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -22,7 +20,7 @@ const SideBarFilters = () => {
         [searchParams]
     );
 
-    const [popoversOpen, setpopoversOpen] = useState({
+    const [OpenFilters, setOpenFilters] = useState({
         categories: false,
         types: false,
         sizes: false,
@@ -52,16 +50,26 @@ const SideBarFilters = () => {
         }
         FetchVairnts();
     }, []);
-    const [activeCategories, setActiveCategories] = useState<string[]>([]);
-    const [activetypes, setActivetypes] = useState<string[]>([]);
-    const [activeSizes, setActiveSizes] = useState<string[]>([]);
-    const [activeColors, setActiveColors] = useState<string[]>([]);
+
+    const [activeFilters, setActiveFilters] = useState<{
+        categories: string[];
+        types: string[];
+        sizes: string[];
+        colors: string[];
+    }>({
+        categories: params.get("categories")?.split("--") || [],
+        types: params.get("suitableFor")?.split("--") || [],
+        sizes: params.get("size")?.split("--") || [],
+        colors: params.get("color")?.split("--") || [],
+    });
 
     useEffect(() => {
-        setActiveCategories(params.get("categories")?.split("--") || []);
-        setActivetypes(params.get("suitableFor")?.split("--") || []);
-        setActiveSizes(params.get("size")?.split("--") || []);
-        setActiveColors(params.get("color")?.split("--") || []);
+        setActiveFilters({
+            categories: params.get("categories")?.split("--") || [],
+            types: params.get("types")?.split("--") || [],
+            sizes: params.get("sizes")?.split("--") || [],
+            colors: params.get("colors")?.split("--") || [],
+        });
     }, [params]);
 
     const createQueryString = useCallback(
@@ -89,56 +97,50 @@ const SideBarFilters = () => {
         [params]
     );
 
-    const handleCheckboxChange = (
-        name: string,
-        value: string,
-        setState: React.Dispatch<React.SetStateAction<string[]>>,
-        state: string[]
+    const handleFilterChange = (
+        FilterName: "categories" | "colors" | "sizes" | "types",
+        value: string
     ) => {
+        let state = activeFilters[FilterName];
         const newState = state.includes(value)
             ? state.filter((item) => item !== value)
             : [...state, value];
-        setState(newState);
-        const newQueryString = createQueryString(name, value);
+        setActiveFilters((prev) => {
+            return {
+                ...prev,
+                [FilterName]: newState,
+            };
+        });
+        const newQueryString = createQueryString(FilterName, value);
         router.push(`${pathname}?${newQueryString}`, {
             scroll: false,
         });
     };
 
     const MobileFiltersItems: {
-        filterName: "categories" | "color" | "size" | "suitableFor";
+        filterName: "categories" | "colors" | "sizes" | "types";
         filters: string[];
         activeFilters: string[];
-        isFilterOpen: boolean;
-        setActiveFilter: React.Dispatch<React.SetStateAction<string[]>>;
     }[] = [
         {
             filterName: "categories",
             filters: Vairants.categories.map((category) => category.name),
-            activeFilters: activeCategories,
-            isFilterOpen: openFiltersMobile.categories,
-            setActiveFilter: setActiveCategories,
+            activeFilters: activeFilters.categories,
         },
         {
-            filterName: "suitableFor",
+            filterName: "types",
             filters: Object.values(SuitableFor),
-            activeFilters: activetypes,
-            isFilterOpen: openFiltersMobile.suitableFor,
-            setActiveFilter: setActivetypes,
+            activeFilters: activeFilters.types,
         },
         {
-            filterName: "size",
+            filterName: "sizes",
             filters: Vairants.sizes.map((size) => size.value),
-            activeFilters: activeSizes,
-            isFilterOpen: openFiltersMobile.size,
-            setActiveFilter: setActiveSizes,
+            activeFilters: activeFilters.sizes,
         },
         {
-            filterName: "color",
+            filterName: "colors",
             filters: Vairants.colors.map((color) => color.name),
-            activeFilters: activeColors,
-            isFilterOpen: openFiltersMobile.color,
-            setActiveFilter: setActiveColors,
+            activeFilters: activeFilters.colors,
         },
     ];
     return (
@@ -146,9 +148,9 @@ const SideBarFilters = () => {
             <div className="sm:flex flex-col gap-4 hidden ">
                 <div className="flex flex-wrap  w-full items-center  justify-start gap-4 ">
                     <Popover
-                        open={popoversOpen.types}
+                        open={OpenFilters.types}
                         onOpenChange={() => {
-                            setpopoversOpen((prev) => ({
+                            setOpenFilters((prev) => ({
                                 ...prev,
                                 types: !prev.types,
                             }));
@@ -156,13 +158,13 @@ const SideBarFilters = () => {
                     >
                         <PopoverTrigger
                             className={`flex gap-2 capitalize ${
-                                popoversOpen.types && "text-red-500"
+                                OpenFilters.types && "text-red-500"
                             }`}
                         >
                             for
                             <ArrowDown
                                 className={`${
-                                    popoversOpen.types && "rotate-180"
+                                    OpenFilters.types && "rotate-180"
                                 } duration-300`}
                             />
                         </PopoverTrigger>
@@ -176,16 +178,11 @@ const SideBarFilters = () => {
                                     variant={"outline"}
                                     className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
                                     onClick={() => {
-                                        handleCheckboxChange(
-                                            "suitableFor",
-                                            item,
-                                            setActivetypes,
-                                            activetypes
-                                        );
+                                        handleFilterChange("types", item);
                                     }}
                                 >
                                     <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                        {activetypes.includes(item) && (
+                                        {activeFilters.types.includes(item) && (
                                             <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
                                         )}
                                     </div>
@@ -195,9 +192,9 @@ const SideBarFilters = () => {
                         </PopoverContent>
                     </Popover>
                     <Popover
-                        open={popoversOpen.categories}
+                        open={OpenFilters.categories}
                         onOpenChange={() => {
-                            setpopoversOpen((prev) => ({
+                            setOpenFilters((prev) => ({
                                 ...prev,
                                 categories: !prev.categories,
                             }));
@@ -205,13 +202,13 @@ const SideBarFilters = () => {
                     >
                         <PopoverTrigger
                             className={`flex gap-2 capitalize ${
-                                popoversOpen.categories && "text-red-500"
+                                OpenFilters.categories && "text-red-500"
                             }`}
                         >
                             categories
                             <ArrowDown
                                 className={`${
-                                    popoversOpen.categories && "rotate-180"
+                                    OpenFilters.categories && "rotate-180"
                                 } duration-300`}
                             />
                         </PopoverTrigger>
@@ -226,16 +223,14 @@ const SideBarFilters = () => {
                                         variant={"outline"}
                                         className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
                                         onClick={() => {
-                                            handleCheckboxChange(
+                                            handleFilterChange(
                                                 "categories",
-                                                category.name,
-                                                setActiveCategories,
-                                                activeCategories
+                                                category.name
                                             );
                                         }}
                                     >
                                         <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                            {activeCategories.includes(
+                                            {activeFilters.categories.includes(
                                                 category.name
                                             ) && (
                                                 <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
@@ -248,9 +243,9 @@ const SideBarFilters = () => {
                         </PopoverContent>
                     </Popover>
                     <Popover
-                        open={popoversOpen.sizes}
+                        open={OpenFilters.sizes}
                         onOpenChange={() => {
-                            setpopoversOpen((prev) => ({
+                            setOpenFilters((prev) => ({
                                 ...prev,
                                 sizes: !prev.sizes,
                             }));
@@ -258,13 +253,13 @@ const SideBarFilters = () => {
                     >
                         <PopoverTrigger
                             className={`flex gap-2 capitalize ${
-                                popoversOpen.sizes && "text-red-500"
+                                OpenFilters.sizes && "text-red-500"
                             }`}
                         >
                             sizes
                             <ArrowDown
                                 className={`${
-                                    popoversOpen.sizes && "rotate-180"
+                                    OpenFilters.sizes && "rotate-180"
                                 } duration-300`}
                             />
                         </PopoverTrigger>
@@ -278,16 +273,13 @@ const SideBarFilters = () => {
                                     variant={"outline"}
                                     className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
                                     onClick={() => {
-                                        handleCheckboxChange(
-                                            "size",
-                                            size.value,
-                                            setActiveSizes,
-                                            activeSizes
-                                        );
+                                        handleFilterChange("sizes", size.value);
                                     }}
                                 >
                                     <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                        {activeSizes.includes(size.value) && (
+                                        {activeFilters.sizes.includes(
+                                            size.value
+                                        ) && (
                                             <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
                                         )}
                                     </div>
@@ -297,9 +289,9 @@ const SideBarFilters = () => {
                         </PopoverContent>
                     </Popover>
                     <Popover
-                        open={popoversOpen.colors}
+                        open={OpenFilters.colors}
                         onOpenChange={() => {
-                            setpopoversOpen((prev) => ({
+                            setOpenFilters((prev) => ({
                                 ...prev,
                                 colors: !prev.colors,
                             }));
@@ -307,13 +299,13 @@ const SideBarFilters = () => {
                     >
                         <PopoverTrigger
                             className={`flex gap-2 capitalize ${
-                                popoversOpen.colors && "text-red-500"
+                                OpenFilters.colors && "text-red-500"
                             }`}
                         >
                             colors
                             <ArrowDown
                                 className={`${
-                                    popoversOpen.colors && "rotate-180"
+                                    OpenFilters.colors && "rotate-180"
                                 } duration-300`}
                             />
                         </PopoverTrigger>
@@ -327,16 +319,16 @@ const SideBarFilters = () => {
                                     variant={"outline"}
                                     className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
                                     onClick={() => {
-                                        handleCheckboxChange(
-                                            "color",
-                                            color.name,
-                                            setActiveColors,
-                                            activeColors
+                                        handleFilterChange(
+                                            "colors",
+                                            color.name
                                         );
                                     }}
                                 >
                                     <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
-                                        {activeColors.includes(color.name) && (
+                                        {activeFilters.colors.includes(
+                                            color.name
+                                        ) && (
                                             <span className="h-4 w-4 rounded-full bg-black  inline-flex z-50" />
                                         )}
                                     </div>
@@ -349,76 +341,53 @@ const SideBarFilters = () => {
             </div>
             <MobileFilters
                 Filters={MobileFiltersItems}
-                handleCheckboxChange={handleCheckboxChange}
-                openFilters={openFiltersMobile}
-                setFilterOpen={setopenFiltersMobile}
+                handleFilterChange={handleFilterChange}
             />
-            {activeCategories.length > 0 ||
-            activeSizes.length > 0 ||
-            activetypes.length > 0 ||
-            activeColors.length > 0 ? (
+            {Object.values(activeFilters).some(
+                (filterArray) => filterArray.length > 0
+            ) ? (
                 <div className="flex gap-2  sm:min-h-8 min-h-4 text-xs py-2">
                     <span className="text-lg"> filters</span>
                     <div className="flex flex-wrap gap-2">
-                        {activetypes.map((type) => (
+                        {activeFilters.types.map((type) => (
                             <button
                                 key={type}
                                 className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
                                 onClick={() => {
-                                    handleCheckboxChange(
-                                        "suitableFor",
-                                        type,
-                                        setActivetypes,
-                                        activetypes
-                                    );
+                                    handleFilterChange("types", type);
                                 }}
                             >
                                 {type}
                             </button>
                         ))}
-                        {activeCategories.map((category) => (
+                        {activeFilters.categories.map((category) => (
                             <button
                                 key={category}
                                 className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
                                 onClick={() => {
-                                    handleCheckboxChange(
-                                        "categories",
-                                        category,
-                                        setActiveCategories,
-                                        activeCategories
-                                    );
+                                    handleFilterChange("categories", category);
                                 }}
                             >
                                 {category}
                             </button>
                         ))}
-                        {activeSizes.map((size) => (
+                        {activeFilters.sizes.map((size) => (
                             <button
                                 key={size}
                                 className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
                                 onClick={() => {
-                                    handleCheckboxChange(
-                                        "size",
-                                        size,
-                                        setActiveSizes,
-                                        activeSizes
-                                    );
+                                    handleFilterChange("sizes", size);
                                 }}
                             >
                                 {size}
                             </button>
                         ))}
-                        {activeColors.map((color) => (
+                        {activeFilters.colors.map((color) => (
                             <button
                                 key={color}
                                 className="bg-black hover:bg-red-500 text-white rounded-full px-2 py-1 flex items-center justify-center capitalize"
                                 onClick={() => {
-                                    handleCheckboxChange(
-                                        "color",
-                                        color,
-                                        setActiveColors,
-                                        activeColors
-                                    );
+                                    handleFilterChange("colors", color);
                                 }}
                             >
                                 {color}
@@ -430,10 +399,12 @@ const SideBarFilters = () => {
                                 router.push(`${pathname}`, {
                                     scroll: false,
                                 });
-                                setActivetypes([]);
-                                setActiveCategories([]);
-                                setActiveColors([]);
-                                setActiveSizes([]);
+                                setActiveFilters({
+                                    categories: [],
+                                    colors: [],
+                                    sizes: [],
+                                    types: [],
+                                });
                             }}
                         >
                             Clear all
@@ -441,13 +412,12 @@ const SideBarFilters = () => {
                     </div>
                 </div>
             ) : (
-                <div className="flex gap-2  min-h-8 w-full mx-auto items-center justify-center">
-                    {" "}
-                    No filters selected{" "}
+                <div className="flex gap-2 h-11 w-full mx-auto items-center justify-center sm:justify-start">
+                    No filters selected
                 </div>
             )}
         </div>
     );
 };
 
-export default SideBarFilters;
+export default Filters;

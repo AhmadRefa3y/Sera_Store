@@ -1,63 +1,33 @@
-import { Button } from "@/components/ui/button";
 import {
-    Collapsible,
-    CollapsibleTrigger,
-    CollapsibleContent,
-} from "@radix-ui/react-collapsible";
-import { ArrowDown } from "lucide-react";
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 
 interface CollapsibleFilterProps {
-    filterName: "categories" | "color" | "size" | "suitableFor";
+    filterName: "categories" | "colors" | "sizes" | "types";
 
     activeFilters: string[];
-    setActiveFilter: React.Dispatch<React.SetStateAction<string[]>>;
-    openFilters: {
-        categories: boolean;
-        color: boolean;
-        size: boolean;
-        suitableFor: boolean;
-    };
-    setFilterOpen: React.Dispatch<
-        React.SetStateAction<{
-            categories: boolean;
-            color: boolean;
-            size: boolean;
-            suitableFor: boolean;
-        }>
-    >;
-    isFilterOpen: boolean;
-    handleCheckboxChange: (
-        type: string,
-        value: string,
-        setActive: React.Dispatch<React.SetStateAction<string[]>>,
-        active: string[]
+
+    handleFilterChange: (
+        FilterName: "categories" | "colors" | "sizes" | "types",
+        value: string
     ) => void;
     filters: string[];
 }
 
 const CollapsibleFilter = ({
-    isFilterOpen,
     filterName,
     activeFilters,
-    openFilters,
-    setFilterOpen,
-    setActiveFilter,
-    handleCheckboxChange,
+    handleFilterChange,
     filters,
 }: CollapsibleFilterProps) => {
     return (
-        <Collapsible>
-            <CollapsibleTrigger asChild>
+        <AccordionItem value={filterName}>
+            <AccordionTrigger>
                 <button
-                    className={`flex sm:justify-normal justify-between w-full gap-2 capitalize p-4 ${
-                        openFilters[filterName] && "text-red-500"
-                    }`}
-                    onClick={() => {
-                        setFilterOpen((prev) => ({
-                            ...prev,
-                            [filterName]: !isFilterOpen,
-                        }));
-                    }}
+                    className={`flex sm:justify-normal justify-between w-full  capitalize p-2 `}
                 >
                     <span className="text-xl flex-1 mr-auto  text-left">
                         {filterName}
@@ -78,26 +48,16 @@ const CollapsibleFilter = ({
                             </span>
                         )}
                     </span>
-                    <ArrowDown
-                        className={`${
-                            openFilters[filterName] && "rotate-180"
-                        } duration-300`}
-                    />
                 </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
+            </AccordionTrigger>
+            <AccordionContent>
                 {filters.map((item) => (
                     <Button
                         key={item}
                         variant={"outline"}
                         className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
                         onClick={() => {
-                            handleCheckboxChange(
-                                filterName,
-                                item,
-                                setActiveFilter,
-                                activeFilters
-                            );
+                            handleFilterChange(filterName, item);
                         }}
                     >
                         <div className=" h-6 w-6  bg-transparent border border-black rounded-full mx-3 flex items-center justify-center ">
@@ -108,8 +68,8 @@ const CollapsibleFilter = ({
                         {item}
                     </Button>
                 ))}
-            </CollapsibleContent>
-        </Collapsible>
+            </AccordionContent>
+        </AccordionItem>
     );
 };
 

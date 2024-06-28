@@ -4,7 +4,7 @@ import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./addToCartButton";
-import { ProductType } from "@/app/(public)/shop/productsClient";
+import { ProductType } from "@/app/(public)/shop/Products";
 
 const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
     const products: ProductType[] | undefined = await GetProducts(searchParams);

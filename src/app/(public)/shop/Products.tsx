@@ -10,6 +10,7 @@ import { useSearchParams } from "next/navigation";
 import Spinner from "@/components/loadingComp";
 import AddToCartButton from "@/components/addToCartButton";
 import ProductSkelton from "./ProductSkelton";
+import { useQuery } from "@tanstack/react-query";
 
 export type ProductType = {
     id: string;
@@ -22,31 +23,39 @@ export type ProductType = {
     SuitableFor: string;
 };
 const ProductsGrid = () => {
-    const [products, setProducts] = useState<ProductType[]>([]);
-    const [loading, setloading] = useState(true);
     const searchParams = useSearchParams();
     const params = useMemo(
         () => new URLSearchParams(searchParams.toString()),
         [searchParams]
     );
-    useEffect(() => {
-        setloading(true);
-        async function FetchProducts() {
-            const products = await GetProducts({
-                types: params.get("types"),
-                categories: params.get("categories"),
-                sizes: params.get("sizes"),
-                colors: params.get("colors"),
-                priceRange: params.get("priceRange"),
-                sort: params.get("sort"),
-            });
-            if (products) {
-                setProducts(products);
-            }
-            setloading(false);
-        }
-        FetchProducts();
-    }, [params]);
+
+    const types = params.get("types");
+    const categories = params.get("categories");
+    const sizes = params.get("sizes");
+    const colors = params.get("colors");
+    const priceRange = params.get("priceRange");
+    const sort = params.get("sort");
+
+    const { data: products, isLoading: loading } = useQuery({
+        queryKey: [
+            "products",
+            types,
+            categories,
+            sizes,
+            colors,
+            priceRange,
+            sort,
+        ],
+        queryFn: () =>
+            GetProducts({
+                types,
+                categories,
+                sizes,
+                colors,
+                priceRange,
+                sort,
+            }),
+    });
 
     return (
         <div className="flex w-full  justify-center items-start h-full  flex-wrap gap-2 flex-1">
@@ -54,7 +63,8 @@ const ProductsGrid = () => {
                 ? new Array(10)
                       .fill(null)
                       .map((_, i) => <ProductSkelton key={i} />)
-                : products.length > 0 &&
+                : products &&
+                  products.length > 0 &&
                   products?.map((product) => (
                       <div
                           className=" sm:w-[265px] w-[160px]   group group/parent  flex items-start flex-col gap-1  border border-transparent      hover:border-sky-400  duration-500  "

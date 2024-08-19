@@ -2,26 +2,6 @@
 
 import SortableHeader from "@/components/SortColumn";
 import { ColumnDef } from "@tanstack/react-table";
-import { BadgeCheck, BadgeX, MoreHorizontal } from "lucide-react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-
-import Link from "next/link";
-import Image from "next/image";
 
 export type sizeColumn = {
     id: string;

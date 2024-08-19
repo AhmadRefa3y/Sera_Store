@@ -3,8 +3,6 @@ import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
 } from "@/components/ui/carousel";
 import React from "react";
 import billboard1 from "/public/billboard1.webp";

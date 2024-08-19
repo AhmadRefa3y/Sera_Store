@@ -1,15 +1,6 @@
 import DB from "@/lib/prismaDb";
 import { formatter } from "@/lib/utils";
-import { Image as PrismaImage } from "@prisma/client";
-import {
-    ArrowBigLeft,
-    ArrowBigRight,
-    Car,
-    Heart,
-    Minus,
-    Package,
-    Plus,
-} from "lucide-react";
+import { Car } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import AddToCart from "./addToCart";

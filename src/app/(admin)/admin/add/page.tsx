@@ -1,6 +1,5 @@
 import React from "react";
 import AddCategory from "./addCategory";
-import DB from "@/lib/prismaDb";
 import AddColorDialog from "./AddColor";
 import AddsizeDialog from "./AddSize";
 

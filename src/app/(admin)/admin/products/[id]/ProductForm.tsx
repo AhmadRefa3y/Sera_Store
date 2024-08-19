@@ -117,7 +117,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 await UpdateProduct({ ...data, id: initialData.id });
                 router.push(`/admin/products`);
             } else {
-                const res = await CreateProduct(data);
+                await CreateProduct(data);
                 router.push(`/admin/products`);
             }
             toast.success(toastMessage);

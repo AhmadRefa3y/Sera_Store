@@ -25,7 +25,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -43,12 +42,9 @@ export function TableUi<TData, TValue>({
     columns,
     data,
     filterAccessorKey,
-    filterlabel,
     filterplaceholder,
     filterEnabled = true,
     notfound,
-    visabilty,
-    reversedNavButton,
 }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(

@@ -3,7 +3,7 @@ import { CreateCheckoutSession } from "@/actions/checkout";
 import { Button } from "@/components/ui/button";
 import useCart from "@/lib/cartStore";
 import { formatter } from "@/lib/utils";
-import { CircleSlashedIcon, Delete } from "lucide-react";
+import { CircleSlashedIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 

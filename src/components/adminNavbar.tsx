@@ -1,5 +1,4 @@
 import {
-    BadgeDollarSign,
     Layers3,
     LayoutDashboard,
     LineChart,

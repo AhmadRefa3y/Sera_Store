@@ -1,7 +1,7 @@
 import { TableUi } from "@/components/ui/MainTable";
 import React from "react";
 import DB from "@/lib/prismaDb";
-import { categoriesColumns, categoryColumn } from "./CategoriesCoulmn";
+import { categoriesColumns } from "./CategoriesCoulmn";
 import Heading from "@/components/ui/heading";
 import AddCategory from "../../add/addCategory";
 

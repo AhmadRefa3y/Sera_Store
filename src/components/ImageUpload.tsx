@@ -9,7 +9,9 @@ import { Button } from "./ui/button";
 
 interface imageUploadProps {
     disabled?: boolean;
+    // eslint-disable-next-line no-unused-vars
     onChange: (value: string) => void;
+    // eslint-disable-next-line no-unused-vars
     onRemove: (value: string) => void;
     value: string[];
 }

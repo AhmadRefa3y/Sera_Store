@@ -8,7 +8,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { formatter } from "@/lib/utils";
-import { Prisma, SuitableFor } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";

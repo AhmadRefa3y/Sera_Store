@@ -34,14 +34,6 @@ const AddColorDialog = () => {
     const [open, setOpen] = useState(false);
     const [color, setColor] = useState("#2cd800");
 
-    const SaveType = async (formData: FormData) => {
-        const colorName = formData.get("color-name");
-        const colorValue = formData.get("color-value");
-        const res = await CreateColor(
-            colorName as string,
-            colorValue as string
-        );
-    };
     const form = useForm<ColorFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {

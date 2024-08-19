@@ -3,7 +3,6 @@
 import { ProductFormValues } from "@/app/(admin)/admin/products/[id]/ProductForm";
 import DB from "@/lib/prismaDb";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export const CreateProduct = async (data: ProductFormValues) => {
     try {

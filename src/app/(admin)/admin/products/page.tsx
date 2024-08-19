@@ -2,7 +2,6 @@ import { TableUi } from "@/components/ui/MainTable";
 import DB from "@/lib/prismaDb";
 import React from "react";
 import { ProductsColumn, ProductsColumns } from "./ProductsColumns";
-import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import Heading from "@/components/ui/heading";

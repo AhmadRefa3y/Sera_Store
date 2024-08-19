@@ -11,8 +11,6 @@ export const GetProducts = async (Filters: {
     sort: string | null;
 }) => {
     const nameFIlter = Filters?.sort;
-    const priceFIlter = Filters?.priceRange;
-    const priceFIltersSpilted = priceFIlter?.split("--");
     const categories = Filters.categories?.split("--");
     const sizes = Filters?.sizes?.split("--");
     const colors = Filters?.colors?.split("--");

@@ -11,7 +11,9 @@ interface CollapsibleFilterProps {
     activeFilters: string[];
 
     handleFilterChange: (
+        // eslint-disable-next-line no-unused-vars
         FilterName: "categories" | "colors" | "sizes" | "types",
+        // eslint-disable-next-line no-unused-vars
         value: string
     ) => void;
     filters: string[];

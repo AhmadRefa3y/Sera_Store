@@ -26,12 +26,6 @@ const Filters = () => {
         sizes: false,
         colors: false,
     });
-    const [openFiltersMobile, setopenFiltersMobile] = useState({
-        categories: false,
-        color: false,
-        size: false,
-        suitableFor: false,
-    });
 
     const [Vairants, setVairants] = useState<{
         categories: Category[];
@@ -174,7 +168,7 @@ const Filters = () => {
                         >
                             {Object.values(SuitableFor).map((item, typeIdx) => (
                                 <Button
-                                    key={item}
+                                    key={item + typeIdx}
                                     variant={"outline"}
                                     className="w-full border-none rounded-none capitalize flex items-center justify-start p-0 py-1 hover:bg-[#f4eddd]"
                                     onClick={() => {

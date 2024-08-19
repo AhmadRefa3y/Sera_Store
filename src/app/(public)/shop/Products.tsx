@@ -1,16 +1,10 @@
-"use client";
 import { GetProducts } from "@/data/GetProducts";
 import { formatter } from "@/lib/utils";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { Prisma, PrismaClient, Product } from "@prisma/client";
-import { useSearchParams } from "next/navigation";
-import Spinner from "@/components/loadingComp";
 import AddToCartButton from "@/components/addToCartButton";
 import ProductSkelton from "./ProductSkelton";
-import { useQuery } from "@tanstack/react-query";
 
 export type ProductType = {
     id: string;
@@ -22,44 +16,52 @@ export type ProductType = {
     size: string;
     SuitableFor: string;
 };
-const ProductsGrid = () => {
-    const searchParams = useSearchParams();
-    const params = useMemo(
-        () => new URLSearchParams(searchParams.toString()),
-        [searchParams]
-    );
+const ProductsGrid = async ({ searchParams }: { searchParams: any }) => {
+    // const searchParams = useSearchParams();
+    // const params = useMemo(
+    //     () => new URLSearchParams(searchParams.toString()),
+    //     [searchParams]
+    // );
 
-    const types = params.get("types");
-    const categories = params.get("categories");
-    const sizes = params.get("sizes");
-    const colors = params.get("colors");
-    const priceRange = params.get("priceRange");
-    const sort = params.get("sort");
+    const types = searchParams.types;
+    const categories = searchParams.categories;
+    const sizes = searchParams.sizes;
+    const colors = searchParams.colors;
+    const priceRange = searchParams.priceRange;
+    const sort = searchParams.sort;
 
-    const { data: products, isLoading: loading } = useQuery({
-        queryKey: [
-            "products",
-            types,
-            categories,
-            sizes,
-            colors,
-            priceRange,
-            sort,
-        ],
-        queryFn: () =>
-            GetProducts({
-                types,
-                categories,
-                sizes,
-                colors,
-                priceRange,
-                sort,
-            }),
+    // const { data: products, isLoading: loading } = useQuery({
+    //     queryKey: [
+    //         "products",
+    //         types,
+    //         categories,
+    //         sizes,
+    //         colors,
+    //         priceRange,
+    //         sort,
+    //     ],
+    //     queryFn: () =>
+    //         GetProducts({
+    //             types,
+    //             categories,
+    //             sizes,
+    //             colors,
+    //             priceRange,
+    //             sort,
+    //         }),
+    // });
+
+    const products = await GetProducts({
+        types,
+        categories,
+        sizes,
+        colors,
+        priceRange,
+        sort,
     });
-
     return (
         <div className="flex w-full  justify-center items-start h-full  flex-wrap gap-2 flex-1">
-            {loading
+            {false
                 ? new Array(10)
                       .fill(null)
                       .map((_, i) => <ProductSkelton key={i} />)

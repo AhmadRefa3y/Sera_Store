@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { Alexandria } from "next/font/google";
 import "../globals.css";
-import Navbar from "@/components/PublicNavBar/Navbar";
 import { Toaster } from "react-hot-toast";
 import AdminNavbar from "@/components/adminNavbar";
 import { auth } from "@/auth";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
-
-const inter = Alexandria({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Dashboard - Sera Store",
@@ -22,6 +17,7 @@ export default async function AdminLayout({
     children: React.ReactNode;
 }>) {
     const session = await auth();
+    console.log(session?.user);
 
     if (!session) {
         redirect("/api/auth/signin");
